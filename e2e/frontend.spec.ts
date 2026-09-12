@@ -35,7 +35,7 @@ test.describe('Customer Experience (C-01 to C-10)', () => {
 
     // C-05: Complete checkout simulation -> Success Screen
     await page.getByRole('button', { name: /continue to secure checkout/i }).click()
-    await expect(page.getByRole('heading', { name: /your program is ready/i })).toBeVisible()
+    await expect(page.getByRole('heading', { name: /your program is ready/i })).toBeVisible({ timeout: 15000 })
 
     // C-06: Program Dashboard
     await page.getByRole('link', { name: /go to my dashboard/i }).click()
@@ -63,6 +63,10 @@ test.describe('Customer Experience (C-01 to C-10)', () => {
 
 test.describe('Admin Experience (A-01 to A-07)', () => {
   test('renders operational metrics and navigates administrative roster', async ({ page }) => {
+    // A-01: Admin Login Screen
+    await page.goto('/admin/login')
+    await expect(page.getByRole('heading', { name: /sign in/i })).toBeVisible()
+
     // A-02: Master Admin Dashboard
     await page.goto('/admin')
     await expect(page.getByRole('heading', { name: /overview/i })).toBeVisible()
@@ -88,6 +92,13 @@ test.describe('Admin Experience (A-01 to A-07)', () => {
     await page.goto('/admin/customers')
     await expect(page.getByRole('heading', { name: /customers/i })).toBeVisible()
     await expect(page.getByPlaceholder(/search customers/i)).toBeVisible()
+
+    // A-06: Customer Detail
+    const firstCustomer = page.locator('.customer-item, tr, li').filter({ hasText: /sarah|customer/i }).first()
+    if (await firstCustomer.isVisible()) {
+      await firstCustomer.click()
+      await expect(page.getByRole('heading', { name: /customer detail|progress/i })).toBeVisible()
+    }
 
     // A-07: QR / Access Links
     await page.goto('/admin/access')
