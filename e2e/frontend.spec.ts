@@ -1,0 +1,135 @@
+import { test, expect } from '@playwright/test'
+
+test.describe('Customer Experience (C-01 to C-10)', () => {
+  test('completes full customer journey from branded welcome to dashboard usage completion', async ({ page }) => {
+    // C-01: Welcome Screen
+    await page.goto('/comprex')
+    await expect(page.getByRole('heading', { level: 1 })).toContainText(/your program/i)
+    await expect(page.getByRole('main')).toBeVisible()
+
+    // Navigate to Onboarding
+    await page.getByRole('link', { name: /start my program/i }).click()
+    await expect(page).toHaveURL(/\/comprex\/start/)
+
+    // C-02: Customer Details / Onboarding Validation
+    const continueBtn = page.getByRole('button', { name: /continue/i })
+    await continueBtn.click()
+    // Should display validation error when submitting empty
+    await expect(page.getByText(/enter at least 2 characters/i)).toBeVisible()
+
+    // Fill valid onboarding details
+    await page.locator('#first-name').fill('Sarah')
+    await page.locator('#contact').fill('sarah@example.com')
+    await page.locator('#order-number').fill('#CX-9021')
+    await continueBtn.click()
+
+    // C-03: Program Activation Screen
+    await expect(page).toHaveURL(/\/comprex\/activate/, { timeout: 10000 })
+    await expect(page.getByRole('heading', { name: /program activation/i })).toBeVisible()
+    await expect(page.getByText(/14 days/i)).toBeVisible()
+
+    // C-04: Secure Checkout Handoff
+    await page.getByRole('link', { name: /activate my program/i }).click()
+    await expect(page).toHaveURL(/\/comprex\/checkout/, { timeout: 15000 })
+    await expect(page.getByText(/secure checkout handoff/i)).toBeVisible()
+
+    // C-05: Complete checkout simulation -> Success Screen
+    await page.getByRole('button', { name: /continue to secure checkout/i }).click()
+    await expect(page.getByRole('heading', { name: /your program is ready/i })).toBeVisible()
+
+    // C-06: Program Dashboard
+    await page.getByRole('link', { name: /go to my dashboard/i }).click()
+    await expect(page).toHaveURL(/\/comprex\/dashboard/, { timeout: 15000 })
+    await expect(page.getByRole('heading', { name: /welcome back/i })).toBeVisible()
+    await expect(page.getByText(/program summary/i)).toBeVisible()
+
+    // C-07: Usage Completion & Undo
+    const markCompleteBtn = page.getByRole('button', { name: /mark complete/i })
+    if (await markCompleteBtn.isVisible()) {
+      await markCompleteBtn.click()
+      await expect(page.getByRole('button', { name: /undo/i })).toBeVisible()
+      // Undo should restore mark complete
+      await page.getByRole('button', { name: /undo/i }).click()
+      await expect(page.getByRole('button', { name: /mark complete/i })).toBeVisible()
+    }
+  })
+
+  test('handles invalid brand slug with graceful error screen (C-10)', async ({ page }) => {
+    await page.goto('/invalid-brand-slug')
+    await expect(page.getByRole('main')).toBeVisible()
+    await expect(page.getByText(/unavailable|not found|error/i)).toBeVisible()
+  })
+})
+
+test.describe('Admin Experience (A-01 to A-07)', () => {
+  test('renders operational metrics and navigates administrative roster', async ({ page }) => {
+    // A-02: Master Admin Dashboard
+    await page.goto('/admin')
+    await expect(page.getByRole('heading', { name: /overview/i })).toBeVisible()
+    await expect(page.getByText(/total brands/i)).toBeVisible()
+    await expect(page.getByText(/total customers/i)).toBeVisible()
+    await expect(page.getByText(/active programs/i)).toBeVisible()
+    await expect(page.getByText(/active subscriptions/i)).toBeVisible()
+
+    // A-03: Brands Roster
+    await page.goto('/admin/brands')
+    await expect(page.getByRole('heading', { name: /brands/i })).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'COMPREX' })).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Demo Wellness' })).toBeVisible()
+
+    // A-04: Brand Editor
+    await page.goto('/admin/brands/comprex')
+    await expect(page.getByRole('heading', { name: /edit brand/i })).toBeVisible()
+    await expect(page.getByLabel(/brand name/i)).toHaveValue('COMPREX')
+    await expect(page.getByLabel(/product name/i)).toBeVisible()
+    await expect(page.getByLabel(/duration/i)).toBeVisible()
+
+    // A-05: Customer Roster
+    await page.goto('/admin/customers')
+    await expect(page.getByRole('heading', { name: /customers/i })).toBeVisible()
+    await expect(page.getByPlaceholder(/search customers/i)).toBeVisible()
+
+    // A-07: QR / Access Links
+    await page.goto('/admin/access')
+    await expect(page.getByRole('heading', { name: /access links/i })).toBeVisible()
+    await expect(page.locator('#access-qr')).toBeVisible()
+    await expect(page.getByRole('button', { name: /download png/i })).toBeVisible()
+    await expect(page.getByRole('button', { name: /download svg/i })).toBeVisible()
+  })
+})
+
+test.describe('Multi-Brand Architecture (§70, §71, §72)', () => {
+  test('renders distinct brand identities without hardcoded template collisions', async ({ page }) => {
+    // Brand 1: COMPREX
+    await page.goto('/comprex')
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
+    await expect(page.locator('.logo').filter({ hasText: 'COMPREX' })).toBeVisible()
+
+    // Brand 2: Demo Wellness
+    await page.goto('/demo-wellness')
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
+    await expect(page.locator('.logo').filter({ hasText: 'Demo Wellness' })).toBeVisible()
+  })
+})
+
+test.describe('Responsive Layout Verification (§97)', () => {
+  const viewports = [
+    { width: 375, height: 667, name: 'iPhone SE (375px)' },
+    { width: 390, height: 844, name: 'iPhone 12/13/14 (390px)' },
+    { width: 768, height: 1024, name: 'iPad Mini (768px)' },
+    { width: 1440, height: 900, name: 'Desktop Large (1440px)' },
+  ]
+
+  for (const vp of viewports) {
+    test(`renders cleanly without horizontal overflow at ${vp.name}`, async ({ page }) => {
+      await page.setViewportSize({ width: vp.width, height: vp.height })
+      await page.goto('/comprex')
+      await expect(page.getByRole('main')).toBeVisible()
+
+      // Ensure no horizontal scrollbar on body
+      const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth)
+      const clientWidth = await page.evaluate(() => document.documentElement.clientWidth)
+      expect(scrollWidth).toBeLessThanOrEqual(clientWidth + 2)
+    })
+  }
+})

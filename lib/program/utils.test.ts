@@ -1,0 +1,6 @@
+import { describe, expect, it } from 'vitest'
+import { addScheduleDay, getSummary, removeScheduleDay } from './utils'
+import type { Brand, Customer } from '@/lib/types'
+const brand: Brand = { slug: 'test', name: 'Test', productName: 'Product', duration: 14, schedule: [1, 3, 5, 7], reorderUrl: 'https://example.com/reorder', status: 'active', theme: { primary: '#f07106', primaryHover: '#d85800', primaryText: '#121212', secondary: '#5c3d2e', highlight: '#fdeee1', highlightBorder: '#f07106' } }
+const customer: Customer = { id: 'c', firstName: 'Test', email: 'test@example.com', brandSlug: 'test', startDate: '2026-01-01', currentDay: 5, programStatus: 'active', subscriptionStatus: 'active', completedDays: [1, 3] }
+describe('program utilities', () => { it('calculates progress and remaining days', () => { const summary = getSummary(brand, customer); expect(summary.progressPercent).toBe(36); expect(summary.remainingDays).toBe(9); expect(summary.scheduledToday).toBe(true) }); it('adds valid sorted unique days and rejects invalid values', () => { expect(addScheduleDay([3, 1], 2, 14)).toEqual([1, 2, 3]); expect(addScheduleDay([1], 1, 14)).toEqual([1]); expect(addScheduleDay([1], 15, 14)).toEqual([1]) }); it('removes a scheduled day', () => { expect(removeScheduleDay([1, 3, 5], 3)).toEqual([1, 5]) }) })

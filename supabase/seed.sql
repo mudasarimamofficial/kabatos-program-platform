@@ -1,0 +1,2 @@
+-- Development seed intentionally contains no customer or subscription records.
+-- Add approved brand fixtures through a controlled seed process after remote verification.

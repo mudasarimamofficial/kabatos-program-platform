@@ -1,0 +1,2 @@
+import Link from 'next/link'
+export default function Page() { return <main className="reference-home"><div className="eyebrow">COMPREX · PHASE B REFERENCE</div><h1>Program operations, made clear.</h1><p>Choose a brand experience to preview the reusable customer flow.</p><div className="reference-links"><Link href="/comprex">COMPREX customer flow <span>→</span></Link><Link href="/demo-wellness">Demo Wellness proof <span>→</span></Link><Link href="/admin/login">Admin preview <span>→</span></Link></div></main> }
