@@ -151,6 +151,8 @@ Tested across all specified viewports in Playwright Chromium:
 - **Existing Project ID:** `prj_tM5CUywwMBvYqAh5CHmdqZ6lv4qD`
 - **Project Name:** `kabatos-program-platform`
 - **Owner:** `mudasarimamofficial-gmailcom's projects`
+- **Staging Preview URL:** `https://kabatos-program-platform-ccnzx1awz.vercel.app`
+- **Deployment ID:** `dpl_BNKk6bsUNrZeSKJbUtUsVwTAVBtS` (Status: `READY`)
 - **Environment Separation:** Staging/Preview linked to DEV Supabase (`finbvtwjddrmbuuuyeni`). Production configured for PROD Supabase (`svghcgvmnpjuzzxtnjch`).
 
 ---
