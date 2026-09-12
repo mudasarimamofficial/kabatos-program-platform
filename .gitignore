@@ -8,15 +8,16 @@ __v0_jsx-dev-runtime.ts
 .env
 .env*.local
 .env.local
+!.env.example
 
 # Common ignores
 node_modules/
 .next/
 .DS_Store
 .vercel/
+.vercel
 playwright-report/
 test-results/
-.env*
 supabase/.temp/
 supabase/remote_dump.sql
 *.tsbuildinfo

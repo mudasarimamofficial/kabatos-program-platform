@@ -1,4 +1,17 @@
 import { notFound } from 'next/navigation'
-import { brands } from '@/lib/mock/data'
+import { getAdminBrandBySlug, saveAdminBrand } from '@/lib/services/admin-service'
 import { BrandEditor } from '@/components/admin'
-export default async function Page({ params }: { params: Promise<{ id: string }> }) { const { id } = await params; const brand = brands.find((item) => item.slug === id); if (!brand) notFound(); return <BrandEditor brand={brand} mode="edit" /> }
+import type { BrandForm } from '@/lib/types'
+
+export default async function Page({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  const brand = await getAdminBrandBySlug(id)
+  if (!brand) notFound()
+
+  async function handleSave(form: BrandForm) {
+    'use server'
+    return await saveAdminBrand(form, 'edit', id)
+  }
+
+  return <BrandEditor brand={brand} mode="edit" onSave={handleSave} />
+}

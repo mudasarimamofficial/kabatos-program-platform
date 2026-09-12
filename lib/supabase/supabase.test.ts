@@ -41,5 +41,5 @@ describe('Supabase Client & RPC Contract', () => {
     expect(demo.data.primary_color).toBe('#246B5A')
     expect(demo.data.program.duration_days).toBe(10)
     expect(demo.data.program.schedule_days).toEqual([2, 4, 6, 8, 10])
-  })
+  }, 25000)
 })

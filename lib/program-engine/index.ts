@@ -118,11 +118,13 @@ export function validateSchedule(days: number[], duration: number): { valid: boo
   if (!Number.isInteger(duration) || duration <= 0) {
     return { valid: false, message: 'Program duration must be a positive integer.' }
   }
-  const normalized = normalizeSchedule(days)
-  if (normalized.length === 0) {
+  if (!Array.isArray(days) || days.length === 0) {
     return { valid: false, message: 'Schedule must contain at least one scheduled day.' }
   }
-  if (normalized.some((day) => day > duration)) {
+  if (days.some((day) => !Number.isInteger(day) || day <= 0)) {
+    return { valid: false, message: 'Scheduled days must be positive integers starting from Day 1.' }
+  }
+  if (days.some((day) => day > duration)) {
     return { valid: false, message: 'Scheduled days cannot exceed program duration.' }
   }
   return { valid: true }

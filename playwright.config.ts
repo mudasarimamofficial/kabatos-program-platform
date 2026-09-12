@@ -6,7 +6,7 @@ export default defineConfig({
   workers: 1,
   reporter: [['list'], ['html', { open: 'never' }]],
   timeout: 60000,
-  use: { baseURL: 'http://localhost:3000', trace: 'retain-on-failure' },
+  use: { baseURL: 'http://localhost:3000', trace: 'off' },
   webServer: { command: 'pnpm dev', url: 'http://localhost:3000', reuseExistingServer: true, timeout: 120000 },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
 })
