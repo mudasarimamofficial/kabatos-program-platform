@@ -41,7 +41,7 @@ pnpm start
 - **Responsive Targets:** 375px, 390px, 768px, 1440px with zero horizontal scroll overflow
 
 ## Documentation Index
-Comprehensive technical and client documentation is available in `docs/`:
+- **[Unified Master Engineering Specification & System Bible](UNIFIED-MASTER-DOCUMENTATION.md)** *(Single unified master document consolidating all 25 specifications, reports, and architecture guides)*
 - [Project Scope & Client Agreement](docs/PROJECT-SCOPE.md)
 - [System Architecture](docs/ARCHITECTURE.md)
 - [Frontend Architecture & Component System](docs/FRONTEND-ARCHITECTURE.md)
