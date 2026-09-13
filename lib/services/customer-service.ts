@@ -17,7 +17,31 @@ function getSupabaseClient() {
   return createClient(url, key)
 }
 
+function deriveHoverColor(color: string): string {
+  const hex = color.replace('#', '')
+  if (hex.length !== 6) return color
+  const num = parseInt(hex, 16)
+  const r = Math.max(0, Math.floor((num >> 16) * 0.85))
+  const g = Math.max(0, Math.floor(((num >> 8) & 0x00FF) * 0.85))
+  const b = Math.max(0, Math.floor((num & 0x0000FF) * 0.85))
+  return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase()}`
+}
+
+function deriveTextColor(color: string): string {
+  const hex = color.replace('#', '')
+  if (hex.length !== 6) return '#FFFFFF'
+  const num = parseInt(hex, 16)
+  const r = num >> 16
+  const g = (num >> 8) & 0x00FF
+  const b = num & 0x0000FF
+  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255
+  return luminance > 0.5 ? '#121212' : '#FFFFFF'
+}
+
 export function formatBrandFromDb(data: any): Brand {
+  const primary = data.primary_color ?? '#121212'
+  const secondary = data.secondary_color ?? '#666666'
+  const highlight = data.highlight_color ?? '#F4F4F4'
   return {
     slug: data.slug,
     name: data.name,
@@ -31,18 +55,19 @@ export function formatBrandFromDb(data: any): Brand {
     reorderUrl: data.reorder_url ?? undefined,
     status: 'active',
     theme: {
-      primary: data.primary_color ?? '#F07106',
-      primaryHover: data.primary_color === '#F07106' ? '#D85800' : '#185647',
-      primaryText: data.primary_color === '#F07106' ? '#121212' : '#FFFFFF',
-      secondary: data.secondary_color ?? '#8B6F47',
-      highlight: data.highlight_color ?? '#FDEEE1',
-      highlightBorder: data.highlight_color ?? '#FDEEE1',
+      primary,
+      primaryHover: deriveHoverColor(primary),
+      primaryText: deriveTextColor(primary),
+      secondary,
+      highlight,
+      highlightBorder: highlight,
     },
   }
 }
 
 /**
- * Resolves brand configuration from Supabase DEV database, with fallback to fixture.
+ * Resolves brand configuration from Supabase DEV database.
+ * Never masks missing or unknown brands with mock data when Supabase is configured.
  */
 export async function resolveBrand(slug: string): Promise<Brand | null> {
   const supabase = getSupabaseClient()
@@ -52,9 +77,19 @@ export async function resolveBrand(slug: string): Promise<Brand | null> {
       if (!error && data) {
         return formatBrandFromDb(data)
       }
+      if (error) {
+        // Brand unavailable or inactive in database
+        return null
+      }
     } catch {
-      // Fallback to mock data if network or dev environment unavailable
+      if (process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL) {
+        return null
+      }
     }
+  }
+  // Only fall back to mock data if Supabase is unconfigured (offline development)
+  if (process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL) {
+    return null
   }
   return getMockBrand(slug) ?? null
 }

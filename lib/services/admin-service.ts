@@ -24,6 +24,27 @@ async function getAdminSupabaseClient() {
   return anonKey ? createClient(url, anonKey) : null
 }
 
+function deriveHoverColor(color: string): string {
+  const hex = color.replace('#', '')
+  if (hex.length !== 6) return color
+  const num = parseInt(hex, 16)
+  const r = Math.max(0, Math.floor((num >> 16) * 0.85))
+  const g = Math.max(0, Math.floor(((num >> 8) & 0x00FF) * 0.85))
+  const b = Math.max(0, Math.floor((num & 0x0000FF) * 0.85))
+  return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase()}`
+}
+
+function deriveTextColor(color: string): string {
+  const hex = color.replace('#', '')
+  if (hex.length !== 6) return '#FFFFFF'
+  const num = parseInt(hex, 16)
+  const r = num >> 16
+  const g = (num >> 8) & 0x00FF
+  const b = num & 0x0000FF
+  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255
+  return luminance > 0.5 ? '#121212' : '#FFFFFF'
+}
+
 /**
  * Retrieves high-level operational counts for the Master Admin dashboard.
  */
@@ -34,15 +55,31 @@ export async function getAdminDashboardMetrics(): Promise<AdminMetrics> {
       const { data, error } = await supabase.rpc('admin_dashboard_counts')
       if (!error && data) {
         return {
-          totalBrands: data.brands ?? mockBrands.length,
-          totalCustomers: data.customers ?? mockCustomers.length,
-          activePrograms: data.active_programs ?? mockMetrics.activePrograms,
-          activeSubscriptions: data.active_subscriptions ?? mockMetrics.activeSubscriptions,
+          totalBrands: data.brands ?? 0,
+          totalCustomers: data.customers ?? 0,
+          activePrograms: data.active_programs ?? 0,
+          activeSubscriptions: data.active_subscriptions ?? 0,
         }
       }
+      // If RPC requires user session, query tables directly via service_role client
+      const [bRes, cRes, pRes, sRes] = await Promise.all([
+        supabase.from('brands').select('*', { count: 'exact', head: true }),
+        supabase.from('customers').select('*', { count: 'exact', head: true }),
+        supabase.from('customer_programs').select('*', { count: 'exact', head: true }).eq('status', 'active'),
+        supabase.from('subscriptions').select('*', { count: 'exact', head: true }).eq('status', 'active'),
+      ])
+      return {
+        totalBrands: bRes.count ?? 0,
+        totalCustomers: cRes.count ?? 0,
+        activePrograms: pRes.count ?? 0,
+        activeSubscriptions: sRes.count ?? 0,
+      }
     } catch {
-      // Fall through to mock metrics
+      // Fall through if unconfigured
     }
+  }
+  if (process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL) {
+    return { totalBrands: 0, totalCustomers: 0, activePrograms: 0, activeSubscriptions: 0 }
   }
   return mockMetrics
 }
@@ -56,30 +93,71 @@ export async function getAdminBrands(): Promise<Brand[]> {
     try {
       const { data, error } = await supabase.rpc('admin_brand_list')
       if (!error && Array.isArray(data) && data.length > 0) {
-        return data.map((b: any) => ({
-          id: b.id,
-          version: b.config_version ?? 1,
-          slug: b.slug,
-          name: b.name,
-          logo: b.logo_path ?? undefined,
-          productName: b.product_name,
-          duration: b.current_config?.duration_days ?? 14,
-          schedule: b.current_config?.schedule_days ?? [1, 3, 5, 7],
-          reorderUrl: b.reorder_url ?? undefined,
-          status: b.active ? 'active' : 'draft',
-          theme: {
-            primary: b.primary_color ?? '#F07106',
-            primaryHover: b.primary_color === '#F07106' ? '#D85800' : '#185647',
-            primaryText: '#121212',
-            secondary: b.secondary_color ?? '#8B6F47',
-            highlight: b.highlight_color ?? '#FDEEE1',
-            highlightBorder: b.highlight_color ?? '#FDEEE1',
-          },
-        }))
+        return data.map((b: any) => {
+          const primary = b.primary_color ?? '#121212'
+          const secondary = b.secondary_color ?? '#666666'
+          const highlight = b.highlight_color ?? '#F4F4F4'
+          return {
+            id: b.id,
+            version: b.config_version ?? 1,
+            slug: b.slug,
+            name: b.name,
+            logo: b.logo_path ?? undefined,
+            productName: b.product_name,
+            duration: b.current_config?.duration_days ?? 14,
+            schedule: b.current_config?.schedule_days ?? [1, 3, 5, 7],
+            reorderUrl: b.reorder_url ?? undefined,
+            status: b.active ? 'active' : 'draft',
+            theme: {
+              primary,
+              primaryHover: deriveHoverColor(primary),
+              primaryText: deriveTextColor(primary),
+              secondary,
+              highlight,
+              highlightBorder: highlight,
+            },
+          }
+        })
+      }
+      // If RPC requires user session, query brands table directly via service_role
+      const { data: directBrands, error: directErr } = await supabase
+        .from('brands')
+        .select('*, program_configs(*)')
+        .order('created_at', { ascending: true })
+      if (!directErr && Array.isArray(directBrands) && directBrands.length > 0) {
+        return directBrands.map((b: any) => {
+          const currentConfig = b.program_configs?.find((c: any) => c.is_current) ?? b.program_configs?.[0]
+          const primary = b.primary_color ?? '#121212'
+          const secondary = b.secondary_color ?? '#666666'
+          const highlight = b.highlight_color ?? '#F4F4F4'
+          return {
+            id: b.id,
+            version: b.config_revision ?? 1,
+            slug: b.slug,
+            name: b.name,
+            logo: b.logo_path ?? undefined,
+            productName: b.product_name,
+            duration: currentConfig?.duration_days ?? 14,
+            schedule: currentConfig?.schedule_days ?? [1, 3, 5, 7],
+            reorderUrl: b.reorder_url ?? undefined,
+            status: b.active ? 'active' : 'draft',
+            theme: {
+              primary,
+              primaryHover: deriveHoverColor(primary),
+              primaryText: deriveTextColor(primary),
+              secondary,
+              highlight,
+              highlightBorder: highlight,
+            },
+          }
+        })
       }
     } catch {
-      // Fall through to mock brands
+      // Fall through if unconfigured
     }
+  }
+  if (process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL) {
+    return []
   }
   return mockBrands
 }
@@ -184,8 +262,11 @@ export async function getAdminCustomers(query = ''): Promise<Customer[]> {
         }))
       }
     } catch {
-      // Fall through to mock customers
+      // Fall through if unconfigured
     }
+  }
+  if (process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL) {
+    return []
   }
   const filtered = query
     ? mockCustomers.filter((c) =>
@@ -226,9 +307,12 @@ export async function getAdminCustomerDetail(id: string): Promise<Customer | nul
         }
       }
     } catch {
-      // Fall through to mock lookup
+      // Fall through if unconfigured
     }
   }
+  if (process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL) {
+    return null
+  }
   const all = await getAdminCustomers()
-  return all.find((c) => c.id === id) ?? mockCustomers[0]
+  return all.find((c) => c.id === id) ?? null
 }

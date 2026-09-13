@@ -13,6 +13,17 @@ export function BackLink({ href, children = 'Back' }: { href: string; children?:
   )
 }
 
+function isSafeUrl(url?: string): boolean {
+  if (!url) return false
+  if (url.startsWith('#') || url.startsWith('/')) return true
+  try {
+    const parsed = new URL(url, 'https://kabatos-internal.local')
+    return parsed.protocol === 'https:' || parsed.protocol === 'http:'
+  } catch {
+    return false
+  }
+}
+
 export function Button({
   children,
   variant = 'primary',
@@ -29,11 +40,11 @@ export function Button({
   disabled?: boolean
 }) {
   const className = `btn btn-${variant}`
-  if (href) {
+  if (href && isSafeUrl(href)) {
     return (
-      <Link className={className} href={href}>
+      <a className={className} href={href}>
         {children}
-      </Link>
+      </a>
     )
   }
   return (

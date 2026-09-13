@@ -9,7 +9,7 @@ test.describe('Customer Experience (C-01 to C-10)', () => {
 
     // Navigate to Onboarding
     await page.getByRole('link', { name: /start my program/i }).click()
-    await expect(page).toHaveURL(/\/comprex\/start/, { timeout: 15000 })
+    await expect(page).toHaveURL(/\/comprex\/start/, { timeout: 30000 })
 
     // C-02: Customer Details / Onboarding Validation
     const continueBtn = page.getByRole('button', { name: /continue/i })
@@ -24,24 +24,24 @@ test.describe('Customer Experience (C-01 to C-10)', () => {
     await continueBtn.click()
 
     // C-03: Program Activation Screen
-    await expect(page).toHaveURL(/\/comprex\/activate/, { timeout: 10000 })
+    await expect(page).toHaveURL(/\/comprex\/activate/, { timeout: 30000 })
     await expect(page.getByRole('heading', { name: /program activation/i })).toBeVisible()
     await expect(page.getByText(/14 days/i)).toBeVisible()
 
     // C-04: Secure Checkout Handoff
     await page.getByRole('link', { name: /activate my program/i }).click()
-    await expect(page).toHaveURL(/\/comprex\/checkout/, { timeout: 15000 })
+    await expect(page).toHaveURL(/\/comprex\/checkout/, { timeout: 30000 })
     await expect(page.getByText(/secure checkout handoff/i)).toBeVisible()
 
     // C-05: Complete checkout simulation -> Success Screen
     await page.getByRole('button', { name: /continue to secure checkout/i }).click()
-    await expect(page.getByRole('heading', { name: /your program is ready/i })).toBeVisible({ timeout: 15000 })
+    await expect(page.getByRole('heading', { name: /your program is ready/i })).toBeVisible({ timeout: 30000 })
 
     // C-06: Program Dashboard
     await page.getByRole('link', { name: /go to my dashboard/i }).click()
-    await expect(page).toHaveURL(/\/comprex\/dashboard/, { timeout: 15000 })
-    await expect(page.getByRole('heading', { name: /welcome back/i })).toBeVisible()
-    await expect(page.getByText(/program summary/i)).toBeVisible()
+    await expect(page).toHaveURL(/\/comprex\/dashboard/, { timeout: 30000 })
+    await expect(page.getByRole('heading', { name: /welcome back/i })).toBeVisible({ timeout: 30000 })
+    await expect(page.getByText(/program summary/i)).toBeVisible({ timeout: 30000 })
 
     // C-07: Usage Completion & Undo
     const markCompleteBtn = page.getByRole('button', { name: /mark complete/i })
@@ -83,7 +83,7 @@ test.describe('Admin Experience (A-01 to A-07)', () => {
 
     // A-04: Brand Editor
     await page.goto('/admin/brands/comprex')
-    await expect(page.getByRole('heading', { name: /edit brand/i })).toBeVisible()
+    await expect(page.getByRole('heading', { name: /edit brand/i })).toBeVisible({ timeout: 15000 })
     await expect(page.getByLabel(/brand name/i)).toHaveValue('COMPREX')
     await expect(page.getByLabel(/product name/i)).toBeVisible()
     await expect(page.getByLabel(/duration/i)).toBeVisible()

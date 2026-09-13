@@ -5,6 +5,7 @@ import { Check, CheckCircle2, ExternalLink, Moon, Package } from 'lucide-react'
 import { CustomerShell } from './customer-shell'
 import { Button } from './buttons'
 import { getScheduleItems, getSummary } from '@/lib/program/utils'
+import { completeScheduledUsageAction, undoScheduledUsageAction } from '@/lib/services/customer-actions'
 import type { Brand, Customer, ProgramSummary, ScheduleItem } from '@/lib/types'
 
 export function DashboardScreen({
@@ -47,20 +48,24 @@ export function DashboardScreen({
 
   const handleMarkComplete = () => {
     setCompleted(true)
-    if (onCompleteAction) {
-      startTransition(async () => {
+    startTransition(async () => {
+      if (onCompleteAction) {
         await onCompleteAction()
-      })
-    }
+      } else {
+        await completeScheduledUsageAction(brand.slug)
+      }
+    })
   }
 
   const handleUndo = () => {
     setCompleted(false)
-    if (onUndoAction) {
-      startTransition(async () => {
+    startTransition(async () => {
+      if (onUndoAction) {
         await onUndoAction()
-      })
-    }
+      } else {
+        await undoScheduledUsageAction(brand.slug)
+      }
+    })
   }
 
   return (

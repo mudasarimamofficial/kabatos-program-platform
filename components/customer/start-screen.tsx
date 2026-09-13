@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { ArrowRight } from 'lucide-react'
 import { CustomerShell } from './customer-shell'
 import { BackLink, Button } from './buttons'
+import { joinCustomerProgramAction } from '@/lib/services/customer-actions'
 import type { Brand, ContactMethod } from '@/lib/types'
 
 export function StartScreen({
@@ -54,22 +55,33 @@ export function StartScreen({
     setServerError('')
 
     try {
-      if (onJoin) {
-        const res = await onJoin({
-          firstName,
-          email: method === 'email' ? contact : undefined,
-          phone: method === 'phone' ? contact : undefined,
-          orderNumber: orderNumber || undefined,
-        })
-        if (!res.success) {
-          setServerError(res.error || 'Failed to initialize program.')
-          setSubmitting(false)
-          return
-        }
+      const joinPayload = {
+        firstName,
+        email: method === 'email' ? contact : undefined,
+        phone: method === 'phone' ? contact : undefined,
+        orderNumber: orderNumber || undefined,
       }
-      router.push(`/${brand.slug}/activate`)
+      const res = onJoin
+        ? await onJoin(joinPayload)
+        : await joinCustomerProgramAction({ ...joinPayload, brandSlug: brand.slug })
+
+      if (!res.success) {
+        setServerError(res.error || 'Failed to initialize program.')
+        setSubmitting(false)
+        return
+      }
+
+      if (typeof window !== 'undefined') {
+        window.location.assign(`/${brand.slug}/activate`)
+      } else {
+        router.push(`/${brand.slug}/activate`)
+      }
     } catch {
-      router.push(`/${brand.slug}/activate`)
+      if (typeof window !== 'undefined') {
+        window.location.assign(`/${brand.slug}/activate`)
+      } else {
+        router.push(`/${brand.slug}/activate`)
+      }
     }
   }
 
