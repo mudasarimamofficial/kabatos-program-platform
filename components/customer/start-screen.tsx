@@ -75,7 +75,7 @@ export function StartScreen({
 
   return (
     <CustomerShell brand={brand}>
-      <main className="customer-main">
+      <main className="customer-main motion-card-reveal">
         <BackLink href={`/${brand.slug}`} />
         <div className="progress-steps" aria-label="Onboarding step 1 of 3">
           <span className="active">1</span>
@@ -96,6 +96,9 @@ export function StartScreen({
             First name
             <input
               id="first-name"
+              name="firstName"
+              autoComplete="given-name"
+              autoCapitalize="words"
               value={firstName}
               onChange={(event) => setFirstName(event.target.value)}
               onBlur={() => setTouched((state) => ({ ...state, firstName: true }))}
@@ -133,7 +136,10 @@ export function StartScreen({
             </div>
             <input
               id="contact"
+              name={method === 'email' ? 'email' : 'phone'}
               type={method === 'email' ? 'email' : 'tel'}
+              inputMode={method === 'email' ? 'email' : 'tel'}
+              autoComplete={method === 'email' ? 'email' : 'tel'}
               value={contact}
               onChange={(event) => setContact(event.target.value)}
               onBlur={() => setTouched((state) => ({ ...state, contact: true }))}
@@ -151,6 +157,8 @@ export function StartScreen({
             Order number <span className="optional">Optional</span>
             <input
               id="order-number"
+              name="orderNumber"
+              autoComplete="off"
               value={orderNumber}
               onChange={(event) => setOrderNumber(event.target.value)}
               placeholder="e.g. #CX-1042"

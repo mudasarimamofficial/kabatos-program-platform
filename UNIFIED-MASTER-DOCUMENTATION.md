@@ -939,3 +939,67 @@ All 25 standalone documents remain version-controlled under `docs/` and are synt
 ### U. FINAL VERDICT
 **FULL-STACK RELEASE CANDIDATE: BLOCKED_PENDING_APPROVED_STRIPE_PRICE**  
 *(Commercial Price Blocker only; all engineering deliverables are 100% complete, verified, and ready for immediate production promotion approval upon receipt of pricing terms).*
+
+---
+
+## 23. COMPREX BRAND ASSET INVENTORY & FORENSIC SPECIFICATION
+*(Incorporating `docs/COMPREX-ASSET-INVENTORY.md`)*
+
+### Forensic Sourcing Authority
+- **Authority Domain:** `https://www.goodcomprex.com` (Official client-owned storefront).
+- **Security & Privacy Guarantee:** Zero external marketing analytics scripts (Pixel, Klaviyo, TikTok) imported. All assets localized into `public/brands/comprex/`.
+
+### Localized Brand Asset Matrix
+1. **Official Wordmark & Brand Logo (`public/brands/comprex/logo.png`):**
+   - Source: `https://www.goodcomprex.com/.../Asset_2.png`
+   - Intrinsic Dimensions: 2988 × 670 px, transparent background PNG, optimized to 66 KB.
+   - Slogan: *« Soin naturel des douleurs corporelles »*.
+   - Usage: Customer Shell header and brand identity contexts.
+2. **Authentic Product Packaging Pouch (`public/brands/comprex/product-pouch.jpg`):**
+   - Source: Official studio packaging photography.
+   - Dimensions: 420 × 580 px, 66 KB.
+   - Usage: C-01 Welcome Screen hero visual and C-03 activation overview.
+3. **Official Routine Guide (`public/brands/comprex/how-to-use.png`):**
+   - Source: Official 4-step routine illustration.
+   - Dimensions: 1254 × 1254 px.
+   - Usage: Customer education and routine onboarding.
+4. **Official Brand Emblem Mark (`public/brands/comprex/mark.png`):**
+   - Dimensions: 500 × 500 px.
+   - Usage: Compact favicons and avatar marks.
+
+---
+
+## 24. MOTION DESIGN SYSTEM SPECIFICATION
+*(Incorporating `docs/MOTION-DESIGN-SYSTEM.md`)*
+
+### Motion Personality & Philosophy
+- **Personality:** Calming, tactile, purposeful wellness motion mimicking gentle breathing and warm unfolding.
+- **Duration Hierarchy:**
+  - `--motion-instant`: 100ms (tactile active button response `scale(0.98)`).
+  - `--motion-fast`: 160ms (tab indicator sliding, chip toggles).
+  - `--motion-base`: 240ms (card reveals, state morphs).
+  - `--motion-slow`: 360ms (progress bar advance, timeline updates).
+  - `--motion-emphasis`: 480ms (screen route transitions).
+- **Easing:**
+  - Smooth: `cubic-bezier(0.16, 1, 0.3, 1)`.
+  - Spring: `cubic-bezier(0.175, 0.885, 0.32, 1.15)`.
+- **Accessibility & Reduced Motion:**
+  - Full `@media (prefers-reduced-motion: reduce)` overrides across all components.
+  - Floating animations and scale transforms clamped to `none !important`.
+
+---
+
+## 25. FINAL UI/UX, INTERACTION & VISUAL QA REPORT
+*(Incorporating `docs/FINAL-UI-UX-MOTION-QA.md`)*
+
+### Verification Results
+- **Visual Polish Bar:** High-end consumer wellness standard comparable to modern D2C health products.
+- **Hero Next Usage Card:** Restorative morphing interaction on completion with tactile response and undo capability.
+- **Restful Off-Day Experience:** Calming rest-day card replaces action pressure on unscheduled days without disabled buttons.
+- **Multi-Brand Isolation:** Demo Wellness tested with complete absence of COMPREX assets or color leakage.
+- **Automated Gates:**
+  - `pnpm typecheck`: 0 errors.
+  - `pnpm test:unit`: 41/41 passing (including real Supabase DEV database connection and RLS enforcement).
+  - `pnpm test:e2e`: 8/8 passing across all viewports (375px, 390px, 768px, 1440px).
+  - `pnpm build`: 13/13 static and dynamic routes compiled cleanly.
+

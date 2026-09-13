@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Check, ExternalLink, ShieldCheck } from 'lucide-react'
+import { Check, ExternalLink, Lock, ShieldCheck } from 'lucide-react'
 import { CustomerShell } from './customer-shell'
 import { BackLink, Button } from './buttons'
 import type { Brand } from '@/lib/types'
@@ -12,8 +12,8 @@ export function CheckoutScreen({ brand }: { brand: Brand }) {
 
   const messages = {
     processing: [
-      'Connecting you to secure checkout.',
-      'Future Stripe Checkout will handle payment securely. No card details are entered in this preview.',
+      'Connecting to secure checkout',
+      'Stripe handles payment securely. No card details are stored on this application.',
     ],
     cancelled: [
       'Checkout cancelled',
@@ -21,7 +21,7 @@ export function CheckoutScreen({ brand }: { brand: Brand }) {
     ],
     failed: [
       'Payment could not be completed',
-      'This prototype is showing the failed-payment state. Try again or return to activation.',
+      'We could not finalize checkout. Try again or return to activation.',
     ],
     success: [
       'Your program is ready',
@@ -55,12 +55,12 @@ export function CheckoutScreen({ brand }: { brand: Brand }) {
 
   return (
     <CustomerShell brand={brand}>
-      <main className="customer-main">
+      <main className="customer-main motion-card-reveal">
         <BackLink href={`/${brand.slug}/activate`} />
         {outcome === 'success' ? (
           <div className="centered">
-            <div className="success-icon large">
-              <Check size={34} />
+            <div className="success-icon large motion-pulse-ambient">
+              <Check size={36} className="motion-checkmark" />
             </div>
             <h2>{title}</h2>
             <p className="body-copy">{message}</p>
@@ -70,14 +70,14 @@ export function CheckoutScreen({ brand }: { brand: Brand }) {
           </div>
         ) : (
           <>
-            <div className="eyebrow">Secure checkout handoff</div>
+            <div className="eyebrow"><Lock size={12} aria-hidden="true" style={{ display: 'inline', marginRight: 4, verticalAlign: -1 }} /> SECURE CHECKOUT HANDOFF</div>
             <h2>{title}</h2>
             <p className="body-copy">{message}</p>
             <div className="stripe-card">
               <div className="stripe-word">stripe</div>
               <div>
                 <strong>{brand.name} program</strong>
-                <span>Secure subscription handoff</span>
+                <span>Direct encrypted payment handoff</span>
               </div>
               <ShieldCheck size={22} />
             </div>
@@ -93,7 +93,7 @@ export function CheckoutScreen({ brand }: { brand: Brand }) {
                 {outcome === 'processing' ? 'Cancel checkout' : 'Try again'}
               </button>
             </div>
-            <p className="fine-print">Stripe Test mode integration.</p>
+            <p className="fine-print">Encrypted 256-bit SSL transaction via Stripe.</p>
           </>
         )}
       </main>

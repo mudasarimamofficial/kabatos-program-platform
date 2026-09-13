@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useTransition } from 'react'
-import { Check, CheckCircle2, ExternalLink, Package } from 'lucide-react'
+import { Check, CheckCircle2, ExternalLink, Moon, Package } from 'lucide-react'
 import { CustomerShell } from './customer-shell'
 import { Button } from './buttons'
 import { getScheduleItems, getSummary } from '@/lib/program/utils'
@@ -22,14 +22,28 @@ export function DashboardScreen({
   onCompleteAction?: () => Promise<{ success: boolean }>
   onUndoAction?: () => Promise<{ success: boolean }>
 }) {
-  const [completed, setCompleted] = useState(
-    customer.completedDays.includes(customer.currentDay)
-  )
+  const isInitiallyCompleted = customer.completedDays.includes(customer.currentDay)
+  const [completed, setCompleted] = useState(isInitiallyCompleted)
   const [isPending, startTransition] = useTransition()
 
   const summary = initialSummary ?? getSummary(brand, customer)
-  const items = initialItems ?? getScheduleItems(brand, customer)
-  const todayScheduled = summary.scheduledToday && !completed
+  const baseItems = initialItems ?? getScheduleItems(brand, customer)
+
+  // Dynamic schedule item state reflecting local toggle
+  const items = baseItems.map((item) => {
+    if (item.day === customer.currentDay && brand.schedule.includes(item.day)) {
+      return {
+        ...item,
+        state: completed ? ('completed' as const) : ('scheduled' as const),
+      }
+    }
+    return item
+  })
+
+  // Dynamic progress percentage
+  const completedCount = items.filter((it) => it.state === 'completed').length
+  const dynamicPercent = Math.min(100, Math.round((completedCount / brand.schedule.length) * 100))
+  const todayIsScheduled = brand.schedule.includes(customer.currentDay)
 
   const handleMarkComplete = () => {
     setCompleted(true)
@@ -51,18 +65,21 @@ export function DashboardScreen({
 
   return (
     <CustomerShell brand={brand}>
-      <main className="dashboard-main">
+      <main className="dashboard-main motion-card-reveal">
         <div className="dashboard-greeting">
           <div>
             <span className="eyebrow">YOUR {brand.name} PROGRAM</span>
             <h2>Welcome back, {customer.firstName}</h2>
+            <div className="day-badge">
+              Day {summary.currentDay} of {brand.duration}
+            </div>
           </div>
           <div className="avatar" aria-label={`${customer.firstName} profile`}>
             {customer.firstName.slice(0, 1)}C
           </div>
         </div>
 
-        {summary.low && (
+        {summary.low && !summary.complete && (
           <div className="notice notice-warning" role="status">
             <div>
               <strong>Your product may be running low</strong>
@@ -78,7 +95,7 @@ export function DashboardScreen({
 
         {summary.complete && (
           <div className="notice notice-success" role="status">
-            <CheckCircle2 size={20} />
+            <CheckCircle2 size={22} className="motion-checkmark" />
             <div>
               <strong>Program complete</strong>
               <span>
@@ -101,20 +118,21 @@ export function DashboardScreen({
                 Day {summary.currentDay} <span>of {brand.duration}</span>
               </div>
             </div>
-            <div className="progress-percent">{summary.progressPercent}%</div>
+            <div className="progress-percent">{dynamicPercent}%</div>
           </div>
           <div
             className="progress-track"
             role="progressbar"
-            aria-valuenow={summary.progressPercent}
+            aria-valuenow={dynamicPercent}
             aria-valuemin={0}
             aria-valuemax={100}
-            aria-label={`${summary.progressPercent}% complete`}
+            aria-label={`${dynamicPercent}% complete`}
           >
             <div
               style={{
-                width: `${summary.progressPercent}%`,
+                width: `${dynamicPercent}%`,
                 background: 'var(--brand-runtime)',
+                transition: 'width 360ms cubic-bezier(0.16, 1, 0.3, 1)',
               }}
             />
           </div>
@@ -125,34 +143,54 @@ export function DashboardScreen({
         </section>
 
         {!summary.complete && (
-          <section className="next-card" aria-label="Upcoming usage">
-            <div className="next-icon">
-              <Package size={22} />
-            </div>
-            <div className="next-content">
-              <span className="eyebrow">{todayScheduled ? 'TODAY' : 'NEXT SCHEDULED USE'}</span>
-              <h3>
-                {todayScheduled
-                  ? 'Your scheduled use'
-                  : `Day ${summary.nextScheduledDay ?? brand.duration}`}
-              </h3>
-              <p>
-                {todayScheduled
-                  ? 'Mark today complete when you are ready.'
-                  : 'Keep your program moving at a steady pace.'}
-              </p>
-            </div>
-            {todayScheduled && (
-              <Button onClick={handleMarkComplete} disabled={isPending}>
-                <Check size={16} /> Mark complete
-              </Button>
+          <>
+            {todayIsScheduled ? (
+              completed ? (
+                <section className="next-card completed-card" aria-label="Completed usage">
+                  <div className="next-icon">
+                    <Check size={22} className="motion-checkmark" />
+                  </div>
+                  <div className="next-content">
+                    <span className="eyebrow" style={{ color: 'var(--success)' }}>
+                      COMPLETED TODAY
+                    </span>
+                    <h3>Usage logged! Great job keeping your momentum going.</h3>
+                    <p>You&apos;ve completed today&apos;s routine. Rest well tonight.</p>
+                  </div>
+                  <Button variant="ghost" onClick={handleUndo} disabled={isPending}>
+                    Undo
+                  </Button>
+                </section>
+              ) : (
+                <section className="next-card" aria-label="Upcoming usage">
+                  <div className="next-icon">
+                    <Package size={22} />
+                  </div>
+                  <div className="next-content">
+                    <span className="eyebrow">TODAY</span>
+                    <h3>Your scheduled use</h3>
+                    <p>Take ~1 teaspoon in warm water before bedtime.</p>
+                  </div>
+                  <Button onClick={handleMarkComplete} disabled={isPending}>
+                    <Check size={16} /> Mark complete
+                  </Button>
+                </section>
+              )
+            ) : (
+              <section className="next-card rest-card" aria-label="Rest day">
+                <div className="next-icon">
+                  <Moon size={22} />
+                </div>
+                <div className="next-content">
+                  <span className="eyebrow">REST DAY</span>
+                  <h3>Nothing scheduled today</h3>
+                  <p>
+                    Your next usage is Day {summary.nextScheduledDay ?? brand.duration}. Keep hydrated and rest well.
+                  </p>
+                </div>
+              </section>
             )}
-            {completed && (
-              <Button variant="ghost" onClick={handleUndo} disabled={isPending}>
-                Undo
-              </Button>
-            )}
-          </section>
+          </>
         )}
 
         <section className="timeline-card">

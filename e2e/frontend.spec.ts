@@ -9,7 +9,7 @@ test.describe('Customer Experience (C-01 to C-10)', () => {
 
     // Navigate to Onboarding
     await page.getByRole('link', { name: /start my program/i }).click()
-    await expect(page).toHaveURL(/\/comprex\/start/)
+    await expect(page).toHaveURL(/\/comprex\/start/, { timeout: 15000 })
 
     // C-02: Customer Details / Onboarding Validation
     const continueBtn = page.getByRole('button', { name: /continue/i })

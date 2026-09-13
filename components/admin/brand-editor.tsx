@@ -133,11 +133,25 @@ export function BrandEditor({
               </label>
               <label>
                 Main brand color
-                <input
-                  required
-                  value={form.primary}
-                  onChange={(event) => update('primary', event.target.value)}
-                />
+                <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                  <div
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      borderRadius: '6px',
+                      backgroundColor: form.primary || '#F07106',
+                      border: '1px solid var(--line)',
+                      flexShrink: 0,
+                    }}
+                    aria-hidden="true"
+                  />
+                  <input
+                    required
+                    value={form.primary}
+                    onChange={(event) => update('primary', event.target.value)}
+                    placeholder="#F07106"
+                  />
+                </div>
               </label>
               <label>
                 Product name

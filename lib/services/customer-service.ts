@@ -21,7 +21,8 @@ export function formatBrandFromDb(data: any): Brand {
   return {
     slug: data.slug,
     name: data.name,
-    logo: data.logo_path ?? undefined,
+    logo: data.logo_path ?? (data.slug === 'comprex' ? '/brands/comprex/logo.png' : undefined),
+    productImage: data.product_image_path ?? (data.slug === 'comprex' ? '/brands/comprex/product-pouch.jpg' : undefined),
     productName: data.product_name,
     duration: data.program?.duration_days ?? 14,
     schedule: data.program?.schedule_days ?? [1, 3, 5, 7, 9, 11, 13],

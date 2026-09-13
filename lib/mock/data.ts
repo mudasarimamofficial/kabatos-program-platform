@@ -1,7 +1,7 @@
 import type { AdminMetrics, Brand, Customer } from '@/lib/types'
 
 export const brands: Brand[] = [
-  { slug: 'comprex', name: 'COMPREX', productName: 'Daily Wellness', duration: 14, schedule: [1, 3, 5, 7, 9, 11, 13], reorderUrl: '#mock-reorder', status: 'active', theme: { primary: '#F07106', primaryHover: '#D85800', primaryText: '#121212', secondary: '#8B6F47', highlight: '#FDEEE1', highlightBorder: '#F6C79E' } },
+  { slug: 'comprex', name: 'COMPREX', logo: '/brands/comprex/logo.png', productImage: '/brands/comprex/product-pouch.jpg', productName: 'Daily Wellness', duration: 14, schedule: [1, 3, 5, 7, 9, 11, 13], reorderUrl: '#mock-reorder', status: 'active', theme: { primary: '#F07106', primaryHover: '#D85800', primaryText: '#121212', secondary: '#8B6F47', highlight: '#FDEEE1', highlightBorder: '#F6C79E' } },
   { slug: 'demo-wellness', name: 'Demo Wellness', productName: 'Daily Balance', duration: 10, schedule: [1, 3, 5, 7, 9], reorderUrl: 'https://example.com/reorder', status: 'active', theme: { primary: '#2F7D72', primaryHover: '#245F57', primaryText: '#FFFFFF', secondary: '#5F716D', highlight: '#E4F1ED', highlightBorder: '#B8D9D0' } },
 ]
 export const customers: Customer[] = [
