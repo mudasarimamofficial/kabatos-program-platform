@@ -23,3 +23,5 @@
 | **ENG-02** | Snapshot Invariance Guarantee | Bible | Schema + RPC | `customer_programs` | Snapshot Trigger | `lib/program-engine/snapshot.test.ts` | **PASS** |
 | **ENG-03** | Webhook Idempotency Engine | Bible | `/api/stripe/webhook` | `app/api/stripe/webhook/route.ts` | `stripe_events` | `lib/stripe/stripe.test.ts` | **PASS** |
 | **ST-01** | Approved Stripe Commercial Price | Brief | Billing Handoff | `/api/stripe/checkout` | `program_configs.stripe_price_id` | Blocked until client provides terms | **BLOCKED** |
+| **TR-01** | Client Infrastructure Ownership Transfer | Agreement | Staging -> Client Accounts | `docs/CLIENT-OWNERSHIP-TRANSFER-PLAN.md` | Full Client Accounts | Verification Smoke Test | **PENDING_TRANSFER** |
+

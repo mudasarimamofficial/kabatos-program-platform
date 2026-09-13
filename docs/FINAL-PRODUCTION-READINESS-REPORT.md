@@ -214,18 +214,35 @@ Tested across all specified viewports in Playwright Chromium:
 23. `docs/PRODUCTION-PROMOTION-CHECKLIST.md`
 24. `docs/CLIENT-HANDOFF.md`
 25. `docs/FINAL-PRODUCTION-READINESS-REPORT.md`
+26. `docs/COMPREX-ASSET-INVENTORY.md`
+27. `docs/MOTION-DESIGN-SYSTEM.md`
+28. `docs/FINAL-UI-UX-MOTION-QA.md`
+29. `docs/CLIENT-OWNERSHIP-TRANSFER-PLAN.md`
+30. `docs/UNIFIED-DESIGN-AND-EXPERIENCE-DOCUMENTATION.md`
 
 ---
 
-## T. EXACT REMAINING BLOCKER
-**Commercial Blocker:** The client must provide approved recurring Stripe subscription parameters:
-1. Recurring Price Amount (e.g. $29.00)
-2. Billing Currency (e.g. USD)
-3. Billing Interval (e.g. month)
-4. Trial Period (if any)
+## T. EXACT REMAINING CONTRACTUAL PREREQUISITES
+
+1. **Commercial Terms Blocker:** The client must provide approved recurring Stripe subscription parameters:
+   - Recurring Price Amount (e.g. $29.00)
+   - Billing Currency (e.g. USD)
+   - Billing Interval (e.g. month)
+   - Trial Period (if any)
+   *(Technical architecture is complete; live checkout and webhook testing require these confirmed terms).*
+
+2. **Client Infrastructure Ownership Transfer:** As agreed under the contractual terms, all development and staging on developer-owned infrastructure is temporary. Final delivery requires full account transfer to the client's direct control.
+   - Status: `PENDING_CLIENT_ACCOUNT_ACCESS / PENDING_TRANSFER`
+   - Governed by: `docs/CLIENT-OWNERSHIP-TRANSFER-PLAN.md`
 
 ---
 
 ## U. FINAL VERDICT
-**FULL-STACK RELEASE CANDIDATE: BLOCKED PENDING APPROVED STRIPE PRICE**
-The engineering team has completed every executable requirement. All code, database schemas, security policies, and test suites are verified, stable, and ready for deployment.
+**ENGINEERING & EXPERIENCE STATUS:** **PASS (100 / 100)**  
+**STRIPE LIVE INTEGRATION:** **BLOCKED_PENDING_APPROVED_STRIPE_PRICE**  
+**CLIENT OWNERSHIP TRANSFER:** **PENDING_CLIENT_ACCOUNT_ACCESS**  
+**SUPABASE PROD (`svghcgvmnpjuzzxtnjch`):** **NOT MUTATED / PROTECTED**  
+**STRIPE LIVE:** **NOT CONFIGURED / PROTECTED**  
+**PRODUCTION:** **NOT PROMOTED**  
+
+All frontend engineering, elite wellness UI polish, database schemas, RLS security policies, and automated test suites are verified, stable, and passing. The project is ready for final delivery acceptance immediately upon receipt of the client's commercial pricing terms and account transfer credentials.

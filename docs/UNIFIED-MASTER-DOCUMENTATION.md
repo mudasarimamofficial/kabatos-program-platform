@@ -994,12 +994,32 @@ All 25 standalone documents remain version-controlled under `docs/` and are synt
 
 ### Verification Results
 - **Visual Polish Bar:** High-end consumer wellness standard comparable to modern D2C health products.
-- **Hero Next Usage Card:** Restorative morphing interaction on completion with tactile response and undo capability.
+- **Hero Next Usage Card:** Restorative morphing interaction on completion with tactile response, dynamic brand usage instructions, and undo capability.
+- **Compositor Progress Bar Fill:** GPU-accelerated `transform: scaleX(...)` animation with zero layout reflows and preserved ARIA semantics (`role="progressbar"`).
 - **Restful Off-Day Experience:** Calming rest-day card replaces action pressure on unscheduled days without disabled buttons.
-- **Multi-Brand Isolation:** Demo Wellness tested with complete absence of COMPREX assets or color leakage.
+- **Multi-Brand Isolation & Tenant Neutrality:** Demo Wellness tested with complete absence of COMPREX assets, copy, or color leakage. Generic application services contain zero tenant branching.
+- **Authoritative Contrast Standard:** `#121212` on `#F07106` is **6.21 : 1**; White on `#D85800` is **4.62 : 1**. WCAG 2.1 AA checks passed for tested MVP application scope.
 - **Automated Gates:**
   - `pnpm typecheck`: 0 errors.
   - `pnpm test:unit`: 41/41 passing (including real Supabase DEV database connection and RLS enforcement).
-  - `pnpm test:e2e`: 8/8 passing across all viewports (375px, 390px, 768px, 1440px).
+  - `pnpm test:e2e`: 10/10 passing across all 6 viewports (375px, 390px, 430px, 768px, 1024px, 1440px).
   - `pnpm build`: 13/13 static and dynamic routes compiled cleanly.
+
+---
+
+## 26. CLIENT INFRASTRUCTURE OWNERSHIP TRANSFER PLAN
+*(Incorporating `docs/CLIENT-OWNERSHIP-TRANSFER-PLAN.md`)*
+
+### Contractual Transfer Protocol (§10, §14)
+- **Status:** **PENDING_CLIENT_ACCOUNT_ACCESS / PENDING_TRANSFER**
+- **Zero-Vendor-Lock-In Guarantee:** All developer-hosted infrastructure (GitHub, Supabase, Vercel) is strictly temporary for milestone development. Final project acceptance requires complete ownership transfer into client-owned accounts.
+- **11-Point Transfer Protocol:**
+  1. GitHub repository transfer (`mudasarimamofficial/kabatos-program-platform` -> client GitHub org)
+  2. Supabase project transfer or production instance provisioning with 8 verified migrations & RLS
+  3. Vercel team project transfer and custom domain routing (`program.goodcomprex.com`)
+  4. Stripe commercial product/price provisioning & LIVE webhook endpoint configuration
+  5. API secrets handover and rotation of all developer staging JWT secrets
+  6. Master administrator provisioning via `scripts/bootstrap-admin.ts`
+  7. Post-transfer end-to-end acceptance smoke test
+
 

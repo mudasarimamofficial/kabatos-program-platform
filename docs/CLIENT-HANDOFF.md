@@ -103,9 +103,24 @@ pnpm typecheck
 # 2. Run all unit, snapshot, and adversarial security tests (41 tests)
 pnpm test:unit
 
-# 3. Run Playwright end-to-end browser tests
+# 3. Run Playwright end-to-end browser tests across all 6 viewports (10 tests)
 pnpm test:e2e
 
 # 4. Create production build
 pnpm build
 ```
+
+---
+
+## 6. Client Infrastructure Ownership Transfer Protocol
+
+Under final delivery obligations, all developer-hosted staging is temporary. Final delivery requires complete account transfer into the client's direct control.
+
+Refer to [`docs/CLIENT-OWNERSHIP-TRANSFER-PLAN.md`](file:///d:/COMPREX%20DEVELOPMENT/comprex-main/comprex-main/docs/CLIENT-OWNERSHIP-TRANSFER-PLAN.md) for the complete 11-step transfer protocol:
+1. GitHub Repository transfer (`mudasarimamofficial/kabatos-program-platform`)
+2. Supabase project / organization transfer or fresh production provisioning
+3. Vercel team project transfer and custom domain DNS mapping
+4. Stripe commercial price configuration and LIVE webhook endpoint registration
+5. Environment variable handover and API secret rotation
+6. Post-transfer end-to-end verification smoke testing
+

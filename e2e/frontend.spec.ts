@@ -127,7 +127,9 @@ test.describe('Responsive Layout Verification (§97)', () => {
   const viewports = [
     { width: 375, height: 667, name: 'iPhone SE (375px)' },
     { width: 390, height: 844, name: 'iPhone 12/13/14 (390px)' },
+    { width: 430, height: 932, name: 'iPhone 14/15 Pro Max (430px)' },
     { width: 768, height: 1024, name: 'iPad Mini (768px)' },
+    { width: 1024, height: 768, name: 'iPad Pro / Laptop (1024px)' },
     { width: 1440, height: 900, name: 'Desktop Large (1440px)' },
   ]
 

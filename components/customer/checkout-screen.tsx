@@ -77,7 +77,7 @@ export function CheckoutScreen({ brand }: { brand: Brand }) {
               <div className="stripe-word">stripe</div>
               <div>
                 <strong>{brand.name} program</strong>
-                <span>Direct encrypted payment handoff</span>
+                <span>Secure payment handoff</span>
               </div>
               <ShieldCheck size={22} />
             </div>
@@ -93,7 +93,7 @@ export function CheckoutScreen({ brand }: { brand: Brand }) {
                 {outcome === 'processing' ? 'Cancel checkout' : 'Try again'}
               </button>
             </div>
-            <p className="fine-print">Encrypted 256-bit SSL transaction via Stripe.</p>
+            <p className="fine-print">Secure checkout powered by Stripe.</p>
           </>
         )}
       </main>

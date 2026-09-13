@@ -127,12 +127,17 @@ export function DashboardScreen({
             aria-valuemin={0}
             aria-valuemax={100}
             aria-label={`${dynamicPercent}% complete`}
+            style={{ overflow: 'hidden' }}
           >
             <div
               style={{
-                width: `${dynamicPercent}%`,
+                width: '100%',
+                height: '100%',
                 background: 'var(--brand-runtime)',
-                transition: 'width 360ms cubic-bezier(0.16, 1, 0.3, 1)',
+                transform: `scaleX(${dynamicPercent / 100})`,
+                transformOrigin: 'left center',
+                transition: 'transform 360ms cubic-bezier(0.16, 1, 0.3, 1)',
+                willChange: 'transform',
               }}
             />
           </div>
@@ -168,8 +173,8 @@ export function DashboardScreen({
                   </div>
                   <div className="next-content">
                     <span className="eyebrow">TODAY</span>
-                    <h3>Your scheduled use</h3>
-                    <p>Take ~1 teaspoon in warm water before bedtime.</p>
+                    <h3>{brand.usageTitle || 'Scheduled usage for today'}</h3>
+                    <p>{brand.usageInstructions || 'Follow the directions provided with your product.'}</p>
                   </div>
                   <Button onClick={handleMarkComplete} disabled={isPending}>
                     <Check size={16} /> Mark complete

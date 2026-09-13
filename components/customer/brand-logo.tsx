@@ -29,7 +29,7 @@ export function BrandLogo({ brand, small = false }: { brand: Brand; small?: bool
   }
 
   return (
-    <div className={`logo ${small ? 'logo-small' : ''}`} aria-label={brand.name}>
+    <div className={`logo ${small ? 'logo-small' : ''}`}>
       <span className="logo-mark" aria-hidden="true" style={{ borderColor: brand.theme.primary }}>
         <span style={{ borderColor: brand.theme.primary }} />
       </span>
