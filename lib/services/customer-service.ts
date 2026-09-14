@@ -220,47 +220,9 @@ export async function getCustomerDashboard(brandSlug: string): Promise<Dashboard
     }
   }
 
-  // If Supabase environment is configured, never leak mock customer data
-  if (process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL) {
-    return null
-  }
-
-  // Fallback to demo fixture ONLY for offline unit tests with unconfigured env
-  const fixtureCustomer =
-    mockCustomers.find((c) => c.brandSlug === brandSlug) ?? {
-      ...defaultCustomer,
-      brandSlug,
-    }
-
-  const currentDay = Math.min(Math.max(fixtureCustomer.currentDay, 1), brand.duration)
-  const complete = fixtureCustomer.programStatus === 'completed' || currentDay >= brand.duration
-  const remainingDays = Math.max(brand.duration - currentDay, 0)
-  const scheduledToday =
-    brand.schedule.includes(currentDay) && !fixtureCustomer.completedDays.includes(currentDay) && !complete
-  const nextScheduledDay = brand.schedule.find(
-    (day) => day >= currentDay && !fixtureCustomer.completedDays.includes(day)
-  )
-
-  const summary: ProgramSummary = {
-    currentDay,
-    progressPercent: Math.min(100, Math.round((currentDay / brand.duration) * 100)),
-    remainingDays,
-    nextScheduledDay,
-    scheduledToday,
-    low: !complete && remainingDays <= 3,
-    complete,
-  }
-
-  const items: ScheduleItem[] = brand.schedule.map((day) => ({
-    day,
-    state: fixtureCustomer.completedDays.includes(day)
-      ? 'completed'
-      : day === summary.currentDay && !summary.complete
-      ? 'scheduled'
-      : 'upcoming',
-  }))
-
-  return { brand, customer: fixtureCustomer, summary, items, isLiveSession: false }
+  // Under NO circumstances may an anonymous request receive customer dashboard data.
+  // Real customer capability session token verified against database is strictly required.
+  return null
 }
 
 /**
