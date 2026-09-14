@@ -26,8 +26,7 @@ export default function Page() {
         setError(result.error || 'Invalid credentials or unauthorized.')
       }
     } catch {
-      // Allow preview / dev transition
-      router.push('/admin')
+      setError('An unexpected error occurred. Please try again.')
     } finally {
       setLoading(false)
     }
@@ -47,9 +46,10 @@ export default function Page() {
         )}
 
         <form className="form-stack" onSubmit={handleSubmit}>
-          <label>
+          <label htmlFor="email">
             Email
             <input
+              id="email"
               name="email"
               type="email"
               value={email}
@@ -58,9 +58,10 @@ export default function Page() {
               placeholder="admin@example.com"
             />
           </label>
-          <label>
+          <label htmlFor="password">
             Password
             <input
+              id="password"
               name="password"
               type="password"
               value={password}

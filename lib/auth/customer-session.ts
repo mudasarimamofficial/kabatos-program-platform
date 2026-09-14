@@ -2,7 +2,7 @@ import 'server-only'
 import { createHash, randomBytes } from 'node:crypto'
 import { cookies } from 'next/headers'
 
-export const CUSTOMER_SESSION_COOKIE = 'comprex_customer_session'
+export const CUSTOMER_SESSION_COOKIE = 'kabatos_customer_session'
 export const CUSTOMER_SESSION_TTL_SECONDS = 60 * 60 * 24 * 30
 export function createOpaqueSessionToken() { return randomBytes(32).toString('base64url') }
 export function hashSessionToken(token: string) { return createHash('sha256').update(token).digest('hex') }

@@ -166,58 +166,66 @@ export async function getCustomerDashboard(brandSlug: string): Promise<Dashboard
   const sessionToken = cookieStore.get(CUSTOMER_SESSION_COOKIE)?.value
   const supabase = getSupabaseClient()
 
-  if (supabase && sessionToken) {
+  if (supabase) {
+    if (!sessionToken) return null
     try {
       const { data, error } = await supabase.rpc('customer_dashboard', {
         p_brand_slug: brandSlug,
         p_capability: sessionToken,
       })
 
-      if (!error && data) {
-        const p = data.program
-        const completedDay = data.usage?.scheduled_day
-        const completedAt = data.usage?.completed_at
-        const completedDays = completedAt && completedDay ? [completedDay] : []
-
-        const customer: Customer = {
-          id: 'live-customer',
-          firstName: 'Sarah',
-          email: 'sarah@example.com',
-          brandSlug,
-          startDate: p.start_date ?? new Date().toISOString().split('T')[0],
-          currentDay: p.current_day ?? 1,
-          programStatus: p.status ?? 'active',
-          subscriptionStatus: data.subscription?.status ?? 'active',
-          completedDays,
-        }
-
-        const summary: ProgramSummary = {
-          currentDay: p.current_day ?? 1,
-          progressPercent: p.progress_percent ?? 0,
-          remainingDays: p.estimated_days_remaining ?? brand.duration,
-          nextScheduledDay: p.next_scheduled_day ?? undefined,
-          scheduledToday: Boolean(p.current_day && brand.schedule.includes(p.current_day) && !completedAt),
-          low: Boolean(p.estimated_days_remaining !== null && p.estimated_days_remaining <= 3),
-          complete: p.status === 'completed',
-        }
-
-        const items: ScheduleItem[] = brand.schedule.map((day) => ({
-          day,
-          state: completedDays.includes(day)
-            ? 'completed'
-            : day === summary.currentDay && !summary.complete
-            ? 'scheduled'
-            : 'upcoming',
-        }))
-
-        return { brand, customer, summary, items, isLiveSession: true }
+      if (error || !data) {
+        return null
       }
+
+      const p = data.program
+      const completedDay = data.usage?.scheduled_day
+      const completedAt = data.usage?.completed_at
+      const completedDays = completedAt && completedDay ? [completedDay] : []
+
+      const customer: Customer = {
+        id: 'live-customer',
+        firstName: 'Sarah',
+        email: 'sarah@example.com',
+        brandSlug,
+        startDate: p.start_date ?? new Date().toISOString().split('T')[0],
+        currentDay: p.current_day ?? 1,
+        programStatus: p.status ?? 'active',
+        subscriptionStatus: data.subscription?.status ?? 'active',
+        completedDays,
+      }
+
+      const summary: ProgramSummary = {
+        currentDay: p.current_day ?? 1,
+        progressPercent: p.progress_percent ?? 0,
+        remainingDays: p.estimated_days_remaining ?? brand.duration,
+        nextScheduledDay: p.next_scheduled_day ?? undefined,
+        scheduledToday: Boolean(p.current_day && brand.schedule.includes(p.current_day) && !completedAt),
+        low: Boolean(p.estimated_days_remaining !== null && p.estimated_days_remaining <= 3),
+        complete: p.status === 'completed',
+      }
+
+      const items: ScheduleItem[] = brand.schedule.map((day) => ({
+        day,
+        state: completedDays.includes(day)
+          ? 'completed'
+          : day === summary.currentDay && !summary.complete
+          ? 'scheduled'
+          : 'upcoming',
+      }))
+
+      return { brand, customer, summary, items, isLiveSession: true }
     } catch {
-      // Fall through to default customer fixture
+      return null
     }
   }
 
-  // Fallback to demo fixture for preview / test suites
+  // If Supabase environment is configured, never leak mock customer data
+  if (process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL) {
+    return null
+  }
+
+  // Fallback to demo fixture ONLY for offline unit tests with unconfigured env
   const fixtureCustomer =
     mockCustomers.find((c) => c.brandSlug === brandSlug) ?? {
       ...defaultCustomer,
@@ -263,7 +271,8 @@ export async function completeScheduledUsage(brandSlug: string): Promise<{ succe
   const sessionToken = cookieStore.get(CUSTOMER_SESSION_COOKIE)?.value
   const supabase = getSupabaseClient()
 
-  if (supabase && sessionToken) {
+  if (supabase) {
+    if (!sessionToken) return { success: false, error: 'Unauthorized: active session required' }
     try {
       const { data, error } = await supabase.rpc('customer_complete_today', {
         p_brand_slug: brandSlug,
@@ -290,7 +299,8 @@ export async function undoScheduledUsage(brandSlug: string): Promise<{ success: 
   const sessionToken = cookieStore.get(CUSTOMER_SESSION_COOKIE)?.value
   const supabase = getSupabaseClient()
 
-  if (supabase && sessionToken) {
+  if (supabase) {
+    if (!sessionToken) return { success: false, error: 'Unauthorized: active session required' }
     try {
       const { data, error } = await supabase.rpc('customer_undo_today', {
         p_brand_slug: brandSlug,

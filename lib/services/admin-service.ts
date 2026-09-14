@@ -1,4 +1,5 @@
 import 'server-only'
+import { revalidatePath } from 'next/cache'
 import { createClient } from '@supabase/supabase-js'
 import { brands as mockBrands, customers as mockCustomers, metrics as mockMetrics } from '@/lib/mock/data'
 import type { AdminMetrics, Brand, BrandForm, Customer } from '@/lib/types'
@@ -228,6 +229,10 @@ export async function saveAdminBrand(
           if (error) return { success: false, error: error.message }
         }
       }
+      try {
+        revalidatePath('/[brandSlug]', 'layout')
+        revalidatePath('/admin', 'layout')
+      } catch {}
       return { success: true }
     } catch (err: any) {
       return { success: false, error: err?.message || 'Failed to save brand' }

@@ -10,7 +10,13 @@ export async function POST(request: Request) {
   if (!brand) return NextResponse.json({ error: 'Brand unavailable' }, { status: 404 })
   const priceId = process.env.COMPREX_STRIPE_TEST_PRICE_ID
   if (!priceId) return NextResponse.json({ error: 'BLOCKED_PENDING_APPROVED_STRIPE_PRICE' }, { status: 503 })
-  const origin = request.headers.get('origin') ?? new URL(request.url).origin
+  const forwardedHost = request.headers.get('x-forwarded-host')
+  const forwardedProto = request.headers.get('x-forwarded-proto') || 'https'
+  const origin =
+    request.headers.get('origin') ||
+    (forwardedHost ? `${forwardedProto}://${forwardedHost}` : null) ||
+    process.env.NEXT_PUBLIC_APP_URL ||
+    new URL(request.url).origin
   const session = await getStripe().checkout.sessions.create({
     mode: 'subscription',
     line_items: [{ price: priceId, quantity: 1 }],
