@@ -146,7 +146,10 @@ Tested across all specified viewports in Playwright Chromium:
 ---
 
 ## M. ACCESSIBILITY QA (WCAG 2.1 AA)
-- **Color Contrast:** Primary `#F07106` paired with `#121212` text (6.31:1 contrast). Primary hover uses `#D85800` (3.95:1 large text).
+- **Color Contrast (W3C Relative Luminance Standard):**
+  - `#121212` on `#F07106`: **6.31:1** (PASS normal text, threshold 4.5:1)
+  - `#121212` on `#D85800` (Hover State): **4.74:1** (PASS normal text, threshold 4.5:1)
+  - Contrast Correction: Previous documentation incorrectly assumed white (`#FFFFFF`) on `#D85800` reached 4.62:1; mathematical calculation confirms it is 3.95:1 (FAIL for normal text). Button hover styling in `app/globals.css` strictly enforces `#121212` on `#D85800`, achieving 4.74:1 and full WCAG AA compliance across all interactive states.
 - **Focus Rings:** Visible focus ring with `--ring` outline across all interactive buttons and inputs.
 - **Semantic Structure:** Single `h1` per page, semantic `fieldset` and `legend` for contact method, labeled form inputs with `aria-describedby` error associations.
 
@@ -156,9 +159,11 @@ Tested across all specified viewports in Playwright Chromium:
 - **Existing Project ID:** `prj_tM5CUywwMBvYqAh5CHmdqZ6lv4qD`
 - **Project Name:** `kabatos-program-platform`
 - **Owner:** `mudasarimamofficial-gmailcom's projects`
-- **Verified Staging Preview URL:** `https://kabatos-program-platform-f5o35hva4.vercel.app`
-- **Deployment ID:** `dpl_5VGVdoZmpM7D1uocgyJWiAttKtP3` (Status: `READY`)
-- **Deployed Commit:** `0e1cbba`
+- **Verified Staging Preview URL:** `https://kabatos-program-platform-gyi984y8t.vercel.app`
+- **Deployment ID:** `dpl_HtD8aatK7CNQ9w51znWvqMHQSsMN` (Status: `READY`)
+- **Deployed Commit:** `f18a4ea` (Branch: `audit/independent-release-gate`)
+- **Customer Cookie:** Centralized platform-neutral `kabatos_customer_session` in `lib/auth/customer-session.ts`.
+- **Route Cache Strategy:** Fully dynamic (`force-dynamic`) server-rendering across `/[brandSlug]` and `/admin` routes; immediate propagation of database configuration changes and runtime brand creation without redeployment.
 - **Environment Separation:** Staging/Preview linked to DEV Supabase (`finbvtwjddrmbuuuyeni`). Production configured for PROD Supabase (`svghcgvmnpjuzzxtnjch`).
 
 ---
