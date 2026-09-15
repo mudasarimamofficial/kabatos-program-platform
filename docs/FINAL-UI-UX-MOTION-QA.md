@@ -33,8 +33,8 @@ An exhaustive forensic inspection of the official COMPREX storefront was conduct
    - 4-step routine visual (`how-to-use.png`, 1254 × 1254 px) detailing evening administration in warm water.
 3. **Color Palette & Contrast (Verified Mathematical Values):**
    - Primary Brand: `#F07106` (Amber Orange).
-   - Text on Primary: `#121212` (**6.21 : 1** contrast ratio, compliant with WCAG AA/AAA).
-   - Deep Accent / Hover: `#D85800` (White on `#D85800` is **4.62 : 1** contrast ratio).
+   - Text on Primary: `#121212` (**6.31 : 1** contrast ratio, compliant with WCAG AA/AAA).
+   - Deep Accent / Hover: `#D85800` (`#121212` text on `#D85800` is **4.74 : 1** contrast ratio, compliant with WCAG AA; white text on `#D85800` yields 3.95:1 and is avoided).
    - Warm Highlight Surface: `#FDEEE1`.
    - Bark Earth Tone: `#5C3D2E`.
 4. **Patterns Deliberately Rejected:**
@@ -108,7 +108,7 @@ Tested via Chromium browser and automated E2E tests:
 
 ## 5. Accessibility & Motion Verification
 
-- **Color Contrast:** All interactive button text on `#F07106` strictly uses `#121212` (**6.21 : 1**). Secondary states use `#D85800` with pure white text (**4.62 : 1**). Both pass WCAG 2.1 AA checks.
+- **Color Contrast:** All interactive button text on `#F07106` strictly uses `#121212` (**6.31 : 1**). Hover states use `#D85800` with `#121212` text (**4.74 : 1**). Both pass WCAG 2.1 AA checks.
 - **Prefers-Reduced-Motion:** Full `@media (prefers-reduced-motion: reduce)` rule overrides:
   - Animation durations clamped to `0.01ms`.
   - Floating keyframes disabled (`transform: none !important`).

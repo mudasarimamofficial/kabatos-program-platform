@@ -103,8 +103,8 @@ The motion system is standardized in `app/globals.css` via CSS custom properties
 | **Error Messages** | Fade-in + 4px slide down (160ms) | Instant visible text with `role="alert"` |
 
 ### Authoritative Color Contrast Standard
-- **#121212 Text on #F07106 (Primary Brand):** **6.21 : 1** (WCAG AA & AAA for large text).
-- **White (#FFFFFF) on #D85800 (Deep Amber Hover):** **4.62 : 1** (WCAG AA compliant).
+- **#121212 Text on #F07106 (Primary Brand):** **6.31 : 1** (WCAG AA & AAA for large text).
+- **#121212 Text on #D85800 (Deep Amber Hover):** **4.74 : 1** (WCAG AA compliant; white text on #D85800 yields 3.95:1 and is avoided by enforcing #121212 on hover).
 - **Compliance Status:** WCAG 2.1 AA checks passed for the tested MVP application scope.
 
 ---

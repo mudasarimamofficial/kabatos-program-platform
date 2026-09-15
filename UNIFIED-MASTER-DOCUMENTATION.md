@@ -8,7 +8,7 @@
 **Flagship Tenant (Brand #1):** COMPREX (`comprex`)  
 **Target Repository:** `https://github.com/mudasarimamofficial/kabatos-program-platform.git`  
 **Primary Working Branch:** `feat/antigravity-fullstack`  
-**Staging Preview URL:** `https://kabatos-program-platform-ccnzx1awz.vercel.app` (Deployment ID: `dpl_BNKk6bsUNrZeSKJbUtUsVwTAVBtS`)  
+**Staging Preview URL:** `https://kabatos-program-platform-f5o35hva4.vercel.app` (Deployment ID: `dpl_HtD8aatK7CNQ9w51znWvqMHQSsMN`)  
 **Release Candidate Verdict:** **FULL-STACK RELEASE CANDIDATE: BLOCKED_PENDING_APPROVED_STRIPE_PRICE**
 
 ---
@@ -279,7 +279,7 @@ The earlier monolithic files (`components/customer.tsx` and `components/admin.ts
 | :--- | :--- | :--- | :--- |
 | **Supabase Project** | `kabatos-program-platform-dev` (`finbvtwjddrmbuuuyeni`) | `kabatos-program-platform-dev` (`finbvtwjddrmbuuuyeni`) | `kabatos-program-platform-prod` (`svghcgvmnpjuzzxtnjch`) |
 | **Stripe Mode** | TEST Mode | TEST Mode | LIVE Mode (Post-Promotion Approval) |
-| **Target URL** | `http://localhost:3000` | `https://kabatos-program-platform-ccnzx1awz.vercel.app` | Production Custom Domain |
+| **Target URL** | `http://localhost:3000` | `https://kabatos-program-platform-f5o35hva4.vercel.app` | Production Custom Domain |
 | **Database Seed** | COMPREX + Demo Wellness (Multi-Brand) | COMPREX + Demo Wellness | Approved COMPREX Only (Zero Test Fixtures) |
 | **Admin Access** | Master Admin (Auth) | Master Admin (Auth) | Master Admin (Provisioned Securely) |
 
@@ -759,8 +759,8 @@ In Phase B on the historical v0 Linux sandbox, Playwright execution was blocked 
 - **Vercel Project Name:** `kabatos-program-platform`
 - **Owner Scope:** `mudasarimamofficial-gmailcom's projects`
 - **Connected Git Repository:** `mudasarimamofficial/kabatos-program-platform`
-- **Staging Preview URL:** `https://kabatos-program-platform-ccnzx1awz.vercel.app`
-- **Deployment ID:** `dpl_BNKk6bsUNrZeSKJbUtUsVwTAVBtS`
+- **Staging Preview URL:** `https://kabatos-program-platform-f5o35hva4.vercel.app`
+- **Deployment ID:** `dpl_HtD8aatK7CNQ9w51znWvqMHQSsMN`
 - **Deployment Status:** `READY`
 
 ### Environment Separation Policy
@@ -906,7 +906,7 @@ All software engineering, UI workflows, database migrations, RLS security polici
 
 ### N. VERCEL DEPLOYMENT
 - **Project ID:** `prj_tM5CUywwMBvYqAh5CHmdqZ6lv4qD`
-- **Preview Staging URL:** `https://kabatos-program-platform-ccnzx1awz.vercel.app`
+- **Preview Staging URL:** `https://kabatos-program-platform-f5o35hva4.vercel.app`
 - **Status:** `READY`
 
 ### O. SECURITY AUDIT
@@ -998,7 +998,7 @@ All 25 standalone documents remain version-controlled under `docs/` and are synt
 - **Compositor Progress Bar Fill:** GPU-accelerated `transform: scaleX(...)` animation with zero layout reflows and preserved ARIA semantics (`role="progressbar"`).
 - **Restful Off-Day Experience:** Calming rest-day card replaces action pressure on unscheduled days without disabled buttons.
 - **Multi-Brand Isolation & Tenant Neutrality:** Demo Wellness tested with complete absence of COMPREX assets, copy, or color leakage. Generic application services contain zero tenant branching.
-- **Authoritative Contrast Standard:** `#121212` on `#F07106` is **6.21 : 1**; White on `#D85800` is **4.62 : 1**. WCAG 2.1 AA checks passed for tested MVP application scope.
+- **Authoritative Contrast Standard:** `#121212` on `#F07106` is **6.31 : 1**; `#121212` on `#D85800` hover is **4.74 : 1** (white on `#D85800` yields 3.95:1 and is avoided). WCAG 2.1 AA checks passed for tested MVP application scope.
 - **Automated Gates:**
   - `pnpm typecheck`: 0 errors.
   - `pnpm test:unit`: 41/41 passing (including real Supabase DEV database connection and RLS enforcement).

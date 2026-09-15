@@ -159,7 +159,7 @@ Tested across all specified viewports in Playwright Chromium:
 - **Existing Project ID:** `prj_tM5CUywwMBvYqAh5CHmdqZ6lv4qD`
 - **Project Name:** `kabatos-program-platform`
 - **Owner:** `mudasarimamofficial-gmailcom's projects`
-- **Verified Staging Preview URL:** `https://kabatos-program-platform-gyi984y8t.vercel.app`
+- **Verified Staging Preview URL:** `https://kabatos-program-platform-f5o35hva4.vercel.app` (also alias `https://kabatos-program-platform-gyi984y8t.vercel.app`)
 - **Deployment ID:** `dpl_HtD8aatK7CNQ9w51znWvqMHQSsMN` (Status: `READY`)
 - **Deployed Commit:** `f18a4ea` (Branch: `audit/independent-release-gate`)
 - **Customer Cookie:** Centralized platform-neutral `kabatos_customer_session` in `lib/auth/customer-session.ts`.

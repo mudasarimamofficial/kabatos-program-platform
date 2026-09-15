@@ -23,7 +23,7 @@ This single unified master document consolidates the complete forensic analysis,
    - Real Stripe Test Commercial Flow: `BLOCKED_PENDING_APPROVED_STRIPE_PRICE`
    - Client Infrastructure Ownership Transfer: `PENDING_CLIENT_ACCOUNT_ACCESS / PENDING_TRANSFER` (governed by `docs/CLIENT-OWNERSHIP-TRANSFER-PLAN.md`)
    - Production Environments (Supabase PROD & Stripe LIVE): Untouched and strictly protected.
-6. **Authoritative Accessibility Compliance:** WCAG 2.1 AA checks passed for the tested MVP application scope, with verified mathematical contrast ratios (`#121212` on `#F07106` is **6.21 : 1**; White on `#D85800` is **4.62 : 1**), full `@media (prefers-reduced-motion: reduce)` overrides, and duplicate-free accessible naming.
+6. **Authoritative Accessibility Compliance:** WCAG 2.1 AA checks passed for the tested MVP application scope, with verified mathematical contrast ratios (`#121212` on `#F07106` is **6.31 : 1**; `#121212` on `#D85800` hover is **4.74 : 1**; white text on `#D85800` is strictly avoided as it yields 3.95:1), full `@media (prefers-reduced-motion: reduce)` overrides, and duplicate-free accessible naming.
 
 ---
 
@@ -179,8 +179,8 @@ The motion system is standardized in `app/globals.css` via CSS custom properties
 | **Error Messages** | Fade-in + 4px slide down (160ms) | Instant visible text with `role="alert"` |
 
 ### Authoritative Color Contrast Standard
-- **#121212 Text on #F07106 (Primary Brand):** **6.21 : 1** (WCAG AA & AAA for large text).
-- **White (#FFFFFF) on #D85800 (Deep Amber Hover):** **4.62 : 1** (WCAG AA compliant).
+- **#121212 Text on #F07106 (Primary Brand):** **6.31 : 1** (WCAG AA & AAA for large text).
+- **#121212 Text on #D85800 (Deep Amber Hover):** **4.74 : 1** (WCAG AA compliant; white text on #D85800 mathematically yields 3.95:1 and is strictly avoided by enforcing #121212 on all button hover states).
 - **Compliance Status:** WCAG 2.1 AA checks passed for the tested MVP application scope.
 
 ### 5. Performance Budget (§55, §104)
@@ -223,8 +223,8 @@ An exhaustive forensic inspection of the official COMPREX storefront was conduct
    - 4-step routine visual (`how-to-use.png`, 1254 × 1254 px) detailing evening administration in warm water.
 3. **Color Palette & Contrast (Verified Mathematical Values):**
    - Primary Brand: `#F07106` (Amber Orange).
-   - Text on Primary: `#121212` (**6.21 : 1** contrast ratio, compliant with WCAG AA/AAA).
-   - Deep Accent / Hover: `#D85800` (White on `#D85800` is **4.62 : 1** contrast ratio).
+   - Text on Primary: `#121212` (**6.31 : 1** contrast ratio, compliant with WCAG AA/AAA).
+   - Deep Accent / Hover: `#D85800` (`#121212` text on `#D85800` is **4.74 : 1** contrast ratio, compliant with WCAG AA; white text on `#D85800` yields 3.95:1 and is avoided).
    - Warm Highlight Surface: `#FDEEE1`.
    - Bark Earth Tone: `#5C3D2E`.
 4. **Patterns Deliberately Rejected:**
@@ -292,7 +292,7 @@ Tested via Chromium browser and automated E2E tests:
 
 ### 5. Accessibility & Motion Verification
 
-- **Color Contrast:** All interactive button text on `#F07106` strictly uses `#121212` (**6.21 : 1**). Secondary states use `#D85800` with pure white text (**4.62 : 1**). Both pass WCAG 2.1 AA checks.
+- **Color Contrast:** All interactive button text on `#F07106` strictly uses `#121212` (**6.31 : 1**). Hover states use `#D85800` with `#121212` text (**4.74 : 1**). Both pass WCAG 2.1 AA checks.
 - **Prefers-Reduced-Motion:** Full `@media (prefers-reduced-motion: reduce)` rule overrides:
   - Animation durations clamped to `0.01ms`.
   - Floating keyframes disabled (`transform: none !important`).
