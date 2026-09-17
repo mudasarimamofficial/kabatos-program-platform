@@ -8,6 +8,9 @@
 
 ## 1. Executive Summary & Forensic Truth
 
+> [!NOTE]
+> **Historical Audit Record:** This gap audit documents the baseline system state on 2026-09-13 prior to independent release gate remediations and Stripe TEST acceptance. The previous Stripe blocker (`BLOCKED_PENDING_APPROVED_STRIPE_PRICE`) was superseded by full client-approved Stripe TEST acceptance on 2026-09-17 ($4.99 USD / month, 7-day trial). Canonical migrations now number 11/11.
+
 Previous completion claims (e.g. "frontend approximately 85%", "production ready") originated from automated iterations in v0.app. Independent inspection of the actual filesystem source in `comprex-main/comprex-main` establishes the true state across all systems.
 
 ---

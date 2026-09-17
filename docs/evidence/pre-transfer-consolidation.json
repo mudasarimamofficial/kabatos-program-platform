@@ -1,0 +1,107 @@
+{
+  "timestamp": "2026-09-17T19:38:00Z",
+  "contractualMilestone": "Pre-Client-Ownership-Transfer Consolidation",
+  "verdict": "READY TO REQUEST CLIENT ACCOUNT ACCESS FOR OWNERSHIP TRANSFER",
+  "git": {
+    "repository": "https://github.com/mudasarimamofficial/kabatos-program-platform.git",
+    "branch": "audit/independent-release-gate",
+    "head": "a52f6317dd370cc44c9e9d2b3d3f2993ceb0304f",
+    "originHead": "a52f6317dd370cc44c9e9d2b3d3f2993ceb0304f",
+    "status": "clean"
+  },
+  "vercel": {
+    "projectId": "prj_tM5CUywwMBvYqAh5CHmdqZ6lv4qD",
+    "activeAlias": "https://kabatos-stripe-test.vercel.app",
+    "targetDeploymentUrl": "https://kabatos-program-platform-fexndfl9r.vercel.app",
+    "deploymentId": "dpl_3JABmn4dNizTiPSwdXdUjT5M2d37",
+    "sourceCommit": "a52f6317dd370cc44c9e9d2b3d3f2993ceb0304f",
+    "status": "READY",
+    "contradictionResolution": "dpl_DB55kE5b9Wurp2hJuKMjZemsdGGn was the active test execution deployment during real Stripe acceptance; dpl_3JABmn4dNizTiPSwdXdUjT5M2d37 is the exact-HEAD committed deployment now serving the stable test alias"
+  },
+  "stripe": {
+    "cliVersion": "1.50.11",
+    "profile": "default",
+    "accountId": "acct_1UEoj1Ez179hJ7AU",
+    "livemode": false,
+    "testModeGuard": "ACTIVE_HARD_GUARD",
+    "productId": "prod_VHGrvdkYDhsdx1",
+    "productName": "Kabatos / COMPREX Tracking Service",
+    "priceId": "price_1UGiK6RCnOFy7ZssnkNPUMvs",
+    "priceAmountCents": 499,
+    "currency": "usd",
+    "interval": "month",
+    "trialDays": 7,
+    "webhookEndpointId": "we_1UGiPVRCnOFy7ZssdVtvIOvI",
+    "webhookTarget": "https://kabatos-stripe-test.vercel.app/api/stripe/webhook",
+    "webhookStatus": "enabled",
+    "webhookEvents": [
+      "checkout.session.completed",
+      "customer.subscription.created",
+      "customer.subscription.updated",
+      "customer.subscription.deleted",
+      "invoice.paid",
+      "invoice.payment_failed"
+    ]
+  },
+  "supabase": {
+    "devProjectRef": "finbvtwjddrmbuuuyeni",
+    "devStatus": "ACTIVE_HEALTHY",
+    "prodProjectRef": "svghcgvmnpjuzzxtnjch",
+    "prodStatus": "ACTIVE_HEALTHY (UNTOUCHED / STRICTLY PROTECTED)",
+    "canonicalMigrationCount": 11,
+    "localVsRemoteSync": {
+      "localCount": 11,
+      "remoteCount": 11,
+      "drift": 0,
+      "migrations": [
+        "20260912095018_core_schema.sql",
+        "20260912095023_rls_and_rpc.sql",
+        "20260912095029_admin_and_stripe_rpc.sql",
+        "20260912095033_checkout_and_reconciliation.sql",
+        "20260912095039_brand_asset_storage.sql",
+        "20260912095043_tracking_activation_rpc.sql",
+        "20260912095406_privilege_hardening.sql",
+        "20260912095513_public_rpc_role_cleanup.sql",
+        "20260917090000_release_gate_asset_and_customer_dto.sql",
+        "20260917091000_customer_session_revocation.sql",
+        "20260917100000_stripe_trial_access.sql"
+      ]
+    }
+  },
+  "cleanLocalDbReproduction": {
+    "status": "BLOCKED_BY_LOCAL_DOCKER_ENGINE",
+    "reason": "Docker Desktop Linux Engine pipe unavailable on Windows host (open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified)",
+    "impact": "Workstation tooling limitation only; does not affect Supabase DEV or remote Vercel Preview verification"
+  },
+  "documentationReconciliation": {
+    "status": "COMPLETE",
+    "staleBlockerClaimsRemoved": true,
+    "staleMigrationCountsUpdatedTo11": true,
+    "staleDeploymentReferencesClassified": true,
+    "sessionLifetimesClarified": {
+      "cookieMaxAgeDays": 90,
+      "unactivatedDbExpiryDays": 7,
+      "activatedBillingLeaseDays": 90,
+      "revocationRpcImplemented": true
+    },
+    "accessStateMatrixVerified": {
+      "trialingAllowed": true,
+      "activeAllowed": true,
+      "periodEndCancellationRetainsAccess": true,
+      "expiredCanceledDenied": true,
+      "pastDueDenied": true
+    }
+  },
+  "clientPackage": {
+    "accessRequestFile": "docs/CLIENT-ACCOUNT-ACCESS-REQUEST.md",
+    "fiverrMessageFile": "docs/CLIENT-ACCESS-MESSAGE.txt",
+    "transferRunbookFile": "docs/FINAL-OWNERSHIP-TRANSFER-RUNBOOK.md"
+  },
+  "qualityGates": {
+    "typecheck": "PASS (0 errors)",
+    "unitTests": "PASS (62/62)",
+    "e2e": "PASS (10/10)",
+    "build": "PASS (19 routes)",
+    "secretScan": "PASS (0 active secrets tracked)"
+  }
+}

@@ -7,9 +7,9 @@
 **Platform Name:** Kabatos Program Platform (`kabatos-program-platform`)  
 **Flagship Tenant (Brand #1):** COMPREX (`comprex`)  
 **Target Repository:** `https://github.com/mudasarimamofficial/kabatos-program-platform.git`  
-**Primary Working Branch:** `feat/antigravity-fullstack`  
-**Staging Preview URL:** `https://kabatos-program-platform-f5o35hva4.vercel.app` (Deployment ID: `dpl_HtD8aatK7CNQ9w51znWvqMHQSsMN`)  
-**Release Candidate Verdict:** **FULL-STACK RELEASE CANDIDATE: BLOCKED_PENDING_APPROVED_STRIPE_PRICE**
+**Primary Working Branch:** `audit/independent-release-gate`  
+**Active Preview URL:** `https://kabatos-stripe-test.vercel.app` (Deployment ID: `dpl_3JABmn4dNizTiPSwdXdUjT5M2d37`)  
+**Release Candidate Verdict:** **STRIPE TEST ACCEPTANCE COMPLETE — READY FOR CLIENT OWNERSHIP TRANSFER**
 
 ---
 
@@ -279,7 +279,7 @@ The earlier monolithic files (`components/customer.tsx` and `components/admin.ts
 | :--- | :--- | :--- | :--- |
 | **Supabase Project** | `kabatos-program-platform-dev` (`finbvtwjddrmbuuuyeni`) | `kabatos-program-platform-dev` (`finbvtwjddrmbuuuyeni`) | `kabatos-program-platform-prod` (`svghcgvmnpjuzzxtnjch`) |
 | **Stripe Mode** | TEST Mode | TEST Mode | LIVE Mode (Post-Promotion Approval) |
-| **Target URL** | `http://localhost:3000` | `https://kabatos-program-platform-f5o35hva4.vercel.app` | Production Custom Domain |
+| **Target URL** | `http://localhost:3000` | `https://kabatos-stripe-test.vercel.app` | Production Custom Domain |
 | **Database Seed** | COMPREX + Demo Wellness (Multi-Brand) | COMPREX + Demo Wellness | Approved COMPREX Only (Zero Test Fixtures) |
 | **Admin Access** | Master Admin (Auth) | Master Admin (Auth) | Master Admin (Provisioned Securely) |
 
@@ -620,15 +620,14 @@ The customer shell dynamically injects the brand's color tokens directly into th
   - `invoice.payment_failed`
 - **Idempotency Engine (§84):** Logs every Stripe event ID into `public.stripe_events`. Duplicate events are immediately acknowledged with `200 OK` without re-executing side effects or restarting program Day 1.
 
-### Critical Commercial Blocker Report (§7, §118)
-- **Status:** `BLOCKED_PENDING_APPROVED_STRIPE_PRICE`
-- **Root Cause:** Approved recurring subscription commercial terms have not been provided in the client brief.
-- **Client Action Required:**
-  1. Specify the recurring subscription price amount (e.g., $29.00).
-  2. Specify the billing currency (e.g., USD).
-  3. Specify the billing interval (e.g., month, 14 days).
-  4. Specify trial duration (if any).
-- **Engineering State:** 100% of the Stripe checkout, webhook, status normalization, and idempotency code is written, deployed, and tested. When pricing terms are unconfigured, `/api/stripe/checkout` returns a graceful 503 fallback.
+### Approved Commercial Subscription Terms & Real TEST Acceptance
+- **Status:** **PASS (TEST ACCEPTANCE COMPLETE)**
+- **Approved Terms:**
+  1. Price Amount: **$4.99 USD**
+  2. Billing Frequency: **Monthly**
+  3. Free Trial: **7 days**
+  4. Platform Scope: Tracking & service platform access only (physical product separate)
+- **Engineering & Verification State:** Real Stripe TEST Checkout, signed webhook reconciliation, database persistence, immediate trial access, duplicate event replay idempotency, cancellation, and Test Clock monthly renewal lifecycle are 100% verified (see `docs/evidence/stripe-test-acceptance.md`). Production LIVE billing remains deferred to client ownership transfer.
 
 ---
 
@@ -758,14 +757,13 @@ In Phase B on the historical v0 Linux sandbox, Playwright execution was blocked 
 - **Vercel Project ID:** `prj_tM5CUywwMBvYqAh5CHmdqZ6lv4qD`
 - **Vercel Project Name:** `kabatos-program-platform`
 - **Owner Scope:** `mudasarimamofficial-gmailcom's projects`
-- **Connected Git Repository:** `mudasarimamofficial/kabatos-program-platform`
-- **Staging Preview URL:** `https://kabatos-program-platform-f5o35hva4.vercel.app`
-- **Deployment ID:** `dpl_HtD8aatK7CNQ9w51znWvqMHQSsMN`
+- **Staging Preview URL:** `https://kabatos-stripe-test.vercel.app`
+- **Deployment ID:** `dpl_3JABmn4dNizTiPSwdXdUjT5M2d37`
 - **Deployment Status:** `READY`
 
 ### Environment Separation Policy
 - **Staging Backend:** Linked to Supabase DEV (`finbvtwjddrmbuuuyeni`).
-- **Stripe Mode:** TEST mode only with `BLOCKED_PENDING_APPROVED_STRIPE_PRICE` fallback.
+- **Stripe Mode:** TEST mode verified with approved terms ($4.99 USD/mo, 7-day trial).
 - **Production Backend:** Configured for Supabase PROD (`svghcgvmnpjuzzxtnjch`) once authorized.
 
 ---
@@ -777,10 +775,10 @@ In Phase B on the historical v0 Linux sandbox, Playwright execution was blocked 
 Under strict engineering policy, **NO mutations** may be executed against the Supabase Production project (`svghcgvmnpjuzzxtnjch`) or Stripe LIVE billing without explicit written client authorization.
 
 ### Production Execution Checklist
-- [ ] Receive written client signoff and approved Stripe recurring price terms.
-- [ ] Connect Supabase CLI to Production project `svghcgvmnpjuzzxtnjch`.
+- [ ] Receive written client signoff and ownership transfer credentials.
+- [ ] Connect Supabase CLI to Production project `svghcgvmnpjuzzxtnjch` or client-provisioned production project.
 - [ ] Create automated database backup snapshot in Supabase dashboard.
-- [ ] Apply 8 canonical migrations: `supabase db push --linked`.
+- [ ] Apply 11 canonical migrations: `supabase db push --linked`.
 - [ ] Verify Row Level Security policies active on production tables.
 - [ ] Provision initial production master administrator using `scripts/bootstrap-admin.ts`.
 - [ ] Seed COMPREX Brand #1 configuration (Zero test fixtures, zero Demo Wellness).
@@ -836,16 +834,16 @@ The script:
 *(Incorporating `docs/FINAL-PRODUCTION-READINESS-REPORT.md`)*
 
 ### A. OVERALL STATUS
-**STATUS: BLOCKED**  
-*(Exact Classification: `FULL-STACK RELEASE CANDIDATE: BLOCKED_PENDING_APPROVED_STRIPE_PRICE`)*  
-All software engineering, UI workflows, database migrations, RLS security policies, master-admin authentication, customer sessions, program engine snapshot triggers, usage persistence, and automated test suites are 100% complete and passing. Only client-side commercial pricing terms remain to be configured in Stripe.
+**STATUS: READY FOR CLIENT OWNERSHIP TRANSFER**  
+*(Exact Classification: `STRIPE TEST ACCEPTANCE COMPLETE — READY FOR CLIENT OWNERSHIP TRANSFER`)*  
+All software engineering, UI workflows, database migrations, RLS security policies, master-admin authentication, customer sessions, program engine snapshot triggers, usage persistence, automated test suites, and real Stripe TEST subscription acceptance are 100% complete and passing.
 
 ### B. WORKSPACE / GIT
 - **Local Project Path:** `d:\COMPREX DEVELOPMENT\comprex-main\comprex-main`
 - **Canonical Repository:** `https://github.com/mudasarimamofficial/kabatos-program-platform.git`
 - **Owner / Repo:** `mudasarimamofficial/kabatos-program-platform`
-- **Working Branch:** `feat/antigravity-fullstack`
-- **Latest Commit:** `e3c57a9`
+- **Working Branch:** `audit/independent-release-gate`
+- **Latest Commit:** `a52f631`
 - **Uncommitted Changes:** Working tree clean
 - **GitHub Sync Status:** Fully up to date with origin
 
@@ -857,13 +855,13 @@ All software engineering, UI workflows, database migrations, RLS security polici
 ### D. SUPABASE DEV BACKEND
 - **Linked Project Ref:** `finbvtwjddrmbuuuyeni` (`kabatos-program-platform-dev`)
 - **Database Status:** `ACTIVE_HEALTHY` (PostgreSQL 17.6)
-- **Applied Migrations:** 8/8 verified in sync
+- **Applied Migrations:** 11/11 verified in sync
 - **RLS & Security Policies:** 100% enabled
 - **Storage:** `brand-assets` bucket operational
 
 ### E. CUSTOMER SECURITY
-- **Session Architecture:** Passwordless 64-hex capability tokens
-- **Cookie Security:** `HttpOnly; SameSite=Lax; Path=/; Max-Age=30 days; Secure`
+- **Session Architecture:** Passwordless 32-byte capability tokens
+- **Cookie Security:** `HttpOnly; SameSite=Lax; Path=/; Max-Age=90 days; Secure`
 - **IDOR / Cross-Customer Isolation:** 100% enforced
 
 ### F. PROGRAM ENGINE
@@ -882,10 +880,10 @@ All software engineering, UI workflows, database migrations, RLS security polici
 - **Hardcoding Audit:** PASS (Zero hardcoded tenant branches)
 
 ### I. STRIPE
-- **Local Access Status:** Stripe CLI uninstalled locally; keys unconfigured in `.env.local`
-- **TEST Product / Price Status:** `BLOCKED_PENDING_APPROVED_STRIPE_PRICE`
-- **Checkout & Webhooks:** 100% coded, verified, and idempotent
-- **LIVE Status:** Strictly unconfigured pending commercial signoff
+- **Local Access Status:** TEST keys configured in `.env.local`
+- **TEST Product / Price Status:** `PASS ($4.99 USD / month, 7-day trial)`
+- **Checkout & Webhooks:** 100% verified against real Stripe TEST objects
+- **LIVE Status:** Strictly unconfigured pending client ownership transfer
 
 ### J. QR EXPORT
 - **Rendering:** High-contrast canvas
@@ -894,9 +892,9 @@ All software engineering, UI workflows, database migrations, RLS security polici
 
 ### K. AUTOMATED TESTS
 - **Typecheck:** 0 errors
-- **Unit & Security Tests:** 41 passed / 41 total (9 suites)
-- **Playwright Chromium E2E:** 8 passed / 8 total
-- **Production Build:** 13/13 routes compiled
+- **Unit & Security Tests:** 62 passed / 62 total (14 suites)
+- **Playwright Chromium E2E:** 10 passed / 10 total
+- **Production Build:** 19/19 routes compiled cleanly via Turbopack
 
 ### L. RESPONSIVE QA
 - Tested and verified at 375px, 390px, 430px, 768px, 1024px, 1440px with zero horizontal scroll overflow.
@@ -937,8 +935,8 @@ All 25 standalone documents remain version-controlled under `docs/` and are synt
 4. Trial Duration (if applicable)
 
 ### U. FINAL VERDICT
-**FULL-STACK RELEASE CANDIDATE: BLOCKED_PENDING_APPROVED_STRIPE_PRICE**  
-*(Commercial Price Blocker only; all engineering deliverables are 100% complete, verified, and ready for immediate production promotion approval upon receipt of pricing terms).*
+**STRIPE TEST ACCEPTANCE COMPLETE — READY FOR CLIENT OWNERSHIP TRANSFER**  
+*(Commercial pricing terms approved and verified; all engineering deliverables are 100% complete and ready for client infrastructure ownership transfer).*
 
 ---
 
@@ -1015,7 +1013,7 @@ All 25 standalone documents remain version-controlled under `docs/` and are synt
 - **Zero-Vendor-Lock-In Guarantee:** All developer-hosted infrastructure (GitHub, Supabase, Vercel) is strictly temporary for milestone development. Final project acceptance requires complete ownership transfer into client-owned accounts.
 - **11-Point Transfer Protocol:**
   1. GitHub repository transfer (`mudasarimamofficial/kabatos-program-platform` -> client GitHub org)
-  2. Supabase project transfer or production instance provisioning with 8 verified migrations & RLS
+  2. Supabase project transfer or production instance provisioning with 11 verified migrations & RLS
   3. Vercel team project transfer and custom domain routing (`program.goodcomprex.com`)
   4. Stripe commercial product/price provisioning & LIVE webhook endpoint configuration
   5. API secrets handover and rotation of all developer staging JWT secrets

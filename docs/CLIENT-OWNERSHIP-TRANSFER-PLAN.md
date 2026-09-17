@@ -37,7 +37,7 @@ The following matrix defines the step-by-step transfer requirements across all 1
 - [ ] **Target Organization:** Client creates or designates a Supabase organization on the Free or Pro tier.
 - [ ] **Project Transfer or Provisioning:**
   - *Option 1 (Direct Project Transfer):* In Supabase dashboard: Project Settings -> General -> Transfer Project to client's organization.
-  - *Option 2 (Fresh Production Provisioning):* Create a clean production project in client's Supabase account and apply the canonical 8 migrations in chronological order via `npx supabase db push --linked`:
+  - *Option 2 (Fresh Production Provisioning):* Create a clean production project in client's Supabase account and apply the canonical 11 migrations in chronological order via `npx supabase db push --linked`:
     1. `20260912095018_core_schema.sql` (8 core tables, types, foreign keys, and indexes)
     2. `20260912095023_rls_and_rpc.sql` (Row-Level Security policies, resolve_brand, customer session capabilities)
     3. `20260912095029_admin_and_stripe_rpc.sql` (admin security definer RPCs, stripe event ledger)
@@ -46,15 +46,18 @@ The following matrix defines the step-by-step transfer requirements across all 1
     6. `20260912095043_tracking_activation_rpc.sql` (tracking activation RPCs and capability checks)
     7. `20260912095406_privilege_hardening.sql` (privilege hardening and revoking default public grants)
     8. `20260912095513_public_rpc_role_cleanup.sql` (explicit role grants for anon and authenticated roles)
+    9. `20260917090000_release_gate_asset_and_customer_dto.sql` (release-gate asset and customer DTO corrections)
+    10. `20260917091000_customer_session_revocation.sql` (customer session expiry and revocation controls)
+    11. `20260917100000_stripe_trial_access.sql` (Stripe trial access, scheduled cancellation, and reconciliation)
   - Run `npx tsx scripts/bootstrap-admin.ts` to provision initial administrator.
-- [ ] **Row Level Security (RLS):** Verify all 8 core tables have active RLS and verified security policies.
+- [ ] **Row Level Security (RLS):** Verify all core tables have active RLS and verified security policies.
 - [ ] **Storage Buckets:** Verify public read-only `brand-assets` bucket exists with proper MIME-type restrictions.
 - [ ] **DEV Environment Seeding & Safety Guard Protocol:**
   - `supabase/seeds/dev_kabatos.sql` contains a strict fail-closed safety guard: `app.kabatos_environment = 'development'`. This blocks test seed execution unless the operator opts into development mode.
   - For a fresh local or DEV database, run `SET app.kabatos_environment = 'development';` and the complete seed in the same SQL connection, or use `./scripts/seed-dev.ps1 -Local` / `./scripts/seed-dev.ps1 -LinkedDev`.
     1. Local prerequisites are a running Docker Linux engine; run `supabase start`, then `supabase db reset --local`.
     2. Execute `supabase/seeds/dev_kabatos.sql` to populate `COMPREX` and `Demo Wellness` baseline brand configurations.
-    3. Production instances must never enable this setting; production brands are created purely via the Master Administrator console (`/admin/brands/new`) or audited administrative scripts. The audit's local clean-DB run was blocked because Docker's Linux engine pipe was unavailable.
+    3. Production instances must never enable this setting; production brands are created purely via the Master Administrator console (`/admin/brands/new`) or audited administrative scripts. The local clean-DB run was blocked because Docker's Linux engine daemon was unavailable.
 
 ### C. Vercel Hosting & Domain Deployment
 - [ ] **Project Transfer:** In Vercel dashboard: Project Settings -> General -> Transfer Project to client's Vercel Team / Account.
@@ -65,14 +68,14 @@ The following matrix defines the step-by-step transfer requirements across all 1
   - Verify SSL certificate generation and HTTPS enforcement.
 
 ### D. Stripe Commercial & Billing Account Configuration
-- [ ] **Client Stripe Dashboard:** Client provides restricted access or configures products in their own Stripe dashboard (`dashboard.stripe.com`).
+- [ ] **Client Stripe Dashboard:** Client provides team member access to their own Stripe dashboard (`dashboard.stripe.com`).
 - [ ] **Recurring Price Provisioning:**
-  - Create recurring subscription product: `COMPREX Daily Routine Program`.
-  - Configure agreed price amount (e.g. $29.00), currency (USD), billing interval (monthly), and trial days (if applicable).
+  - Create recurring subscription product: `Kabatos / COMPREX Tracking Service`.
+  - Configure client-approved price amount ($4.99), currency (USD), billing interval (monthly), and trial period (7 days).
   - Record the resulting `price_XXXX` ID.
 - [ ] **Stripe Webhooks:**
   - Add production endpoint: `https://[client-domain]/api/stripe/webhook`.
-  - Listen for events: `checkout.session.completed`, `customer.subscription.created`, `customer.subscription.updated`, `customer.subscription.deleted`, `invoice.payment_succeeded`, `invoice.payment_failed`.
+  - Listen for events: `checkout.session.completed`, `customer.subscription.created`, `customer.subscription.updated`, `customer.subscription.deleted`, `invoice.paid`, `invoice.payment_failed`.
   - Record production webhook secret `whsec_XXXX`.
 
 ### E. Environment Variables & API Secrets Handover

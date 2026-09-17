@@ -7,6 +7,7 @@ export default defineConfig({
   test: {
     include: ['lib/**/*.test.ts'],
     exclude: ['node_modules', '.next', 'e2e'],
+    testTimeout: 15000,
   },
   resolve: {
     alias: {

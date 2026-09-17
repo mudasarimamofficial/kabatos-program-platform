@@ -1,0 +1,62 @@
+KABATOS PROGRAM PLATFORM / COMPREX
+PRE-CLIENT-OWNERSHIP-TRANSFER CONSOLIDATION BASELINE
+Captured: 2026-09-17T19:20:00Z
+
+======================================================================
+1. GIT WORKSPACE STATUS
+======================================================================
+Top Level: D:/COMPREX DEVELOPMENT/comprex-main/comprex-main
+Current Branch: audit/independent-release-gate
+Local Git HEAD: a52f6317dd370cc44c9e9d2b3d3f2993ceb0304f
+Origin Branch HEAD: a52f6317dd370cc44c9e9d2b3d3f2993ceb0304f
+Working Tree Status: Clean (nothing to commit, working tree clean)
+
+Remote:
+origin  https://github.com/mudasarimamofficial/kabatos-program-platform.git (fetch)
+origin  https://github.com/mudasarimamofficial/kabatos-program-platform.git (push)
+
+Recent Commit History:
+a52f631 (HEAD -> audit/independent-release-gate, origin/audit/independent-release-gate) feat(stripe): complete test subscription acceptance and cancellation
+c0361a7 feat: implement approved Stripe test trial and cancellation
+a84868d docs: publish final release gate evidence
+03c76c3 test: complete reversible release gate evidence
+4f59f38 fix: close pre-client authorization and configuration gaps
+7e09814 fix(gate): fail-closed admin guard, staging preview URL synchronization, and contrast ratio documentation correction
+40b3916 docs(gate): record final release gate evidence, contrast correction, and seed guard protocol
+f18a4ea fix(security): strictly eliminate mock customer fallback in getCustomerDashboard
+c5faa3c fix(gate): complete pre-client authorization, session, cache and accessibility gate
+b19702d docs: sync staging deployment ID and commit hash in readiness report
+
+======================================================================
+2. VERCEL DEPLOYMENT & ALIAS BASELINE
+======================================================================
+User: mudasarimamofficial-2733
+Project: kabatos-program-platform (prj_tM5CUywwMBvYqAh5CHmdqZ6lv4qD)
+Target Environment: Preview
+Active Test Alias: https://kabatos-stripe-test.vercel.app
+Target Deployment: https://kabatos-program-platform-fexndfl9r.vercel.app (dpl_3JABmn4dNizTiPSwdXdUjT5M2d37)
+Deployed Source Commit: a52f6317dd370cc44c9e9d2b3d3f2993ceb0304f
+Deployment Status: Ready
+Production Deployment: None / Not promoted
+
+======================================================================
+3. SUPABASE BASELINE
+======================================================================
+Linked DEV Project: finbvtwjddrmbuuuyeni (kabatos-program-platform-dev)
+DEV Region: ap-northeast-1
+DEV Status: ACTIVE_HEALTHY (PostgreSQL 17.6)
+PROD Project: svghcgvmnpjuzzxtnjch (kabatos-program-platform-prod)
+PROD Status: ACTIVE_HEALTHY (PostgreSQL 17.6) - Linked: false (Strictly protected/untouched)
+
+======================================================================
+4. STRIPE CLI & ACCOUNT BASELINE
+======================================================================
+Stripe CLI Version: 1.50.11
+Profile: default
+Account ID: acct_1UEoj1Ez179hJ7AU
+Mode: TEST / Sandbox
+Livemode Guard: Hard guard active in lib/stripe/index.ts. Live keys and live cards unconditionally rejected.
+Commercial Product ID: prod_VHGrvdkYDhsdx1
+Commercial Price ID: price_1UGiK6RCnOFy7ZssnkNPUMvs ($4.99 USD / month, 7-day trial)
+TEST Webhook Endpoint: we_1UGiPVRCnOFy7ZssdVtvIOvI
+Webhook Target: https://kabatos-stripe-test.vercel.app/api/stripe/webhook

@@ -20,7 +20,7 @@ This single unified master document consolidates the complete forensic analysis,
 3. **Multi-Brand Isolation & Dynamic Instructions:** Alternate brand tenant (Demo Wellness at `/demo-wellness`) renders its independent deep teal theme (`#2F7D72`) and geometric logo with 0% leakage of COMPREX assets, colors, or dosage instructions. Program instructions are dynamically sourced from brand configuration (`brand.usageInstructions || 'Follow the directions provided with your product.'`).
 4. **Compositor-Accelerated Motion:** All dynamic UI state transitions (button depressions, card reveals, ambient floats, and the progress bar fill via `transform: scaleX(...)`) execute on the GPU compositor thread, eliminating layout recalculations while maintaining strict ARIA semantics (`role="progressbar"`).
 5. **Contractual Ownership & Commercial Status:**
-   - Real Stripe Test Commercial Flow: `BLOCKED_PENDING_APPROVED_STRIPE_PRICE`
+   - Real Stripe Test Commercial Flow: `PASS (Stripe TEST Acceptance complete; $4.99 USD/mo, 7-day trial)`
    - Client Infrastructure Ownership Transfer: `PENDING_CLIENT_ACCOUNT_ACCESS / PENDING_TRANSFER` (governed by `docs/CLIENT-OWNERSHIP-TRANSFER-PLAN.md`)
    - Production Environments (Supabase PROD & Stripe LIVE): Untouched and strictly protected.
 6. **Authoritative Accessibility Compliance:** WCAG 2.1 AA checks passed for the tested MVP application scope, with verified mathematical contrast ratios (`#121212` on `#F07106` is **6.31 : 1**; `#121212` on `#D85800` hover is **4.74 : 1**; white text on `#D85800` is strictly avoided as it yields 3.95:1), full `@media (prefers-reduced-motion: reduce)` overrides, and duplicate-free accessible naming.
@@ -322,7 +322,7 @@ All staging and development under developer-controlled infrastructure is tempora
 
 ### 2. Mandatory Transfer Dimensions
 1. **GitHub Repository Transfer:** `mudasarimamofficial/kabatos-program-platform` transferred to client's organization.
-2. **Supabase Organization & Project Transfer:** Handover of production database with 8 applied migrations, active RLS, and `brand-assets` storage bucket.
+2. **Supabase Organization & Project Transfer:** Handover of production database with 11 applied migrations, active RLS, and `brand-assets` storage bucket.
 3. **Vercel Team Project & Custom Domain DNS:** Transfer of Vercel project with CNAME/ALIAS routing under client domain (e.g. `program.goodcomprex.com`).
 4. **Stripe Commercial Account Provisioning:** Configuration of approved recurring subscription price in client's Stripe dashboard and LIVE webhook endpoint registration.
 5. **Environment Secrets Handover & Rotation:** Complete handover of production keys with rotation of all developer staging JWT secrets.
@@ -494,7 +494,7 @@ DELIVERY READINESS VERDICT:
 - Frontend Engineering / Experience Polish: PASS (100 / 100)
 - Supabase DEV Connection & RLS Security:   PASS (Verified)
 - Multi-Brand Isolation & Tenant Neutrality:PASS (0% leakage)
-- Stripe Commercial Test Flow:              BLOCKED_PENDING_APPROVED_STRIPE_PRICE
+- Stripe Commercial Test Flow:              PASS (TEST ACCEPTANCE COMPLETE)
 - Client Infrastructure Ownership Transfer: PENDING_CLIENT_ACCOUNT_ACCESS / PENDING_TRANSFER
 - Supabase PROD (svghcgvmnpjuzzxtnjch):      NOT MUTATED / PROTECTED
 - Stripe LIVE:                              NOT CONFIGURED / PROTECTED

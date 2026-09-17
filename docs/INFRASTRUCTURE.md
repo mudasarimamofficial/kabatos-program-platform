@@ -6,19 +6,19 @@ The application infrastructure spans canonical Git, Supabase PostgreSQL with SSR
 ### 1. Canonical GitHub Repository (§8)
 - **URL:** `https://github.com/mudasarimamofficial/kabatos-program-platform.git`
 - **Owner / Repo:** `mudasarimamofficial/kabatos-program-platform`
-- **Primary Working Branch:** `feat/antigravity-fullstack`
+- **Current Engineering Branch:** `audit/independent-release-gate` (pre-transfer release gate; `main` reserved for client production promotion)
 
 ### 2. Canonical Supabase Projects (§10, §11)
 - **Development Project:**
   - Name: `kabatos-program-platform-dev`
   - URL: `https://finbvtwjddrmbuuuyeni.supabase.co`
   - Project Ref: `finbvtwjddrmbuuuyeni`
-  - Status: Linked, Active, 8 Canonical Migrations Applied.
+  - Status: Linked, Active, 11 Canonical Migrations Applied.
 - **Production Project (HARD LOCK — ZERO DEVELOPMENT MUTATIONS):**
   - Name: `kabatos-program-platform-prod`
   - URL: `https://svghcgvmnpjuzzxtnjch.supabase.co`
   - Project Ref: `svghcgvmnpjuzzxtnjch`
-  - Status: Strictly Unlinked during ordinary development. Requires explicit client promotion authorization.
+  - Status: Strictly Unlinked during development. Requires explicit client promotion authorization.
 
 ### 3. Canonical Vercel Project (§12)
 - **Project ID:** `prj_tM5CUywwMBvYqAh5CHmdqZ6lv4qD`
@@ -33,7 +33,7 @@ The application infrastructure spans canonical Git, Supabase PostgreSQL with SSR
 | :--- | :--- | :--- | :--- |
 | **Supabase Project** | `kabatos-program-platform-dev` (`finbvtwjddrmbuuuyeni`) | `kabatos-program-platform-dev` (`finbvtwjddrmbuuuyeni`) | `kabatos-program-platform-prod` (`svghcgvmnpjuzzxtnjch`) |
 | **Stripe Environment** | TEST Mode | TEST Mode | LIVE Mode (Post-Promotion Approval) |
-| **Target URL** | `http://localhost:3000` | Preview URL / Staging Domain | Production Custom Domain |
+| **Target URL** | `http://localhost:3000` | `https://kabatos-stripe-test.vercel.app` | Production Custom Domain |
 | **Database Seed** | COMPREX + Demo Wellness (Multi-Brand) | COMPREX + Demo Wellness | Approved COMPREX Only (No Fixtures) |
 | **Admin Access** | Master Admin (Auth) | Master Admin (Auth) | Master Admin (Provisioned Securely) |
 

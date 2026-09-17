@@ -32,7 +32,7 @@ The Kabatos Program Platform is a multi-brand customer product-usage tracking an
    - Access links with real-time QR generation, link copying, PNG export, and true XML SVG download
 
 3. **Backend Architecture & Security:**
-   - Supabase PostgreSQL with 8 reproducible migrations applied to DEV (`finbvtwjddrmbuuuyeni`)
+   - Supabase PostgreSQL with 11 reproducible migrations applied to DEV (`finbvtwjddrmbuuuyeni`)
    - Strict Row Level Security (RLS) preventing anonymous data enumeration
    - Immutable snapshot triggers (`prevent_program_snapshot_rewrite` and `prevent_config_rewrite`)
    - Cryptographic opaque capability token customer sessions via HttpOnly cookies

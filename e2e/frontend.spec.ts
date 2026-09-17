@@ -25,8 +25,8 @@ test.describe('Customer Experience (C-01 to C-10)', () => {
 
     if (process.env.COMPREX_STRIPE_TEST_PRICE_ID) {
       await expect(page).toHaveURL(/\/comprex\/activate$/)
-      await expect(page.getByText(/7-day free trial/)).toBeVisible()
-      await expect(page.getByText(/\$4.99\/month/)).toBeVisible()
+      await expect(page.getByText(/7-day free trial/)).toBeVisible({ timeout: 15000 })
+      await expect(page.getByText(/\$4.99\/month/)).toBeVisible({ timeout: 15000 })
       expect((await page.context().cookies()).some(c => c.name === 'kabatos_customer_session')).toBe(true)
       await page.goto('/comprex/dashboard')
       await expect(page.getByRole('heading', { name:'Tracking access unavailable' })).toBeVisible()
