@@ -42,13 +42,25 @@ This addendum supersedes earlier blanket PASS language. The current verified Pre
 **Target Product:** Kabatos Program Platform (Multi-Brand Usage Tracking & Subscription SaaS)  
 **Brand #1:** COMPREX  
 **Target Repository:** `mudasarimamofficial/kabatos-program-platform`  
-**Overall Readiness Verdict:** **FULL-STACK RELEASE CANDIDATE: BLOCKED PENDING APPROVED STRIPE PRICE**
+**Overall Readiness Verdict:** **STRIPE TEST ACCEPTANCE COMPLETE — READY FOR CLIENT OWNERSHIP TRANSFER**
 
 ---
 
 ## A. OVERALL STATUS
-**STATUS: BLOCKED_PENDING_APPROVED_STRIPE_PRICE**
-All software engineering, UI, database migrations, RLS security policies, master-admin auth, customer sessions, program engine snapshotting, usage persistence, and automated test suites are 100% complete and passing. Only client-side commercial pricing terms remain to be configured in Stripe.
+**STRIPE COMMERCIAL TERMS:** APPROVED  
+**STRIPE TEST PRODUCT:** CONFIGURED (`prod_VHGrvdkYDhsdx1`)  
+**STRIPE TEST PRICE:** CONFIGURED (`price_1UGiK6RCnOFy7ZssnkNPUMvs` - $4.99 USD / month, 7-day trial)  
+**REAL STRIPE TEST CHECKOUT:** PASS  
+**SIGNED WEBHOOK RECONCILIATION:** PASS  
+**7-DAY TRIAL:** PASS  
+**TRIAL ACCESS:** PASS  
+**CANCELLATION:** PASS  
+**WEBHOOK IDEMPOTENCY:** PASS  
+**MONTHLY RENEWAL CONFIG:** PASS  
+**STRIPE LIVE:** NOT CONFIGURED  
+**CLIENT OWNERSHIP TRANSFER:** PENDING  
+
+All software engineering, UI, database migrations, RLS security policies, master-admin auth, customer sessions, program engine snapshotting, usage persistence, automated test suites, and real Stripe TEST end-to-end acceptance are 100% complete and passing. Remaining milestone is client infrastructure account ownership transfer.
 
 ---
 
@@ -136,7 +148,7 @@ All software engineering, UI, database migrations, RLS security policies, master
 - **Implementation State:** Code architecture 100% complete (`app/api/stripe/*`, `lib/stripe/*`).
 - **Webhook Idempotency:** Managed via `public.stripe_events` table and event ID deduplication.
 - **Supported Events:** `checkout.session.completed`, `customer.subscription.created`, `customer.subscription.updated`, `customer.subscription.deleted`, `invoice.paid`, `invoice.payment_failed`.
-- **Commercial Blocker:** Pending client-approved recurring subscription price terms (`BLOCKED_PENDING_APPROVED_STRIPE_PRICE`).
+- **Commercial Acceptance:** Real Stripe TEST subscription flow verified end-to-end ($4.99 USD/mo with 7-day trial, instant access, cancellation, and renewal prevention; see `docs/evidence/stripe-test-acceptance.md`).
 
 ---
 
@@ -272,12 +284,7 @@ Tested across all specified viewports in Playwright Chromium:
 
 ## T. EXACT REMAINING CONTRACTUAL PREREQUISITES
 
-1. **Commercial Terms Blocker:** The client must provide approved recurring Stripe subscription parameters:
-   - Recurring Price Amount (e.g. $29.00)
-   - Billing Currency (e.g. USD)
-   - Billing Interval (e.g. month)
-   - Trial Period (if any)
-   *(Technical architecture is complete; live checkout and webhook testing require these confirmed terms).*
+1. **Stripe Commercial Acceptance:** COMPLETE. Client approved $4.99 USD / month with 7-day free trial; real TEST Checkout, signed webhook reconciliation, database persistence, immediate trial access, cancellation, and monthly renewal prevention are 100% verified (see `docs/evidence/stripe-test-acceptance.md`).
 
 2. **Client Infrastructure Ownership Transfer:** As agreed under the contractual terms, all development and staging on developer-owned infrastructure is temporary. Final delivery requires full account transfer to the client's direct control.
    - Status: `PENDING_CLIENT_ACCOUNT_ACCESS / PENDING_TRANSFER`
@@ -287,10 +294,11 @@ Tested across all specified viewports in Playwright Chromium:
 
 ## U. FINAL VERDICT
 **ENGINEERING & EXPERIENCE STATUS:** **PASS (100 / 100)**  
-**STRIPE LIVE INTEGRATION:** **BLOCKED_PENDING_APPROVED_STRIPE_PRICE**  
-**CLIENT OWNERSHIP TRANSFER:** **PENDING_CLIENT_ACCOUNT_ACCESS**  
+**STRIPE COMMERCIAL TERMS:** **APPROVED ($4.99 USD/mo, 7-day trial)**  
+**REAL STRIPE TEST ACCEPTANCE:** **PASS**  
+**CLIENT OWNERSHIP TRANSFER:** **PENDING_CLIENT_ACCOUNT_ACCESS / PENDING_TRANSFER**  
 **SUPABASE PROD (`svghcgvmnpjuzzxtnjch`):** **NOT MUTATED / PROTECTED**  
 **STRIPE LIVE:** **NOT CONFIGURED / PROTECTED**  
 **PRODUCTION:** **NOT PROMOTED**  
 
-All frontend engineering, elite wellness UI polish, database schemas, RLS security policies, and automated test suites are verified, stable, and passing. The project is ready for final delivery acceptance immediately upon receipt of the client's commercial pricing terms and account transfer credentials.
+All frontend engineering, elite wellness UI polish, database schemas, RLS security policies, automated test suites, and real Stripe TEST end-to-end acceptance are verified, stable, and passing. The project is ready for client ownership transfer.

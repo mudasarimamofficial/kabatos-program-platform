@@ -3,8 +3,7 @@
 **Target Brand #1:** COMPREX  
 **Engineering Platform:** Kabatos Program Platform  
 **Target Repository:** `mudasarimamofficial/kabatos-program-platform`  
-**Deployment Infrastructure:** Next.js (App Router) + Supabase PostgreSQL + Vercel + Stripe  
-**Release Status:** **STRIPE TERMS APPROVED; TEST ACCEPTANCE IN PROGRESS**. Current [billing evidence](evidence/stripe-test-acceptance.md) supersedes earlier billing completion claims below.
+**Release Status:** **STRIPE TEST ACCEPTANCE COMPLETE — READY FOR CLIENT OWNERSHIP TRANSFER**. Current [billing evidence](evidence/stripe-test-acceptance.md) documents full test subscription acceptance.
 
 ---
 
@@ -75,20 +74,17 @@ The script:
 
 ---
 
-## 4. Pending Commercial Term (Client Action Required)
+## 4. Approved Commercial Terms & Real Stripe TEST Acceptance
 
-The entire full-stack software architecture, UI, program engine, and payment handoff mechanisms are 100% complete and tested. One external business input is required from the client:
+The client confirmed and approved the recurring subscription parameters:
+- **Price Amount:** $4.99 USD
+- **Billing Frequency:** Monthly
+- **Free Trial:** 7 Days
+- **Scope:** Tracking / service platform access only (physical product separate)
+- **Automatic Renewal:** After trial ends, automatically renews at $4.99 USD / month unless canceled
+- **Cancellation:** Customer self-serve cancellation retains access through current period with renewal prevented
 
-> [!WARNING]
-> **Commercial Blocker: Recurring Subscription Price Terms**
-> 
-> To enable live Stripe subscription checkout, provide:
-> 1. **Price Amount:** (e.g., $29.00, $49.00)
-> 2. **Billing Currency:** (e.g., USD, EUR, GBP)
-> 3. **Billing Interval:** (e.g., monthly, every 4 weeks)
-> 4. **Trial Duration (if any):** (e.g., None, 7 days, 14 days)
-> 
-> Once approved, create the Price in your Stripe TEST dashboard and configure `COMPREX_STRIPE_TEST_PRICE_ID` in Vercel environment variables.
+Real Stripe TEST acceptance passed across all flows: real checkout, signed webhook reconciliation, database persistence, immediate trial access, duplicate event replay idempotency, cancellation, and monthly renewal verification. Full details are recorded in [`docs/evidence/stripe-test-acceptance.md`](evidence/stripe-test-acceptance.md).
 
 ---
 

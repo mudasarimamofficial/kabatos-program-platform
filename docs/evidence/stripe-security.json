@@ -1,0 +1,71 @@
+{
+  "timestamp": "2026-09-17T18:03:00.444Z",
+  "base": "https://kabatos-stripe-test.vercel.app",
+  "results": [
+    {
+      "path": "/admin",
+      "status": 200,
+      "location": null,
+      "privateData": false
+    },
+    {
+      "path": "/admin/brands",
+      "status": 200,
+      "location": null,
+      "privateData": false
+    },
+    {
+      "path": "/admin/customers",
+      "status": 200,
+      "location": null,
+      "privateData": false
+    },
+    {
+      "path": "/comprex/dashboard",
+      "status": 200,
+      "location": null,
+      "privateData": false
+    },
+    {
+      "path": "/demo-wellness/dashboard",
+      "status": 200,
+      "location": null,
+      "privateData": false
+    },
+    {
+      "check": "unsigned",
+      "status": 400
+    },
+    {
+      "check": "invalid-signature",
+      "status": 400
+    },
+    {
+      "check": "cross-customer-or-brand-cancel-denied",
+      "status": 400
+    },
+    {
+      "check": "cross-customer-or-brand-cancel-denied",
+      "status": 409
+    },
+    {
+      "check": "cross-customer-or-brand-cancel-denied",
+      "status": 409
+    },
+    {
+      "check": "unactivated-customer_dashboard",
+      "denied": true
+    },
+    {
+      "check": "unactivated-customer_complete_today",
+      "denied": true
+    },
+    {
+      "check": "unactivated-customer_undo_today",
+      "denied": true
+    }
+  ],
+  "hashing": "SHA-256 only",
+  "crossBrand": "DENIED",
+  "RLS": "DENIED"
+}

@@ -1,0 +1,95 @@
+{
+  "timestamp": "2026-09-17T17:57:39.931Z",
+  "base": "https://kabatos-stripe-test.vercel.app",
+  "customerLabel": "Stripe Trial QA",
+  "results": [
+    {
+      "program": {
+        "id": "325ffb4d-c30a-4a9e-a362-183700a7fe17",
+        "brand_id": "35f58cd1-9bd4-4af7-af3e-85f14ed137e9",
+        "status": "active",
+        "start_date": "2026-09-17",
+        "activated_at": "2026-09-17T17:56:12.593884+00:00",
+        "duration_snapshot": 14,
+        "schedule_snapshot": [
+          1,
+          3,
+          5,
+          7,
+          9,
+          11,
+          13
+        ],
+        "price_id_snapshot": "price_1UGiK6RCnOFy7ZssnkNPUMvs"
+      },
+      "subscriptions": [
+        {
+          "id": "a1892e8e-83ad-4378-8b94-21c0fd538f09",
+          "program_id": "325ffb4d-c30a-4a9e-a362-183700a7fe17",
+          "brand_id": "35f58cd1-9bd4-4af7-af3e-85f14ed137e9",
+          "stripe_customer_id": "cus_VHI7tUdnhursy9",
+          "stripe_subscription_id": "sub_1UGjXYRCnOFy7ZssAQd58qwX",
+          "stripe_price_id": "price_1UGiK6RCnOFy7ZssnkNPUMvs",
+          "status": "trialing",
+          "current_period_start": "2026-09-17T17:56:06+00:00",
+          "current_period_end": "2026-09-24T17:56:06+00:00",
+          "cancel_at_period_end": false,
+          "last_reconciled_at": "2026-09-17T17:56:29.040784+00:00",
+          "created_at": "2026-09-17T17:56:12.593884+00:00",
+          "updated_at": "2026-09-17T17:56:29.040784+00:00",
+          "trial_start": "2026-09-17T17:56:06+00:00",
+          "trial_end": "2026-09-24T17:56:06+00:00",
+          "canceled_at": null
+        }
+      ],
+      "events": [
+        {
+          "stripe_event_id": "evt_1UGjXZRCnOFy7ZssD2awvny5",
+          "event_type": "checkout.session.completed",
+          "status": "pending",
+          "attempt_count": 0
+        },
+        {
+          "stripe_event_id": "evt_1UGjXZRCnOFy7Zssad7x1TK6",
+          "event_type": "customer.subscription.created",
+          "status": "processed",
+          "attempt_count": 1
+        },
+        {
+          "stripe_event_id": "evt_1UGjXZRCnOFy7Zss5ith6L7c",
+          "event_type": "invoice.paid",
+          "status": "processed",
+          "attempt_count": 1
+        }
+      ],
+      "attempts": [
+        {
+          "stripe_session_id": "cs_test_a1qz8YD7n47BRAk6xuhoiSpFuLWyt18RkYsgY0Gpd2JARwR5xs5LgB2UNi",
+          "status": "completed"
+        }
+      ],
+      "provider": {
+        "id": "sub_1UGjXYRCnOFy7ZssAQd58qwX",
+        "customer": "cus_VHI7tUdnhursy9",
+        "status": "trialing",
+        "trial_start": 1789667766,
+        "trial_end": 1790272566,
+        "trialDays": 7,
+        "cancel_at_period_end": false,
+        "canceled_at": null,
+        "items": [
+          {
+            "price": "price_1UGiK6RCnOFy7ZssnkNPUMvs",
+            "quantity": 1,
+            "amount": 499,
+            "currency": "usd",
+            "interval": "month",
+            "interval_count": 1,
+            "current_period_start": 1789667766,
+            "current_period_end": 1790272566
+          }
+        ]
+      }
+    }
+  ]
+}

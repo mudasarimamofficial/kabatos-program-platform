@@ -1,0 +1,15 @@
+{
+  "timestamp": "2026-09-17T18:02:31.659Z",
+  "status": 200,
+  "result": {
+    "access": true,
+    "status": "active",
+    "required": true,
+    "trial_end": "2026-09-24T17:58:51+00:00",
+    "canceled_at": "2026-09-24T18:00:51+00:00",
+    "trial_start": "2026-09-17T17:58:51+00:00",
+    "current_period_end": "2026-10-24T17:58:51+00:00",
+    "cancel_at_period_end": true,
+    "current_period_start": "2026-09-24T17:58:51+00:00"
+  }
+}

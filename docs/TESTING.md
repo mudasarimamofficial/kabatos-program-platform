@@ -42,3 +42,7 @@ The application enforces comprehensive automated test coverage spanning pure dom
 `pnpm typecheck` passed. Unit/regression tests passed 55/55. Production-build Playwright E2E passed 10/10. The deployed gate harness is `node --env-file=.env.local --env-file=.env.gate.local scripts/release-gate.mjs`; it uses fresh anonymous contexts, real temporary Auth users, real A-04 saves, QR decoding, reversible DEV fixtures and cleanup. Results are in `docs/evidence/release-gate.json`.
 
 Clean DB commands are `docker info`, `supabase start`, `supabase db reset --local`, `./scripts/seed-dev.ps1 -Local`, and `supabase db query --local --file scripts/verify-schema.sql`. They were attempted but Docker's Linux engine was unavailable; see `docs/evidence/clean-db.txt`. Linked DEV is not clean-DB proof.
+
+# 2026-09-17 Stripe TEST acceptance execution
+
+`pnpm typecheck` passed (0 errors). Unit/integration tests passed 62/62 (14 test files). Production build passed. Playwright E2E passed 10/10. Real Stripe TEST acceptance executed via `node --env-file=.env.local scripts/stripe-test-evidence.mjs` verifying real checkout, signed webhook delivery, 7-day trial access, replay idempotency, cancellation with access retention, renewal via Stripe Test Clock, and security regressions. Complete artifacts saved in `docs/evidence/stripe-test-acceptance.md` and `docs/evidence/stripe-*.json`.

@@ -1,0 +1,32 @@
+=== git rev-parse --show-toplevel ===
+D:/COMPREX DEVELOPMENT/comprex-main/comprex-main
+
+=== git status --short ===
+ M next-env.d.ts ?? scripts/stripe-test-evidence.mjs
+
+=== git status ===
+On branch audit/independent-release-gate Your branch is up to date with 'origin/audit/independent-release-gate'.  Changes not staged for commit:   (use "git add <file>..." to update what will be committed)   (use "git restore <file>..." to discard changes in working directory) 	modified:   next-env.d.ts  Untracked files:   (use "git add <file>..." to include in what will be committed) 	scripts/stripe-test-evidence.mjs  no changes added to commit (use "git add" and/or "git commit -a")
+
+=== git branch --show-current ===
+audit/independent-release-gate
+
+=== git rev-parse HEAD ===
+c0361a7dba8b8cbbc93386110244bde2644a7919
+
+=== git log -10 --oneline --decorate ===
+c0361a7 (HEAD -> audit/independent-release-gate, origin/audit/independent-release-gate) feat: implement approved Stripe test trial and cancellation a84868d docs: publish final release gate evidence 03c76c3 test: complete reversible release gate evidence 4f59f38 fix: close pre-client authorization and configuration gaps 7e09814 fix(gate): fail-closed admin guard, staging preview URL synchronization, and contrast ratio documentation correction 40b3916 docs(gate): record final release gate evidence, contrast correction, and seed guard protocol f18a4ea fix(security): strictly eliminate mock customer fallback in getCustomerDashboard c5faa3c fix(gate): complete pre-client authorization, session, cache and accessibility gate b19702d docs: sync staging deployment ID and commit hash in readiness report 0e1cbba fix(audit): independent release gate remediation, RSC event boundary fix, mock fallback removal, and verified staging deployment
+
+=== git remote -v ===
+origin	https://github.com/mudasarimamofficial/kabatos-program-platform.git (fetch) origin	https://github.com/mudasarimamofficial/kabatos-program-platform.git (push)
+
+=== git diff --stat ===
+ next-env.d.ts | 4 ++--  1 file changed, 2 insertions(+), 2 deletions(-)
+
+=== git diff ===
+diff --git a/next-env.d.ts b/next-env.d.ts index a419cbe..ce4e94a 100644 --- a/next-env.d.ts +++ b/next-env.d.ts @@ -1,7 +1,7 @@  /// <reference types="next" />  /// <reference types="next/image-types/global" /> -import "./.next/dev/types/routes.d.ts"; -import "./.next/dev/types/root-params.d.ts"; +import "./.next/types/routes.d.ts"; +import "./.next/types/root-params.d.ts";    // NOTE: This file should not be edited  // see https://nextjs.org/docs/app/api-reference/config/typescript for more information.
+
+=== git diff --cached ===
+
+
+=== git ls-files --others --exclude-standard ===
+scripts/stripe-test-evidence.mjs
