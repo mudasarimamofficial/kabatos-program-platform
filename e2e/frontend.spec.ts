@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 
 test.describe('Customer Experience (C-01 to C-10)', () => {
-  test('validates onboarding and safely rejects unavailable paid activation and checkout', async ({ page }) => {
+  test('validates onboarding and gates tracking until verified subscription activation', async ({ page }) => {
     // C-01: Welcome Screen
     await page.goto('/comprex')
     await expect(page.getByRole('heading', { level: 1 })).toContainText(/your program/i)
@@ -18,15 +18,26 @@ test.describe('Customer Experience (C-01 to C-10)', () => {
     await expect(page.getByText(/enter at least 2 characters/i)).toBeVisible()
 
     // Fill valid onboarding details
-    await page.locator('#first-name').fill('Sarah')
-    await page.locator('#contact').fill('sarah@example.com')
-    await page.locator('#order-number').fill('#CX-9021')
+    await page.locator('#first-name').fill('Billing QA')
+    await page.locator('#contact').fill('billing-qa@example.invalid')
+    await page.locator('#order-number').fill('TEST-E2E')
     await continueBtn.click()
 
-    // No commercial terms are configured: fail honestly, without minting a session.
-    await expect(page.getByText('Program activation is currently unavailable.')).toBeVisible()
-    await expect(page).toHaveURL(/\/comprex\/start$/)
-    expect((await page.context().cookies()).some(c => c.name === 'kabatos_customer_session')).toBe(false)
+    if (process.env.COMPREX_STRIPE_TEST_PRICE_ID) {
+      await expect(page).toHaveURL(/\/comprex\/activate$/)
+      await expect(page.getByText(/7-day free trial/)).toBeVisible()
+      await expect(page.getByText(/\$4.99\/month/)).toBeVisible()
+      expect((await page.context().cookies()).some(c => c.name === 'kabatos_customer_session')).toBe(true)
+      await page.goto('/comprex/dashboard')
+      await expect(page.getByRole('heading', { name:'Tracking access unavailable' })).toBeVisible()
+      await expect(page.getByText('Usage history')).toHaveCount(0)
+      await page.goto('/comprex/success?session_id=forged')
+      await expect(page.getByRole('heading', { name:'Confirming your subscription' })).toBeVisible()
+    } else {
+      await expect(page.getByText('Program activation is currently unavailable.')).toBeVisible()
+      await expect(page).toHaveURL(/\/comprex\/start$/)
+    }
+    await page.context().clearCookies()
     await page.goto('/comprex/dashboard')
     await expect(page).toHaveURL(/\/comprex$/)
     await page.goto('/comprex/checkout')

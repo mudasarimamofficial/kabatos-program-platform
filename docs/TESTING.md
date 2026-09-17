@@ -1,5 +1,9 @@
 # Testing Strategy & Automated Test Suite
 
+## Stripe TEST gate
+
+Run `pnpm typecheck`, `pnpm test:unit`, `pnpm build`, then `pnpm test:e2e`. No lint command is configured. The ordinary E2E suite verifies onboarding, approved copy and denial of tracking before a verified subscription; it does not complete external Checkout. The dedicated real billing procedure and results are in [Stripe TEST acceptance](evidence/stripe-test-acceptance.md). Unit mocks verify orchestration; they are not proof of provider delivery or database idempotency.
+
 ## Test Pyramid
 The application enforces comprehensive automated test coverage spanning pure domain logic, remote database contracts, Stripe integration, responsive design, and end-to-end browser journeys.
 

@@ -6,6 +6,7 @@ import { ArrowRight, Calendar, Check, Clock, ShieldCheck } from 'lucide-react'
 import { CustomerShell } from './customer-shell'
 import { Button } from './buttons'
 import type { Brand } from '@/lib/types'
+import { COMPREX_PLAN } from '@/lib/stripe/plan'
 
 export function ActivateScreen({ brand }: { brand: Brand }) {
   return (
@@ -34,6 +35,10 @@ export function ActivateScreen({ brand }: { brand: Brand }) {
             <strong>Progress &amp; refill alerts</strong>
           </div>
         </div>
+        {brand.slug === COMPREX_PLAN.brandSlug && <p className="body-copy">
+          {COMPREX_PLAN.trialLabel}. Then {COMPREX_PLAN.priceLabel}, renewing automatically each month unless you cancel.
+          Cancel anytime; access remains through your trial or paid period. Tracking/service subscription only. Physical product sold separately.
+        </p>}
         <Button href={`/${brand.slug}/checkout`}>
           Activate my program <ArrowRight size={18} />
         </Button>
@@ -44,4 +49,3 @@ export function ActivateScreen({ brand }: { brand: Brand }) {
     </CustomerShell>
   )
 }
-

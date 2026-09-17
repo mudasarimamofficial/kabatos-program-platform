@@ -1,6 +1,8 @@
 # Kabatos Program Platform / COMPREX
 # Client Infrastructure Ownership Transfer Plan & Protocol
 
+Current billing terms are approved: one $4.99 USD/month tracking-service plan with seven trial days. [TEST acceptance evidence](evidence/stripe-test-acceptance.md) governs readiness. During transfer recreate the plan in the client-owned TEST account and repeat acceptance. This candidate rejects LIVE keys/events; production billing requires separate authorization and configuration work. Do not place a LIVE Price into the TEST variable described in historical sections below.
+
 **Document Version:** 1.0.0 — Official Contractual Delivery Specification  
 **Client Flagship:** COMPREX (Brand #1)  
 **Contractual Context:** Fiverr $320 Full-Stack Milestone Agreement  
@@ -83,7 +85,7 @@ Configure the following production environment variables exclusively in the clie
 - `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`: Client Stripe LIVE publishable key
 - `STRIPE_SECRET_KEY`: Client Stripe LIVE restricted/secret key
 - `STRIPE_WEBHOOK_SECRET`: Client Stripe LIVE webhook signing secret
-- `COMPREX_STRIPE_TEST_PRICE_ID`: Client Stripe LIVE recurring subscription price ID (`price_...`)
+- `COMPREX_STRIPE_TEST_PRICE_ID`: TEST recurring Price only; never populate with a LIVE Price.
 - `APP_ENV`: `production`
 
 ### F. Security & Secrets Rotation

@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server'
-import { getStripe, normalizeSubscriptionStatus, parseCheckoutReference } from '@/lib/stripe/server'
+import { getStripe } from '@/lib/stripe/server'
+import { reconcileStripeEvent } from '@/lib/stripe/reconcile'
 import { requireServerEnv } from '@/lib/env'
-import Stripe from 'stripe'
+import type Stripe from 'stripe'
 
 export async function POST(request: Request) {
   const signature = request.headers.get('stripe-signature')
@@ -9,13 +10,13 @@ export async function POST(request: Request) {
   let event: Stripe.Event
   try {
     event = getStripe().webhooks.constructEvent(await request.text(), signature, requireServerEnv('STRIPE_WEBHOOK_SECRET'))
+    if (event.livemode) throw new Error('TEST only')
+  } catch { return NextResponse.json({ error: 'Invalid signature or environment' }, { status: 400 }) }
+  try {
+    return NextResponse.json({ received: true, ...await reconcileStripeEvent(event) })
   } catch {
-    return NextResponse.json({ error: 'Invalid signature' }, { status: 400 })
+    // Non-2xx asks Stripe to retry. Never acknowledge an unpersisted relevant event.
+    console.error('[stripe] reconciliation retry required', { eventId: event.id, type: event.type })
+    return NextResponse.json({ error: 'Reconciliation pending; retry required' }, { status: 503 })
   }
-  const object = event.data.object as Stripe.Checkout.Session | Stripe.Subscription | Stripe.Invoice
-  const metadata = 'metadata' in object ? object.metadata : undefined
-  const reference = parseCheckoutReference(metadata)
-  const status = event.type.startsWith('customer.subscription.') ? normalizeSubscriptionStatus((object as Stripe.Subscription).status) : undefined
-  console.info('[stripe] event received', { id: event.id, type: event.type, reference, status, persistence: 'PENDING_SUPABASE' })
-  return NextResponse.json({ received: true, eventId: event.id, status: status ?? 'received', persistence: 'PENDING_SUPABASE' })
 }

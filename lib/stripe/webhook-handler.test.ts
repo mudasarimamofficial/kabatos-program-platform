@@ -1,88 +1,57 @@
-import { describe, it, expect, beforeEach } from 'vitest'
-import { handleStripeWebhookEvent } from './server'
+import { describe,it,expect,vi,beforeEach } from 'vitest'
+import type Stripe from 'stripe'
+import { reconcileStripeEvent } from './reconcile'
+import { cancelCustomerSubscription } from './customer'
 
-describe('Stripe Webhook Idempotency & Lifecycle (§83, §84, §85)', () => {
-  let processedStore: Set<string>
-
-  beforeEach(() => {
-    processedStore = new Set<string>()
+const sub = (status='trialing') => ({id:'sub_fixture',object:'subscription',customer:'cus_fixture',livemode:false,status,
+  metadata:{brandSlug:'comprex',attemptId:'attempt'},trial_start:100,trial_end:604900,canceled_at:null,cancel_at_period_end:false,
+  items:{data:[{quantity:1,current_period_start:100,current_period_end:604900,price:{id:'price_fixture',livemode:false,active:true,
+    unit_amount:499,currency:'usd',billing_scheme:'per_unit',recurring:{interval:'month',interval_count:1,usage_type:'licensed'}}}]}})
+function fixture(status='trialing') {
+  const processed=new Set<string>(), calls:Array<{name:string,args:any}>=[]
+  const db={from:()=>({select:()=>({eq:()=>({maybeSingle:async()=>({data:{program_id:'program',brand_id:'brand',stripe_customer_id:'cus_fixture'},error:null})})})}),
+    rpc:vi.fn(async(name:string,args:any)=>{calls.push({name,args});
+      if(name==='stripe_register_event')return {data:{status:processed.has(args.p_event_id)?'processed':'pending'}}
+      if(name==='stripe_claim_reconcile')return {data:{fence:1}}
+      if(name==='stripe_reconcile_subscription_v2'){processed.add(args.p_event_id);return {data:{program_status:'active',subscription_status:args.p_status}}}
+      if(name==='stripe_customer_subscription_context')return {data:{program_id:'program',brand_id:'brand',stripe_subscription_id:'sub_fixture',stripe_customer_id:'cus_fixture'}}
+      return {data:{}}
+    })}
+  const stripe={subscriptions:{retrieve:vi.fn(async()=>sub(status)),update:vi.fn(async()=>({...sub(status),cancel_at_period_end:true}))}}
+  return {db,stripe,calls}
+}
+beforeEach(()=>vi.stubEnv('COMPREX_STRIPE_TEST_PRICE_ID','price_fixture'))
+describe('Durable webhook orchestration',()=>{
+  for(const type of ['checkout.session.completed','customer.subscription.created','customer.subscription.updated','invoice.paid']) {
+    it(`${type}: replay uses durable event record and never runs activation twice`,async()=>{
+      const f=fixture(), object=type.startsWith('invoice')?{object:'invoice',id:'in_fixture',parent:{subscription_details:{subscription:'sub_fixture'}}}:type.startsWith('checkout')?{object:'checkout.session',id:'cs_test_fixture',subscription:'sub_fixture'}:sub()
+      const event={id:'evt_fixture',type,created:100,livemode:false,data:{object}} as Stripe.Event
+      await reconcileStripeEvent(event,f.stripe as any,f.db as any)
+      expect((await reconcileStripeEvent(event,f.stripe as any,f.db as any)).status).toBe('duplicate_ignored')
+      expect(f.calls.filter(c=>c.name==='stripe_reconcile_subscription_v2')).toHaveLength(1)
+      expect(f.calls.find(c=>c.name==='stripe_reconcile_subscription_v2')?.args).toMatchObject({p_status:'trialing',p_cancel_at_period_end:false})
+    })
+  }
+  for(const [type,status] of [['invoice.payment_failed','past_due'],['customer.subscription.deleted','canceled']]) {
+    it(`${type}: persists current provider state and releases lease`,async()=>{
+      const f=fixture(status),object=type.startsWith('invoice')?{object:'invoice',id:'in_fixture',parent:{subscription_details:{subscription:'sub_fixture'}}}:sub(status)
+      await reconcileStripeEvent({id:'evt_fixture',type,created:100,livemode:false,data:{object}} as Stripe.Event,f.stripe as any,f.db as any)
+      expect(f.calls.find(c=>c.name==='stripe_reconcile_subscription_v2')?.args.p_status).toBe(status)
+      expect(f.calls.at(-1)?.name).toBe('stripe_release_reconcile')
+    })
+  }
+  it('cancellation uses only the capability-owned subscription and persists period-end intent',async()=>{
+    const f=fixture();await cancelCustomerSubscription('comprex','capability',f.stripe as any,f.db as any)
+    expect(f.stripe.subscriptions.update).toHaveBeenCalledWith('sub_fixture',{cancel_at_period_end:true},{idempotencyKey:'kabatos-cancel-sub_fixture'})
+    expect(f.calls.some(c=>c.name==='stripe_persist_cancellation')).toBe(true)
   })
-
-  it('processes checkout.session.completed and signals program activation (§84)', () => {
-    const event = {
-      id: 'evt_checkout_123',
-      type: 'checkout.session.completed',
-      data: {
-        object: {
-          id: 'cs_test_123',
-          metadata: { brandSlug: 'comprex', customerId: 'cust_01' },
-        },
-      },
-    }
-
-    const result = handleStripeWebhookEvent(event, processedStore)
-    expect(result.status).toBe('processed')
-    expect(result.subscriptionStatus).toBe('active')
-    expect(result.programActivated).toBe(true)
-    expect(processedStore.has('evt_checkout_123')).toBe(true)
+  it('denied capability cannot cause any Stripe cancellation',async()=>{
+    const f=fixture();f.db.rpc.mockResolvedValueOnce({error:{message:'invalid access'}} as any)
+    await expect(cancelCustomerSubscription('demo-wellness','wrong-capability',f.stripe as any,f.db as any)).rejects.toThrow()
+    expect(f.stripe.subscriptions.update).not.toHaveBeenCalled()
   })
-
-  it('enforces idempotency and rejects duplicate webhook events (§84)', () => {
-    const event = {
-      id: 'evt_duplicate_test',
-      type: 'customer.subscription.created',
-      data: {
-        object: {
-          id: 'sub_test_123',
-          status: 'active',
-          metadata: { brandSlug: 'comprex' },
-        },
-      },
-    }
-
-    const first = handleStripeWebhookEvent(event, processedStore)
-    expect(first.status).toBe('processed')
-    expect(first.programActivated).toBe(true)
-
-    // Second duplicate arrival
-    const duplicate = handleStripeWebhookEvent(event, processedStore)
-    expect(duplicate.status).toBe('duplicate_ignored')
-    expect(duplicate.programActivated).toBeUndefined()
-  })
-
-  it('handles subscription cancellation without resetting program history (§85)', () => {
-    const event = {
-      id: 'evt_cancel_123',
-      type: 'customer.subscription.deleted',
-      data: {
-        object: {
-          id: 'sub_test_123',
-          status: 'canceled',
-          metadata: { brandSlug: 'comprex' },
-        },
-      },
-    }
-
-    const result = handleStripeWebhookEvent(event, processedStore)
-    expect(result.status).toBe('processed')
-    expect(result.subscriptionStatus).toBe('cancelled')
-    expect(result.programActivated).toBe(false)
-  })
-
-  it('handles invoice.payment_failed transitioning subscription to pending (§85)', () => {
-    const event = {
-      id: 'evt_fail_123',
-      type: 'invoice.payment_failed',
-      data: {
-        object: {
-          id: 'in_test_123',
-          metadata: { brandSlug: 'comprex' },
-        },
-      },
-    }
-
-    const result = handleStripeWebhookEvent(event, processedStore)
-    expect(result.status).toBe('processed')
-    expect(result.subscriptionStatus).toBe('pending')
+  it('database failure is retryable and never acknowledged as processed',async()=>{
+    const f=fixture();f.db.rpc.mockResolvedValueOnce({error:{message:'offline'}} as any)
+    await expect(reconcileStripeEvent({id:'evt_fixture',type:'customer.subscription.updated',created:100,livemode:false,data:{object:sub()}} as unknown as Stripe.Event,f.stripe as any,f.db as any)).rejects.toThrow()
   })
 })

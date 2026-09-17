@@ -4,7 +4,7 @@
 **Engineering Platform:** Kabatos Program Platform  
 **Target Repository:** `mudasarimamofficial/kabatos-program-platform`  
 **Deployment Infrastructure:** Next.js (App Router) + Supabase PostgreSQL + Vercel + Stripe  
-**Release Status:** **FULL-STACK RELEASE CANDIDATE (BLOCKED PENDING APPROVED STRIPE PRICE)**
+**Release Status:** **STRIPE TERMS APPROVED; TEST ACCEPTANCE IN PROGRESS**. Current [billing evidence](evidence/stripe-test-acceptance.md) supersedes earlier billing completion claims below.
 
 ---
 
@@ -123,4 +123,3 @@ Refer to [`docs/CLIENT-OWNERSHIP-TRANSFER-PLAN.md`](file:///d:/COMPREX%20DEVELOP
 4. Stripe commercial price configuration and LIVE webhook endpoint registration
 5. Environment variable handover and API secret rotation
 6. Post-transfer end-to-end verification smoke testing
-

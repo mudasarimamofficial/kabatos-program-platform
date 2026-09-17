@@ -1,5 +1,7 @@
 # Requirements Traceability Matrix (§112, §113)
 
+Current Stripe scope: approved 499-cent USD monthly service, seven-day trial, capability-scoped Checkout/cancellation, signed durable reconciliation and DB access enforcement. Commercial approval is complete; real acceptance status is exclusively recorded in [Stripe TEST evidence](evidence/stripe-test-acceptance.md). Historical Stripe PASS/BLOCKED rows below are superseded.
+
 | Req ID | Description | Source | Route / UI | Implementation File | Database Object | Test | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | **C-01** | Brand Welcome / Entry Point | Brief | `/[brandSlug]` | `components/customer/welcome-screen.tsx` | `brands` | `e2e/frontend.spec.ts` | **PASS** |
@@ -27,4 +29,3 @@
 # 2026-09-17 gate status
 
 The prior 100% completion claim is superseded. Authorization, cache propagation, brand creation, sessions, RLS, assets, contrast and QR gates passed in `docs/evidence/release-gate.json`. Clean disposable-DB reproduction is blocked by the unavailable Docker Linux engine. Approved Stripe commercial terms and client-owned infrastructure access remain external blockers. Paid onboarding and real payment checkout are intentionally unconfigured.
-

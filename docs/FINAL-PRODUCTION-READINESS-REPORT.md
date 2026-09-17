@@ -1,5 +1,9 @@
 # FINAL PRODUCTION READINESS REPORT — KABATOS PROGRAM PLATFORM / COMPREX
 
+## Stripe TEST acceptance update
+
+The client approved $4.99 USD/month with a seven-day card-backed trial and period-end cancellation. TEST Product/Price and Preview environment are configured. Runtime persistence and access controls are implemented; actual acceptance is tracked in [Stripe TEST evidence](evidence/stripe-test-acceptance.md). The earlier commercial decision blocker and blanket engineering claims below are historical. LIVE and client ownership transfer remain pending; clean local DB proof retains its previously reported Docker limitation.
+
 ## 2026-09-17 final surgical gate addendum
 
 This addendum supersedes earlier blanket PASS language. The current verified Preview is `https://kabatos-program-platform-dstgjx4db.vercel.app`, deployment `dpl_HLNLWrVA5ECeuNuifgV6uFP8UXC5`, exact source commit `03c76c373315f6a6d59c3f0d2d703fbf3adc00f1`. The historical supplied deployment `dpl_5VGVdoZmpM7D1uocgyJWiAttKtP3` was built from exact source `0e1cbba509b12701c63220ff8d267b5563613e90` and exposed sample data; evidence is in `docs/evidence/original-staging.json`. Current evidence is in `docs/evidence/release-gate.json`.

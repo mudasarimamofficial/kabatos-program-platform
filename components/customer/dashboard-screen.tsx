@@ -7,6 +7,8 @@ import { Button } from './buttons'
 import { getScheduleItems, getSummary } from '@/lib/program/utils'
 import { completeScheduledUsageAction, undoScheduledUsageAction } from '@/lib/services/customer-actions'
 import type { Brand, Customer, ProgramSummary, ScheduleItem } from '@/lib/types'
+import { SubscriptionCard } from './subscription-card'
+import type { SubscriptionState } from '@/lib/stripe/plan'
 
 export function DashboardScreen({
   brand,
@@ -15,6 +17,7 @@ export function DashboardScreen({
   initialItems,
   onCompleteAction,
   onUndoAction,
+  subscription,
 }: {
   brand: Brand
   customer: Customer
@@ -22,6 +25,7 @@ export function DashboardScreen({
   initialItems?: ScheduleItem[]
   onCompleteAction?: () => Promise<{ success: boolean }>
   onUndoAction?: () => Promise<{ success: boolean }>
+  subscription?: SubscriptionState
 }) {
   const isInitiallyCompleted = customer.completedDays.includes(customer.currentDay)
   const [completed, setCompleted] = useState(isInitiallyCompleted)
@@ -203,6 +207,7 @@ export function DashboardScreen({
           </>
         )}
 
+        {subscription && <SubscriptionCard brandSlug={brand.slug} initialState={subscription} />}
         <section className="timeline-card">
           <span className="eyebrow">PROGRAM SCHEDULE</span>
           <h3>Usage history</h3>
