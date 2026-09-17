@@ -6,7 +6,7 @@
  * into public.admin_profiles with active=true.
  *
  * Usage:
- *   ADMIN_EMAIL=admin@example.com ADMIN_PASSWORD=secure_pass pnpm tsx scripts/bootstrap-admin.ts
+ *   node --env-file=.env.bootstrap.local scripts/bootstrap-admin.ts
  */
 
 import { createClient } from '@supabase/supabase-js'
@@ -20,11 +20,16 @@ async function bootstrapMasterAdmin() {
     process.exit(1)
   }
 
-  const email = process.env.ADMIN_EMAIL || 'admin@kabatos.dev'
+  const host = new URL(url).hostname
+  if (!['finbvtwjddrmbuuuyeni.supabase.co', 'localhost', '127.0.0.1'].includes(host)) {
+    throw new Error('Bootstrap is restricted to the existing DEV project or local Supabase.')
+  }
+
+  const email = process.env.ADMIN_EMAIL?.trim().toLowerCase()
   const password = process.env.ADMIN_PASSWORD
 
-  if (!password) {
-    console.error('Error: ADMIN_PASSWORD environment variable is required.')
+  if (!password || !email) {
+    console.error('Error: ADMIN_EMAIL and ADMIN_PASSWORD environment variables are required.')
     process.exit(1)
   }
 
@@ -33,13 +38,13 @@ async function bootstrapMasterAdmin() {
   })
 
   console.log(`Checking existing user for ${email}...`)
-  const { data: users, error: listError } = await supabase.auth.admin.listUsers()
-  if (listError) {
-    console.error('Failed to list users:', listError.message)
-    process.exit(1)
+  let user
+  for (let page = 1; ; page++) {
+    const { data: users, error: listError } = await supabase.auth.admin.listUsers({ page, perPage: 100 })
+    if (listError) throw listError
+    user = users.users.find((u) => u.email?.toLowerCase() === email)
+    if (user || users.users.length < 100) break
   }
-
-  let user = users.users.find((u) => u.email === email)
   if (!user) {
     console.log(`Creating new Supabase Auth user: ${email}...`)
     const { data: created, error: createError } = await supabase.auth.admin.createUser({

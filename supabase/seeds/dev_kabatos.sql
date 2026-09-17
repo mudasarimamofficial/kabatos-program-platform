@@ -1,5 +1,5 @@
--- Run only against the DEV database after setting a database-level guard:
---   ALTER DATABASE postgres SET app.kabatos_environment = 'development';
+-- Run only against verified DEV/local with this setting in the SAME connection:
+--   SET app.kabatos_environment = 'development';
 -- This script intentionally fails closed if that guard is absent or not development.
 begin;
 
@@ -12,11 +12,11 @@ end;
 $$;
 
 insert into public.brands (
-  slug, name, primary_color, secondary_color, highlight_color, product_name,
+  slug, name, logo_path, product_image_path, primary_color, secondary_color, highlight_color, product_name,
   reorder_url, active, timezone, config_revision
 ) values
-  ('comprex', 'COMPREX', '#F07106', '#8B6F47', '#FDEEE1', 'COMPREX', null, true, 'UTC', 1),
-  ('demo-wellness', 'Demo Wellness', '#246B5A', '#6D8B7A', '#EAF4EE', 'Wellness 10', null, true, 'UTC', 1)
+  ('comprex', 'COMPREX', null, null, '#F07106', '#8B6F47', '#FDEEE1', 'COMPREX', null, true, 'UTC', 1),
+  ('demo-wellness', 'Demo Wellness', null, null, '#246B5A', '#6D8B7A', '#EAF4EE', 'Wellness 10', null, true, 'UTC', 1)
 on conflict (slug) do nothing;
 
 insert into public.program_configs (

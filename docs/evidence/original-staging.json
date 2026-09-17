@@ -1,0 +1,177 @@
+{
+  "base": "https://kabatos-program-platform-f5o35hva4.vercel.app",
+  "sourceCommit": "0e1cbba509b12701c63220ff8d267b5563613e90",
+  "applicationCookies": false,
+  "storageState": false,
+  "deploymentProtectionBypassOnly": true,
+  "routes": [
+    {
+      "path": "/comprex/dashboard",
+      "samples": [
+        {
+          "rsc": false,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "sampleCustomerSerialized": true,
+          "adminMetricsSerialized": false
+        },
+        {
+          "rsc": true,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "sampleCustomerSerialized": true,
+          "adminMetricsSerialized": false
+        }
+      ],
+      "finalUrl": "https://kabatos-program-platform-f5o35hva4.vercel.app/comprex/dashboard",
+      "title": "COMPREX — Your program, made simple",
+      "visibleBody": "COMPREX\nYOUR COMPREX PROGRAM\nWelcome back, Sarah\nDay 5 of 14\nSC\nPROGRAM SUMMARY\nDay 5 of 14\n29%\n9 days remaining\n7 scheduled uses\nTODAY\nYour scheduled use\n\nTake ~1 teaspoon in warm water before bedtime.\n\nMark complete\nPROGRAM SCHEDULE\nUsage history\n✓\nDay 1\ncompleted\n✓\nDay 3\ncompleted\n•\nDay 5\nscheduled\n○\nDay 7\nupcoming\n○\nDay 9\nupcoming\n○\nDay 11\nupcoming\n○\nDay 13\nupcoming\nYour information is kept private and secure."
+    },
+    {
+      "path": "/demo-wellness/dashboard",
+      "samples": [
+        {
+          "rsc": false,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "sampleCustomerSerialized": true,
+          "adminMetricsSerialized": false
+        },
+        {
+          "rsc": true,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "sampleCustomerSerialized": true,
+          "adminMetricsSerialized": false
+        }
+      ],
+      "finalUrl": "https://kabatos-program-platform-f5o35hva4.vercel.app/demo-wellness/dashboard",
+      "title": "COMPREX — Your program, made simple",
+      "visibleBody": "Demo Wellness\nYOUR Demo Wellness PROGRAM\nWelcome back, Alex\nDay 4 of 10\nAC\nPROGRAM SUMMARY\nDay 4 of 10\n40%\n6 days remaining\n5 scheduled uses\nREST DAY\nNothing scheduled today\n\nYour next usage is Day 5. Keep hydrated and rest well.\n\nPROGRAM SCHEDULE\nUsage history\n✓\nDay 1\ncompleted\n✓\nDay 3\ncompleted\n○\nDay 5\nupcoming\n○\nDay 7\nupcoming\n○\nDay 9\nupcoming\nYour information is kept private and secure."
+    },
+    {
+      "path": "/admin",
+      "samples": [
+        {
+          "rsc": false,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "sampleCustomerSerialized": true,
+          "adminMetricsSerialized": true
+        },
+        {
+          "rsc": true,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "sampleCustomerSerialized": true,
+          "adminMetricsSerialized": true
+        }
+      ],
+      "finalUrl": "https://kabatos-program-platform-f5o35hva4.vercel.app/admin",
+      "title": "COMPREX — Your program, made simple",
+      "visibleBody": "COMPREX\nOverview\nBrands\nCustomers\nAccess links\nCustomer preview\nCOMPREX ADMIN\nOverview\nMaster admin\nAD\nTotal brands\n2\nConfigured programs\nTotal customers\n3\nAcross all brands\nActive programs\n3\nAcross all brands\nActive subscriptions\n3\nCurrent subscriptions\nRECENT CUSTOMERS\nLatest program starts\nView all\nSC\nSarah\nStarted a comprex program\nSep 5, 2026\nJC\nJordan\nStarted a comprex program\nAug 29, 2026\nAC\nAlex\nStarted a demo-wellness program\nSep 1, 2026"
+    },
+    {
+      "path": "/admin/brands",
+      "samples": [
+        {
+          "rsc": false,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "sampleCustomerSerialized": false,
+          "adminMetricsSerialized": false
+        },
+        {
+          "rsc": true,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "sampleCustomerSerialized": false,
+          "adminMetricsSerialized": false
+        }
+      ],
+      "finalUrl": "https://kabatos-program-platform-f5o35hva4.vercel.app/admin/brands",
+      "title": "COMPREX — Your program, made simple",
+      "visibleBody": "COMPREX\nOverview\nBrands\nCustomers\nAccess links\nCustomer preview\nCOMPREX ADMIN\nBrands\nMaster admin\nAD\n\nManage the programs customers can access.\n\nAdd brand\nCOMPREX\nActive\nCOMPREX\n\nDaily Wellness\n\n14 days\n7 uses\nEdit brand\nDemo Wellness\nActive\nDemo Wellness\n\nDaily Balance\n\n10 days\n5 uses\nEdit brand"
+    },
+    {
+      "path": "/admin/brands/new",
+      "samples": [
+        {
+          "rsc": false,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "sampleCustomerSerialized": false,
+          "adminMetricsSerialized": false
+        },
+        {
+          "rsc": true,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "sampleCustomerSerialized": false,
+          "adminMetricsSerialized": false
+        }
+      ],
+      "finalUrl": "https://kabatos-program-platform-f5o35hva4.vercel.app/admin/brands/new",
+      "title": "COMPREX — Your program, made simple",
+      "visibleBody": "COMPREX\nOverview\nBrands\nCustomers\nAccess links\nCustomer preview\nCOMPREX ADMIN\nCreate brand\nMaster admin\nAD\nBack to brands\nNew brand\n\nCreate a new program configuration.\n\nCreate brand\nBRAND DETAILS\nBrand name\nBrand logo\nMain brand color\nProduct name\nReorder URL\nPROGRAM SCHEDULE\nDuration (days)\nScheduled usage days\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n\nChanging duration removes scheduled days outside the valid range."
+    },
+    {
+      "path": "/admin/customers",
+      "samples": [
+        {
+          "rsc": false,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "sampleCustomerSerialized": true,
+          "adminMetricsSerialized": false
+        },
+        {
+          "rsc": true,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "sampleCustomerSerialized": true,
+          "adminMetricsSerialized": false
+        }
+      ],
+      "finalUrl": "https://kabatos-program-platform-f5o35hva4.vercel.app/admin/customers",
+      "title": "COMPREX — Your program, made simple",
+      "visibleBody": "COMPREX\nOverview\nBrands\nCustomers\nAccess links\nCustomer preview\nCOMPREX ADMIN\nCustomers\nMaster admin\nAD\n\nView and support every customer program.\n\nCUSTOMER\nBRAND\nPROGRESS\nPROGRAM\nSUBSCRIPTION\nSC\nSarah\nsarah.chen@email.com\ncomprex\nDay 5\nActive\nactive\nJC\nJordan\njordan.w@email.com\ncomprex\nDay 12\nActive\nactive\nAC\nAlex\nalex@demo-wellness.test\ndemo-wellness\nDay 4\nActive\nactive"
+    },
+    {
+      "path": "/admin/access",
+      "samples": [
+        {
+          "rsc": false,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "sampleCustomerSerialized": false,
+          "adminMetricsSerialized": false
+        },
+        {
+          "rsc": true,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "sampleCustomerSerialized": false,
+          "adminMetricsSerialized": false
+        }
+      ],
+      "finalUrl": "https://kabatos-program-platform-f5o35hva4.vercel.app/admin/access",
+      "title": "COMPREX — Your program, made simple",
+      "visibleBody": "COMPREX\nOverview\nBrands\nCustomers\nAccess links\nCustomer preview\nCOMPREX ADMIN\nAccess links\nMaster admin\nAD\n\nShare a direct entry point to each program.\n\nBrand\nCOMPREX\nDemo Wellness\nCOMPREX · Daily Wellness\nCustomer access link\n\nAnyone with this link can enter the onboarding flow.\n\nkabatos-program-platform-f5o35hva4.vercel.app/comprex\nDownload PNG\nDownload SVG\nCopy link"
+    }
+  ]
+}

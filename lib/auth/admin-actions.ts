@@ -9,8 +9,7 @@ export async function signInAdminAction(formData: FormData) {
 
   const supabase = await createSupabaseServerClient()
   if (!supabase) {
-    // If Supabase not configured locally, allow dev preview transition
-    return { success: true }
+    return { success: false, error: 'Authentication is unavailable.' }
   }
 
   const { data, error } = await supabase.auth.signInWithPassword({

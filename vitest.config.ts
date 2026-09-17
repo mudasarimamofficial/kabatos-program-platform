@@ -1,5 +1,7 @@
 import { defineConfig } from 'vitest/config'
 import path from 'node:path'
+process.loadEnvFile('.env.local')
+if (new URL(process.env.NEXT_PUBLIC_SUPABASE_URL!).hostname !== 'finbvtwjddrmbuuuyeni.supabase.co') throw new Error('Live regression tests require DEV Supabase')
 
 export default defineConfig({
   test: {

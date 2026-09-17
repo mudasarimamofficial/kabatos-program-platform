@@ -4,6 +4,7 @@ import React from 'react'
 import { ShieldCheck } from 'lucide-react'
 import { BrandLogo } from './brand-logo'
 import type { Brand } from '@/lib/types'
+import { deriveTextColor } from '@/lib/program/contrast'
 
 export function CustomerShell({ brand, children }: { brand: Brand; children: React.ReactNode }) {
   return (
@@ -11,6 +12,11 @@ export function CustomerShell({ brand, children }: { brand: Brand; children: Rea
       className="customer-shell"
       style={
         {
+          '--brand': brand.theme.primary,
+          '--brand-hover': brand.theme.primaryHover,
+          '--brand-text': brand.theme.primaryText,
+          '--brand-hover-text': deriveTextColor(brand.theme.primaryHover),
+          '--surface': brand.theme.highlight,
           '--brand-runtime': brand.theme.primary,
           '--brand-hover-runtime': brand.theme.primaryHover,
           '--brand-text-runtime': brand.theme.primaryText,

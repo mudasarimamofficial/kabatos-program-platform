@@ -45,9 +45,9 @@ export function CheckoutScreen({ brand }: { brand: Brand }) {
         return
       }
       // If Stripe price blocked or preview mode:
-      setOutcome('success')
+      setOutcome('failed')
     } catch {
-      setOutcome('success')
+      setOutcome('failed')
     } finally {
       setLoading(false)
     }

@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 
 test.describe('Customer Experience (C-01 to C-10)', () => {
-  test('completes full customer journey from branded welcome to dashboard usage completion', async ({ page }) => {
+  test('validates onboarding and safely rejects unavailable paid activation and checkout', async ({ page }) => {
     // C-01: Welcome Screen
     await page.goto('/comprex')
     await expect(page.getByRole('heading', { level: 1 })).toContainText(/your program/i)
@@ -23,26 +23,16 @@ test.describe('Customer Experience (C-01 to C-10)', () => {
     await page.locator('#order-number').fill('#CX-9021')
     await continueBtn.click()
 
-    // C-03: Program Activation Screen
-    await expect(page).toHaveURL(/\/comprex\/activate/, { timeout: 30000 })
-    await expect(page.getByRole('heading', { name: /program activation/i })).toBeVisible()
-    await expect(page.getByText(/14 days/i)).toBeVisible()
-
-    // C-04: Secure Checkout Handoff
-    await page.getByRole('link', { name: /activate my program/i }).click()
-    await expect(page).toHaveURL(/\/comprex\/checkout/, { timeout: 30000 })
-    await expect(page.getByText(/secure checkout handoff/i)).toBeVisible()
-
-    // C-05: Complete checkout simulation -> Success Screen
+    // No commercial terms are configured: fail honestly, without minting a session.
+    await expect(page.getByText('Program activation is currently unavailable.')).toBeVisible()
+    await expect(page).toHaveURL(/\/comprex\/start$/)
+    expect((await page.context().cookies()).some(c => c.name === 'kabatos_customer_session')).toBe(false)
+    await page.goto('/comprex/dashboard')
+    await expect(page).toHaveURL(/\/comprex$/)
+    await page.goto('/comprex/checkout')
     await page.getByRole('button', { name: /continue to secure checkout/i }).click()
-    await expect(page.getByRole('heading', { name: /your program is ready/i })).toBeVisible({ timeout: 30000 })
+    await expect(page.getByRole('heading', { name: /payment could not be completed/i })).toBeVisible()
 
-    // C-06: Program Dashboard Security Gate
-    await page.getByRole('link', { name: /go to my dashboard/i }).click()
-    // In unactivated state without approved Stripe price,
-    // the security layer safely redirects unactivated visitors to branded entry (/comprex)
-    await page.waitForURL(/\/comprex$/, { timeout: 30000 })
-    await expect(page.getByRole('heading', { level: 1 })).toContainText(/your program/i)
   })
 
   test('handles invalid brand slug with graceful error screen (C-10)', async ({ page }) => {
@@ -60,7 +50,7 @@ test.describe('Admin Experience (A-01 to A-07)', () => {
 
     // Sign in as Master Admin to access protected admin routes
     const adminEmail = process.env.DEV_ADMIN_EMAIL || process.env.MASTER_ADMIN_EMAIL || 'master-admin@kabatos.dev'
-    const adminPassword = process.env.DEV_ADMIN_PASSWORD || process.env.MASTER_ADMIN_PASSWORD || 'DevMasterPass_177af0525b6d91e0!'
+    const adminPassword = process.env.DEV_ADMIN_PASSWORD || process.env.MASTER_ADMIN_PASSWORD || ''
     await page.locator('#email').fill(adminEmail)
     await page.locator('#password').fill(adminPassword)
     await page.getByRole('button', { name: /sign in/i }).click()
@@ -90,13 +80,6 @@ test.describe('Admin Experience (A-01 to A-07)', () => {
     await page.goto('/admin/customers')
     await expect(page.getByRole('heading', { name: /customers/i })).toBeVisible()
     await expect(page.getByPlaceholder(/search customers/i)).toBeVisible()
-
-    // A-06: Customer Detail
-    const firstCustomer = page.locator('.customer-item, tr, li').filter({ hasText: /sarah|customer/i }).first()
-    if (await firstCustomer.isVisible()) {
-      await firstCustomer.click()
-      await expect(page.getByRole('heading', { name: /customer detail|progress/i })).toBeVisible()
-    }
 
     // A-07: QR / Access Links
     await page.goto('/admin/access')

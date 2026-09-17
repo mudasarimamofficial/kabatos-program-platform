@@ -1,13 +1,12 @@
+import { deriveHoverColor, deriveTextColor } from '@/lib/program/contrast'
 import 'server-only'
 import { createClient } from '@supabase/supabase-js'
 import { cookies } from 'next/headers'
-import { publicEnv } from '@/lib/env'
 import {
   createOpaqueSessionToken,
   CUSTOMER_SESSION_COOKIE,
   setCustomerSessionCookie,
 } from '@/lib/auth/customer-session'
-import { getBrand as getMockBrand, defaultCustomer, customers as mockCustomers } from '@/lib/mock/data'
 import type { Brand, Customer, ProgramSummary, ScheduleItem } from '@/lib/types'
 
 function getSupabaseClient() {
@@ -17,26 +16,6 @@ function getSupabaseClient() {
   return createClient(url, key)
 }
 
-function deriveHoverColor(color: string): string {
-  const hex = color.replace('#', '')
-  if (hex.length !== 6) return color
-  const num = parseInt(hex, 16)
-  const r = Math.max(0, Math.floor((num >> 16) * 0.85))
-  const g = Math.max(0, Math.floor(((num >> 8) & 0x00FF) * 0.85))
-  const b = Math.max(0, Math.floor((num & 0x0000FF) * 0.85))
-  return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase()}`
-}
-
-function deriveTextColor(color: string): string {
-  const hex = color.replace('#', '')
-  if (hex.length !== 6) return '#FFFFFF'
-  const num = parseInt(hex, 16)
-  const r = num >> 16
-  const g = (num >> 8) & 0x00FF
-  const b = num & 0x0000FF
-  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255
-  return luminance > 0.5 ? '#121212' : '#FFFFFF'
-}
 
 export function formatBrandFromDb(data: any): Brand {
   const primary = data.primary_color ?? '#121212'
@@ -45,8 +24,8 @@ export function formatBrandFromDb(data: any): Brand {
   return {
     slug: data.slug,
     name: data.name,
-    logo: data.logo_path ?? undefined,
-    productImage: data.product_image_path ?? undefined,
+    logo: data.logo_path ? `${process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL}/storage/v1/object/public/brand-assets/${data.logo_path}` : undefined,
+    productImage: data.product_image_path ? `${process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL}/storage/v1/object/public/brand-assets/${data.product_image_path}` : undefined,
     productName: data.product_name,
     duration: data.program?.duration_days ?? 14,
     schedule: data.program?.schedule_days ?? [1, 3, 5, 7, 9, 11, 13],
@@ -91,7 +70,7 @@ export async function resolveBrand(slug: string): Promise<Brand | null> {
   if (process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL) {
     return null
   }
-  return getMockBrand(slug) ?? null
+  return null
 }
 
 export interface JoinProgramInput {
@@ -129,8 +108,7 @@ export async function joinProgram(input: JoinProgramInput): Promise<{
       if (error) {
         // If paid activation is blocked pending stripe price, provide friendly status
         if (error.message.includes('activation unavailable')) {
-          await setCustomerSessionCookie(token)
-          return { success: true, status: 'not_started' }
+          return { success: false, error: 'Program activation is currently unavailable.' }
         }
         return { success: false, error: error.message }
       }
@@ -142,9 +120,7 @@ export async function joinProgram(input: JoinProgramInput): Promise<{
     }
   }
 
-  // Local fallback session
-  await setCustomerSessionCookie(token)
-  return { success: true, status: 'not_started' }
+  return { success: false, error: 'Program service unavailable. Please try again.' }
 }
 
 export interface DashboardData {
@@ -179,14 +155,19 @@ export async function getCustomerDashboard(brandSlug: string): Promise<Dashboard
       }
 
       const p = data.program
+      // Existing programs retain their enrolled configuration after an admin edit.
+      brand.duration = p.duration_days
+      brand.schedule = p.schedule_days
+      brand.usageTitle = p.usage_title
+      brand.usageInstructions = p.usage_instructions
       const completedDay = data.usage?.scheduled_day
       const completedAt = data.usage?.completed_at
-      const completedDays = completedAt && completedDay ? [completedDay] : []
+      const completedDays: number[] = data.history?.filter((u: any) => u.completed_at).map((u: any) => u.scheduled_day) ?? (completedAt && completedDay ? [completedDay] : [])
 
       const customer: Customer = {
-        id: 'live-customer',
-        firstName: 'Sarah',
-        email: 'sarah@example.com',
+        id: data.customer?.id ?? '',
+        firstName: data.customer?.first_name ?? '',
+        email: '',
         brandSlug,
         startDate: p.start_date ?? new Date().toISOString().split('T')[0],
         currentDay: p.current_day ?? 1,
@@ -250,7 +231,7 @@ export async function completeScheduledUsage(brandSlug: string): Promise<{ succe
     }
   }
 
-  return { success: true }
+  return { success: false, error: 'Program service unavailable' }
 }
 
 /**
@@ -278,5 +259,5 @@ export async function undoScheduledUsage(brandSlug: string): Promise<{ success: 
     }
   }
 
-  return { success: true }
+  return { success: false, error: 'Program service unavailable' }
 }

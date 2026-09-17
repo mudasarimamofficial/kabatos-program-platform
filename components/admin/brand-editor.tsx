@@ -44,6 +44,7 @@ export function BrandEditor({
   const validate = () => {
     const next: typeof errors = {}
     try {
+      if (!form.reorderUrl.trim()) return validateSchedule()
       const url = new URL(form.reorderUrl)
       if (url.protocol !== 'https:') next.reorderUrl = 'Use a secure https:// URL.'
     } catch {
@@ -52,6 +53,12 @@ export function BrandEditor({
     if (!days.length) next.schedule = 'Select at least one day within the duration.'
     setErrors(next)
     return Object.keys(next).length === 0
+  }
+
+  const validateSchedule = () => {
+    const next = days.length ? {} : { schedule: 'Select at least one day within the duration.' }
+    setErrors(next)
+    return days.length > 0
   }
 
   const submit = async (event: React.FormEvent) => {
@@ -72,7 +79,7 @@ export function BrandEditor({
       }
       setSaved(true)
     } catch {
-      setSaved(true)
+      setErrors({ general: 'Failed to save brand. Please try again.' })
     } finally {
       setSaving(false)
     }
@@ -128,7 +135,7 @@ export function BrandEditor({
                 <input
                   value={form.logo}
                   onChange={(event) => update('logo', event.target.value)}
-                  placeholder="Optional logo reference"
+                  placeholder="Optional brand-slug/logo.png storage path"
                 />
               </label>
               <label>
@@ -164,7 +171,6 @@ export function BrandEditor({
               <label>
                 Reorder URL
                 <input
-                  required
                   value={form.reorderUrl}
                   onChange={(event) => update('reorderUrl', event.target.value)}
                   aria-invalid={Boolean(errors.reorderUrl)}

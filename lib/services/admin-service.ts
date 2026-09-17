@@ -1,50 +1,19 @@
+import { deriveHoverColor, deriveTextColor } from '@/lib/program/contrast'
 import 'server-only'
 import { revalidatePath } from 'next/cache'
-import { createClient } from '@supabase/supabase-js'
-import { brands as mockBrands, customers as mockCustomers, metrics as mockMetrics } from '@/lib/mock/data'
+import { requireAdminSession } from '@/lib/auth/admin-auth'
 import type { AdminMetrics, Brand, BrandForm, Customer } from '@/lib/types'
 
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 
 async function getAdminSupabaseClient() {
-  try {
-    const serverClient = await createSupabaseServerClient()
-    if (serverClient) {
-      const { data } = await serverClient.auth.getSession()
-      if (data?.session) return serverClient
-    }
-  } catch {}
-
-  const serviceKey = process.env.SUPABASE_SECRET_KEY
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL
-  if (serviceKey && url) {
-    return createClient(url, serviceKey, { auth: { autoRefreshToken: false, persistSession: false } })
-  }
-  if (!url) return null
-  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || process.env.SUPABASE_ANON_KEY
-  return anonKey ? createClient(url, anonKey) : null
+  // Layouts render concurrently with pages. Authenticate before every data operation.
+  await requireAdminSession()
+  const client = await createSupabaseServerClient()
+  if (!client) throw new Error('Authentication unavailable')
+  return client
 }
 
-function deriveHoverColor(color: string): string {
-  const hex = color.replace('#', '')
-  if (hex.length !== 6) return color
-  const num = parseInt(hex, 16)
-  const r = Math.max(0, Math.floor((num >> 16) * 0.85))
-  const g = Math.max(0, Math.floor(((num >> 8) & 0x00FF) * 0.85))
-  const b = Math.max(0, Math.floor((num & 0x0000FF) * 0.85))
-  return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase()}`
-}
-
-function deriveTextColor(color: string): string {
-  const hex = color.replace('#', '')
-  if (hex.length !== 6) return '#FFFFFF'
-  const num = parseInt(hex, 16)
-  const r = num >> 16
-  const g = (num >> 8) & 0x00FF
-  const b = num & 0x0000FF
-  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255
-  return luminance > 0.5 ? '#121212' : '#FFFFFF'
-}
 
 /**
  * Retrieves high-level operational counts for the Master Admin dashboard.
@@ -62,19 +31,7 @@ export async function getAdminDashboardMetrics(): Promise<AdminMetrics> {
           activeSubscriptions: data.active_subscriptions ?? 0,
         }
       }
-      // If RPC requires user session, query tables directly via service_role client
-      const [bRes, cRes, pRes, sRes] = await Promise.all([
-        supabase.from('brands').select('*', { count: 'exact', head: true }),
-        supabase.from('customers').select('*', { count: 'exact', head: true }),
-        supabase.from('customer_programs').select('*', { count: 'exact', head: true }).eq('status', 'active'),
-        supabase.from('subscriptions').select('*', { count: 'exact', head: true }).eq('status', 'active'),
-      ])
-      return {
-        totalBrands: bRes.count ?? 0,
-        totalCustomers: cRes.count ?? 0,
-        activePrograms: pRes.count ?? 0,
-        activeSubscriptions: sRes.count ?? 0,
-      }
+      throw new Error(error?.message || 'Admin metrics unavailable')
     } catch {
       // Fall through if unconfigured
     }
@@ -82,7 +39,7 @@ export async function getAdminDashboardMetrics(): Promise<AdminMetrics> {
   if (process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL) {
     return { totalBrands: 0, totalCustomers: 0, activePrograms: 0, activeSubscriptions: 0 }
   }
-  return mockMetrics
+  throw new Error('Admin metrics unavailable')
 }
 
 /**
@@ -101,6 +58,7 @@ export async function getAdminBrands(): Promise<Brand[]> {
           return {
             id: b.id,
             version: b.config_version ?? 1,
+            configuration: b,
             slug: b.slug,
             name: b.name,
             logo: b.logo_path ?? undefined,
@@ -120,39 +78,7 @@ export async function getAdminBrands(): Promise<Brand[]> {
           }
         })
       }
-      // If RPC requires user session, query brands table directly via service_role
-      const { data: directBrands, error: directErr } = await supabase
-        .from('brands')
-        .select('*, program_configs(*)')
-        .order('created_at', { ascending: true })
-      if (!directErr && Array.isArray(directBrands) && directBrands.length > 0) {
-        return directBrands.map((b: any) => {
-          const currentConfig = b.program_configs?.find((c: any) => c.is_current) ?? b.program_configs?.[0]
-          const primary = b.primary_color ?? '#121212'
-          const secondary = b.secondary_color ?? '#666666'
-          const highlight = b.highlight_color ?? '#F4F4F4'
-          return {
-            id: b.id,
-            version: b.config_revision ?? 1,
-            slug: b.slug,
-            name: b.name,
-            logo: b.logo_path ?? undefined,
-            productName: b.product_name,
-            duration: currentConfig?.duration_days ?? 14,
-            schedule: currentConfig?.schedule_days ?? [1, 3, 5, 7],
-            reorderUrl: b.reorder_url ?? undefined,
-            status: b.active ? 'active' : 'draft',
-            theme: {
-              primary,
-              primaryHover: deriveHoverColor(primary),
-              primaryText: deriveTextColor(primary),
-              secondary,
-              highlight,
-              highlightBorder: highlight,
-            },
-          }
-        })
-      }
+
     } catch {
       // Fall through if unconfigured
     }
@@ -160,7 +86,7 @@ export async function getAdminBrands(): Promise<Brand[]> {
   if (process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL) {
     return []
   }
-  return mockBrands
+  return []
 }
 
 /**
@@ -212,22 +138,22 @@ export async function saveAdminBrand(
             p_name: form.name,
             p_logo_path: form.logo || null,
             p_primary_color: form.primary,
-            p_secondary_color: '#8B6F47',
-            p_highlight_color: '#FDEEE1',
+            p_secondary_color: existing.theme.secondary,
+            p_highlight_color: existing.theme.highlight,
             p_product_name: form.productName,
             p_reorder_url: form.reorderUrl || null,
-            p_timezone: 'UTC',
+            p_timezone: existing.configuration.timezone,
             p_duration_days: form.duration,
             p_schedule_days: form.schedule,
-            p_usage_title: 'Scheduled use',
-            p_usage_instructions: '',
-            p_running_low_days: 3,
-            p_subscription_required: true,
-            p_stripe_price_id: null,
-            p_active: true,
+            p_usage_title: existing.configuration.current_config.usage_title,
+            p_usage_instructions: existing.configuration.current_config.usage_instructions,
+            p_running_low_days: existing.configuration.current_config.running_low_days,
+            p_subscription_required: existing.configuration.current_config.subscription_required,
+            p_stripe_price_id: existing.configuration.current_config.stripe_price_id,
+            p_active: existing.status === 'active',
           })
           if (error) return { success: false, error: error.message }
-        }
+        } else return { success: false, error: 'Brand not found' }
       }
       try {
         revalidatePath('/[brandSlug]', 'layout')
@@ -238,7 +164,7 @@ export async function saveAdminBrand(
       return { success: false, error: err?.message || 'Failed to save brand' }
     }
   }
-  return { success: true }
+  return { success: false, error: 'Backend unavailable' }
 }
 
 /**
@@ -273,12 +199,7 @@ export async function getAdminCustomers(query = ''): Promise<Customer[]> {
   if (process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL) {
     return []
   }
-  const filtered = query
-    ? mockCustomers.filter((c) =>
-        `${c.firstName} ${c.email}`.toLowerCase().includes(query.toLowerCase())
-      )
-    : mockCustomers
-  return filtered
+  return []
 }
 
 /**

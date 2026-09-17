@@ -74,7 +74,7 @@ export function DashboardScreen({
         <div className="dashboard-greeting">
           <div>
             <span className="eyebrow">YOUR {brand.name} PROGRAM</span>
-            <h2>Welcome back, {customer.firstName}</h2>
+            <h2>Welcome back{customer.firstName ? `, ${customer.firstName}` : ''}</h2>
             <div className="day-badge">
               Day {summary.currentDay} of {brand.duration}
             </div>

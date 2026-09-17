@@ -8,6 +8,8 @@ if (!url || !serviceKey) {
   process.exit(1)
 }
 
+if (new URL(url).hostname !== 'finbvtwjddrmbuuuyeni.supabase.co') throw new Error('DEV only')
+
 const supabase = createClient(url, serviceKey, {
   auth: { autoRefreshToken: false, persistSession: false },
 })
