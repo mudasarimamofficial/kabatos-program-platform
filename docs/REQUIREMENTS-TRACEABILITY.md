@@ -24,4 +24,7 @@
 | **ENG-03** | Webhook Idempotency Engine | Bible | `/api/stripe/webhook` | `app/api/stripe/webhook/route.ts` | `stripe_events` | `lib/stripe/stripe.test.ts` | **PASS** |
 | **ST-01** | Approved Stripe Commercial Price | Brief | Billing Handoff | `/api/stripe/checkout` | `program_configs.stripe_price_id` | Blocked until client provides terms | **BLOCKED** |
 | **TR-01** | Client Infrastructure Ownership Transfer | Agreement | Staging -> Client Accounts | `docs/CLIENT-OWNERSHIP-TRANSFER-PLAN.md` | Full Client Accounts | Verification Smoke Test | **PENDING_TRANSFER** |
+# 2026-09-17 gate status
+
+The prior 100% completion claim is superseded. Authorization, cache propagation, brand creation, sessions, RLS, assets, contrast and QR gates passed in `docs/evidence/release-gate.json`. Clean disposable-DB reproduction is blocked by the unavailable Docker Linux engine. Approved Stripe commercial terms and client-owned infrastructure access remain external blockers. Paid onboarding and real payment checkout are intentionally unconfigured.
 

@@ -48,11 +48,11 @@ The following matrix defines the step-by-step transfer requirements across all 1
 - [ ] **Row Level Security (RLS):** Verify all 8 core tables have active RLS and verified security policies.
 - [ ] **Storage Buckets:** Verify public read-only `brand-assets` bucket exists with proper MIME-type restrictions.
 - [ ] **DEV Environment Seeding & Safety Guard Protocol:**
-  - `supabase/seeds/dev_kabatos.sql` contains a strict fail-closed safety guard: `app.kabatos_environment = 'development'`. This strictly blocks test seed execution against production databases.
-  - To apply test data on a fresh local or development database:
-    1. Run `ALTER DATABASE postgres SET app.kabatos_environment = 'development';` (or execute `SET app.kabatos_environment = 'development';` in the migration/seed session).
+  - `supabase/seeds/dev_kabatos.sql` contains a strict fail-closed safety guard: `app.kabatos_environment = 'development'`. This blocks test seed execution unless the operator opts into development mode.
+  - For a fresh local or DEV database, run `SET app.kabatos_environment = 'development';` and the complete seed in the same SQL connection, or use `./scripts/seed-dev.ps1 -Local` / `./scripts/seed-dev.ps1 -LinkedDev`.
+    1. Local prerequisites are a running Docker Linux engine; run `supabase start`, then `supabase db reset --local`.
     2. Execute `supabase/seeds/dev_kabatos.sql` to populate `COMPREX` and `Demo Wellness` baseline brand configurations.
-    3. Production instances must never enable this setting; production brands are created purely via the Master Administrator console (`/admin/brands/new`) or audited administrative scripts.
+    3. Production instances must never enable this setting; production brands are created purely via the Master Administrator console (`/admin/brands/new`) or audited administrative scripts. The audit's local clean-DB run was blocked because Docker's Linux engine pipe was unavailable.
 
 ### C. Vercel Hosting & Domain Deployment
 - [ ] **Project Transfer:** In Vercel dashboard: Project Settings -> General -> Transfer Project to client's Vercel Team / Account.

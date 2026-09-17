@@ -1,6 +1,6 @@
 {
-  "date": "2026-09-17T12:54:34.014Z",
-  "base": "https://kabatos-program-platform-4nkuvbucf.vercel.app",
+  "date": "2026-09-17T13:28:10.892Z",
+  "base": "https://kabatos-program-platform-dstgjx4db.vercel.app",
   "results": [
     {
       "label": "anonymous /admin",
@@ -26,7 +26,7 @@
           "serverRedirect": "NEXT_REDIRECT;replace;/admin/login;307;\"}"
         }
       ],
-      "finalUrl": "https://kabatos-program-platform-4nkuvbucf.vercel.app/admin/login",
+      "finalUrl": "https://kabatos-program-platform-dstgjx4db.vercel.app/admin/login",
       "title": "COMPREX — Your program, made simple",
       "visibleBody": "COMPREX ADMIN\nSign in to continue.\n\nManage brands, programs, and customer access.\n\nEmail\nPassword\nSign in\nReturn to customer preview",
       "network": [
@@ -37,6 +37,11 @@
         },
         {
           "path": "/admin/login",
+          "status": 200,
+          "privatePayload": false
+        },
+        {
+          "path": "/comprex",
           "status": 200,
           "privatePayload": false
         }
@@ -66,7 +71,7 @@
           "serverRedirect": "NEXT_REDIRECT;replace;/admin/login;307;\"}"
         }
       ],
-      "finalUrl": "https://kabatos-program-platform-4nkuvbucf.vercel.app/admin/login",
+      "finalUrl": "https://kabatos-program-platform-dstgjx4db.vercel.app/admin/login",
       "title": "COMPREX — Your program, made simple",
       "visibleBody": "COMPREX ADMIN\nSign in to continue.\n\nManage brands, programs, and customer access.\n\nEmail\nPassword\nSign in\nReturn to customer preview",
       "network": [
@@ -106,7 +111,7 @@
           "serverRedirect": "NEXT_REDIRECT;replace;/admin/login;307;\"}"
         }
       ],
-      "finalUrl": "https://kabatos-program-platform-4nkuvbucf.vercel.app/admin/login",
+      "finalUrl": "https://kabatos-program-platform-dstgjx4db.vercel.app/admin/login",
       "title": "COMPREX — Your program, made simple",
       "visibleBody": "COMPREX ADMIN\nSign in to continue.\n\nManage brands, programs, and customer access.\n\nEmail\nPassword\nSign in\nReturn to customer preview",
       "network": [
@@ -146,7 +151,7 @@
           "serverRedirect": "NEXT_REDIRECT;replace;/admin/login;307;\"}"
         }
       ],
-      "finalUrl": "https://kabatos-program-platform-4nkuvbucf.vercel.app/admin/login",
+      "finalUrl": "https://kabatos-program-platform-dstgjx4db.vercel.app/admin/login",
       "title": "COMPREX — Your program, made simple",
       "visibleBody": "COMPREX ADMIN\nSign in to continue.\n\nManage brands, programs, and customer access.\n\nEmail\nPassword\nSign in\nReturn to customer preview",
       "network": [
@@ -186,7 +191,7 @@
           "serverRedirect": "NEXT_REDIRECT;replace;/admin/login;307;\"}"
         }
       ],
-      "finalUrl": "https://kabatos-program-platform-4nkuvbucf.vercel.app/admin/login",
+      "finalUrl": "https://kabatos-program-platform-dstgjx4db.vercel.app/admin/login",
       "title": "COMPREX — Your program, made simple",
       "visibleBody": "COMPREX ADMIN\nSign in to continue.\n\nManage brands, programs, and customer access.\n\nEmail\nPassword\nSign in\nReturn to customer preview",
       "network": [
@@ -197,11 +202,6 @@
         },
         {
           "path": "/admin/login",
-          "status": 200,
-          "privatePayload": false
-        },
-        {
-          "path": "/comprex",
           "status": 200,
           "privatePayload": false
         }
@@ -231,7 +231,7 @@
           "serverRedirect": "NEXT_REDIRECT;replace;/comprex;307;\"}"
         }
       ],
-      "finalUrl": "https://kabatos-program-platform-4nkuvbucf.vercel.app/comprex",
+      "finalUrl": "https://kabatos-program-platform-dstgjx4db.vercel.app/comprex",
       "title": "COMPREX — Your program, made simple",
       "visibleBody": "COMPREX\nYOUR WELLNESS PROGRAM\nYour program,\nmade simple.\n\nWelcome to your wellness journey. Simple routine. Clear progress. Easy reordering.\n\nCOMPREX · COMPREX\n14-day structured program\nDaily Routine\nEvening habit\nClear Progress\nDaily tracker\nNatural Comfort\nGentle rhythm\nStart My Program\n\nAlready started? View your program\n\nYour information is kept private and secure.",
       "network": [
@@ -271,7 +271,7 @@
           "serverRedirect": "NEXT_REDIRECT;replace;/demo-wellness;307;\"}"
         }
       ],
-      "finalUrl": "https://kabatos-program-platform-4nkuvbucf.vercel.app/demo-wellness",
+      "finalUrl": "https://kabatos-program-platform-dstgjx4db.vercel.app/demo-wellness",
       "title": "COMPREX — Your program, made simple",
       "visibleBody": "Demo Wellness\nYOUR WELLNESS PROGRAM\nYour program,\nmade simple.\n\nWelcome to your wellness journey. Simple routine. Clear progress. Easy reordering.\n\nDemo Wellness\nWellness 10 · 10-day program\nDaily Routine\nEvening habit\nClear Progress\nDaily tracker\nNatural Comfort\nGentle rhythm\nStart My Program\n\nAlready started? View your program\n\nYour information is kept private and secure.",
       "network": [
@@ -318,7 +318,7 @@
           "serverRedirect": "NEXT_REDIRECT;replace;/admin/login;307;\"}"
         }
       ],
-      "finalUrl": "https://kabatos-program-platform-4nkuvbucf.vercel.app/admin/login",
+      "finalUrl": "https://kabatos-program-platform-dstgjx4db.vercel.app/admin/login",
       "visibleBody": "COMPREX ADMIN\nSign in to continue.\n\nManage brands, programs, and customer access.\n\nEmail\nPassword\nSign in\nReturn to customer preview"
     },
     {
@@ -345,7 +345,7 @@
           "serverRedirect": "NEXT_REDIRECT;replace;/admin/login;307;\"}"
         }
       ],
-      "finalUrl": "https://kabatos-program-platform-4nkuvbucf.vercel.app/admin/login",
+      "finalUrl": "https://kabatos-program-platform-dstgjx4db.vercel.app/admin/login",
       "visibleBody": "COMPREX ADMIN\nSign in to continue.\n\nManage brands, programs, and customer access.\n\nEmail\nPassword\nSign in\nReturn to customer preview"
     },
     {
@@ -372,7 +372,7 @@
           "serverRedirect": "NEXT_REDIRECT;replace;/admin/login;307;\"}"
         }
       ],
-      "finalUrl": "https://kabatos-program-platform-4nkuvbucf.vercel.app/admin/login",
+      "finalUrl": "https://kabatos-program-platform-dstgjx4db.vercel.app/admin/login",
       "visibleBody": "COMPREX ADMIN\nSign in to continue.\n\nManage brands, programs, and customer access.\n\nEmail\nPassword\nSign in\nReturn to customer preview"
     },
     {
@@ -399,7 +399,7 @@
           "serverRedirect": "NEXT_REDIRECT;replace;/admin/login;307;\"}"
         }
       ],
-      "finalUrl": "https://kabatos-program-platform-4nkuvbucf.vercel.app/admin/login",
+      "finalUrl": "https://kabatos-program-platform-dstgjx4db.vercel.app/admin/login",
       "visibleBody": "COMPREX ADMIN\nSign in to continue.\n\nManage brands, programs, and customer access.\n\nEmail\nPassword\nSign in\nReturn to customer preview"
     },
     {
@@ -426,7 +426,7 @@
           "serverRedirect": "NEXT_REDIRECT;replace;/admin/login;307;\"}"
         }
       ],
-      "finalUrl": "https://kabatos-program-platform-4nkuvbucf.vercel.app/admin/login",
+      "finalUrl": "https://kabatos-program-platform-dstgjx4db.vercel.app/admin/login",
       "visibleBody": "COMPREX ADMIN\nSign in to continue.\n\nManage brands, programs, and customer access.\n\nEmail\nPassword\nSign in\nReturn to customer preview"
     },
     {
@@ -472,20 +472,161 @@
     },
     {
       "label": "demo restored",
-      "name": "Demo Wellness"
+      "name": "Demo Gate 1789651707376"
     },
     {
       "label": "new runtime brand a",
-      "slug": "gate-1789649700012-a",
+      "slug": "gate-1789651714763-a",
       "status": 200,
       "nameRendered": true,
       "redeployed": false
+    },
+    {
+      "label": "A-04 persistence",
+      "logoPath": true,
+      "mainColor": true,
+      "productName": true,
+      "duration": true,
+      "schedule": true,
+      "reorderUrl": true,
+      "unrelatedConfigPreserved": true,
+      "uploadUi": false
+    },
+    {
+      "label": "valid customer a",
+      "joined": "not_started",
+      "ownDashboard": 200,
+      "ownNameRendered": true,
+      "sha256Stored": true,
+      "rawTokenStored": false
+    },
+    {
+      "label": "new runtime brand b",
+      "slug": "gate-1789651714763-b",
+      "status": 200,
+      "nameRendered": true,
+      "redeployed": false
+    },
+    {
+      "label": "valid customer b",
+      "joined": "not_started",
+      "ownDashboard": 200,
+      "ownNameRendered": true,
+      "sha256Stored": true,
+      "rawTokenStored": false
+    },
+    {
+      "label": "cross-brand 0 to gate-1789651714763-b",
+      "rejected": true,
+      "status": 200,
+      "privatePayload": false
+    },
+    {
+      "label": "cross-brand 0 to comprex",
+      "rejected": true,
+      "status": 200,
+      "privatePayload": false
+    },
+    {
+      "label": "cross-brand 0 to demo-wellness",
+      "rejected": true,
+      "status": 200,
+      "privatePayload": false
+    },
+    {
+      "label": "cross-brand 1 to gate-1789651714763-a",
+      "rejected": true,
+      "status": 200,
+      "privatePayload": false
+    },
+    {
+      "label": "cross-brand 1 to comprex",
+      "rejected": true,
+      "status": 200,
+      "privatePayload": false
+    },
+    {
+      "label": "cross-brand 1 to demo-wellness",
+      "rejected": true,
+      "status": 200,
+      "privatePayload": false
+    },
+    {
+      "label": "named brand onboarding comprex",
+      "blocked": "activation unavailable: subscription requires an approved price",
+      "configurationUnchanged": true
+    },
+    {
+      "label": "named brand onboarding demo-wellness",
+      "blocked": "activation unavailable: subscription requires an approved price",
+      "configurationUnchanged": true
+    },
+    {
+      "label": "RLS customers",
+      "denied": true
+    },
+    {
+      "label": "RLS customer_programs",
+      "denied": true
+    },
+    {
+      "label": "RLS program_usage",
+      "denied": true
+    },
+    {
+      "label": "RLS subscriptions",
+      "denied": true
+    },
+    {
+      "label": "RLS customer_sessions",
+      "denied": true
+    },
+    {
+      "label": "RLS admin_profiles",
+      "denied": true
+    },
+    {
+      "label": "usage persistence",
+      "completeReadUndo": true
+    },
+    {
+      "label": "snapshot and capability lifecycle",
+      "snapshotRewriteBlocked": true,
+      "directIdReadBlocked": true,
+      "revokedRejected": true,
+      "expiredRejected": true
+    },
+    {
+      "label": "QR decoded",
+      "destination": "https://kabatos-program-platform-dstgjx4db.vercel.app/comprex"
+    },
+    {
+      "label": "persisted assets comprex",
+      "logo_path": "comprex/logo.png",
+      "product_image_path": "comprex/product-pouch.jpg",
+      "reorder_url": null,
+      "usage_title": "Scheduled use",
+      "usage_instructions": ""
+    },
+    {
+      "label": "persisted assets demo-wellness",
+      "logo_path": null,
+      "product_image_path": null,
+      "reorder_url": null,
+      "usage_title": "Scheduled use",
+      "usage_instructions": ""
+    },
+    {
+      "label": "invalid brand",
+      "status": 200,
+      "notFoundSignal": true,
+      "privatePayload": false
     }
   ],
   "cleanup": [
-    "Removed test customers/sessions and deactivated temporary brand gate-1789649700012-a; immutable configuration history retained",
+    "Removed test customers/sessions and deactivated temporary brand gate-1789651714763-a; immutable configuration history retained",
+    "Removed test customers/sessions and deactivated temporary brand gate-1789651714763-b; immutable configuration history retained",
     "Removed temporary Auth user",
     "Removed temporary Auth user"
-  ],
-  "failure": "new row violates row-level security policy"
+  ]
 }

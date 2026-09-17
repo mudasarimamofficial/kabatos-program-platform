@@ -33,3 +33,8 @@ The application enforces comprehensive automated test coverage spanning pure dom
 ### 4. Production Build
 - **Command:** `pnpm build`
 - **Status:** 13/13 static and dynamic routes compiled successfully in 2.2s.
+# 2026-09-17 final gate execution
+
+`pnpm typecheck` passed. Unit/regression tests passed 55/55. Production-build Playwright E2E passed 10/10. The deployed gate harness is `node --env-file=.env.local --env-file=.env.gate.local scripts/release-gate.mjs`; it uses fresh anonymous contexts, real temporary Auth users, real A-04 saves, QR decoding, reversible DEV fixtures and cleanup. Results are in `docs/evidence/release-gate.json`.
+
+Clean DB commands are `docker info`, `supabase start`, `supabase db reset --local`, `./scripts/seed-dev.ps1 -Local`, and `supabase db query --local --file scripts/verify-schema.sql`. They were attempted but Docker's Linux engine was unavailable; see `docs/evidence/clean-db.txt`. Linked DEV is not clean-DB proof.

@@ -32,3 +32,8 @@ Comprehensive manual code inspection and automated testing evaluating the platfo
 ### 7. Next.js Cache Isolation (§100)
 - **Status:** PASS.
 - **Verification:** Sensitive customer and admin pages are marked dynamic (`export const dynamic = 'force-dynamic'` or server-rendered on demand `ƒ`), preventing static caching of user-specific session data across requests.
+# 2026-09-17 final gate addendum
+
+The supplied historical Preview (`f5o35hva4`, source `0e1cbba509b12701c63220ff8d267b5563613e90`) exposed sample dashboard and admin data in clean application requests. This is recorded in `docs/evidence/original-staging.json`. The fixed Preview uses server-side authorization at every admin data entry point, a tenant-bound capability for customer data, no mock customer fallback, and no false-success session creation. Fresh HTML, RSC, browser, non-admin Auth, cross-brand, RLS, snapshot, hash, revocation and expiry checks are recorded in `docs/evidence/release-gate.json`.
+
+Streaming routes may return HTTP 200 with a server-generated `NEXT_REDIRECT`; the denied payloads contained no private DTO. Checkout return origins ignore request Origin and forwarded-host headers. The committed DEV admin password was rotated. PROD Supabase and Stripe LIVE were not touched.

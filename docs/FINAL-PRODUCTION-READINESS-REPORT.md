@@ -1,5 +1,38 @@
 # FINAL PRODUCTION READINESS REPORT — KABATOS PROGRAM PLATFORM / COMPREX
 
+## 2026-09-17 final surgical gate addendum
+
+This addendum supersedes earlier blanket PASS language. The current verified Preview is `https://kabatos-program-platform-dstgjx4db.vercel.app`, deployment `dpl_HLNLWrVA5ECeuNuifgV6uFP8UXC5`, exact source commit `03c76c373315f6a6d59c3f0d2d703fbf3adc00f1`. The historical supplied deployment `dpl_5VGVdoZmpM7D1uocgyJWiAttKtP3` was built from exact source `0e1cbba509b12701c63220ff8d267b5563613e90` and exposed sample data; evidence is in `docs/evidence/original-staging.json`. Current evidence is in `docs/evidence/release-gate.json`.
+
+- **A. Anonymous customer dashboard:** clean HTML/RSC/browser requests redirect to the matching branded entry; no customer data.
+- **B. Anonymous admin routes:** all five routes server-redirect to `/admin/login`; no private data.
+- **C. Non-admin authenticated user:** Supabase-authenticated user without active `admin_profiles` is redirected/rejected on all five routes.
+- **D. Private payload audit:** denied HTML, RSC and observed network responses contained no private DTO; streaming status is HTTP 200 with `NEXT_REDIRECT`.
+- **E. Cookie/session model:** one server-only constant, `kabatos_customer_session`; seven-day HttpOnly/Lax/Secure-in-production cookie; SHA-256 hash only in DB; revocation RPC added.
+- **F. Cross-brand session:** bidirectional capability/route mismatch rejected; one browser may participate sequentially with one active capability.
+- **G. Tenant cache:** dynamic `/[brandSlug]`; no `generateStaticParams`, `unstable_cache`, or static tenant allowlist.
+- **H. Config propagation:** real Demo Wellness admin save appeared on `/demo-wellness` and `/demo-wellness/start` without redeploy, then restored.
+- **I. New brand:** two temporary DEV brands resolved immediately without rebuild; deactivated after testing.
+- **J. Clean DB:** BLOCKED. Docker client exists but Linux engine pipe is unavailable; `supabase start`/`db reset --local` could not execute. See `docs/evidence/clean-db.txt`.
+- **K. DEV seed:** guarded seed succeeded twice in DEV with same-connection development setting; empty-setting negative test raised `P0001 DEV seed refused`. Fresh local execution remains blocked by Docker.
+- **L. Admin bootstrap:** required env vars, DEV/local restriction, Auth creation, profile upsert, and idempotent rerun verified with temporary users; no password committed.
+- **M. COMPREX assets:** `logo_path=comprex/logo.png`, `product_image_path=comprex/product-pouch.jpg`, `reorder_url=NULL`, `usage_title=Scheduled use`, `usage_instructions=''`.
+- **N. Demo Wellness assets:** `logo_path=NULL`, `product_image_path=NULL`, `reorder_url=NULL`, `usage_title=Scheduled use`, `usage_instructions=''`.
+- **O. Brand editor:** real A-04 persistence verified for logo object path, main color, product name, duration, schedule and reorder URL; no upload widget and no product-image field in the editor.
+- **P. Contrast:** measured `#121212/#F07106=6.31:1`, `#121212/#D85800=4.74:1`, white on hover `3.95:1` (fail and avoided). Runtime hover uses dark text.
+- **Q. Exact Vercel commit:** `03c76c373315f6a6d59c3f0d2d703fbf3adc00f1` for the verified gate Preview.
+- **R. Base URL:** Preview returns use deployment-owned `VERCEL_URL`; production requires explicit HTTPS `NEXT_PUBLIC_APP_URL`. No stale URL is hardcoded in runtime source.
+- **S. QR:** decoded destination is `https://kabatos-program-platform-dstgjx4db.vercel.app/comprex`.
+- **T. Stripe returns:** success/cancel URLs use the trusted origin helper; request Origin and forwarded-host headers are ignored. No real checkout run.
+- **U. Invalid tenant:** `notFound()` renders the C-10 UI; streamed response is HTTP 200 per Next.js semantics and contains no private data.
+- **V. Security regressions:** admin/customer authorization, RLS, IDOR, tenant mismatch, snapshot immutability, mock leakage, open-origin rejection, hashing, expiry and revocation passed.
+- **W. Quality gates:** typecheck PASS; unit/regression 55/55 PASS; production-build E2E 10/10 PASS; build PASS. Clean DB remains blocked.
+- **X. Fixed defects:** historical mock/admin leakage, missing per-operation admin guard, false customer/session fallback, brand-specific cookie, untrusted checkout origin, incomplete asset DTO, editor overwrite, exposed DEV password, and hover-text risk.
+- **Y. Remaining P0/P1/P2/P3:** P0=0, P1=0, P2=1 (clean DB unexecuted), P3=0.
+- **Z. External blockers:** Docker Linux engine for clean-DB proof; client-approved Stripe commercial terms; client-owned infrastructure access.
+- **AA. Final verdict:** **VERIFICATION BLOCKED — EXACT TOOLING/ACCESS LIMITATION.**
+
+
 **Date:** 2026-09-13  
 **Auditor / Lead Engineer:** Antigravity Principal Engineering Agent  
 **Target Product:** Kabatos Program Platform (Multi-Brand Usage Tracking & Subscription SaaS)  

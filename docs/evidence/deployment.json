@@ -1,23 +1,8 @@
 {
-  "id": "dpl_Bc5R4cJ2F6Cu4GvFwGGKKjbbJAnA",
-  "url": "kabatos-program-platform-4nkuvbucf.vercel.app",
-  "target": null,
+  "id": "dpl_HLNLWrVA5ECeuNuifgV6uFP8UXC5",
+  "url": "https://kabatos-program-platform-dstgjx4db.vercel.app",
   "readyState": "READY",
-  "sourceCommit": "4f59f38959f1b9773be791374dbc3f9ac0d94098",
-  "metadata": {
-    "githubCommitAuthorName": "mudasarimamofficial",
-    "githubCommitAuthorEmail": "mudasarimamofficial@gmail.com",
-    "githubCommitMessage": "fix: close pre-client authorization and configuration gaps",
-    "githubCommitOrg": "mudasarimamofficial",
-    "githubCommitRef": "audit/independent-release-gate",
-    "githubCommitRepo": "kabatos-program-platform",
-    "githubCommitSha": "4f59f38959f1b9773be791374dbc3f9ac0d94098",
-    "githubDeployment": "1",
-    "githubOrg": "mudasarimamofficial",
-    "githubRepo": "kabatos-program-platform",
-    "gitRootDirectory": "",
-    "actor": "codex",
-    "lambdaRuntimeStats": "{\"nodejs\":2}",
-    "bundler": "turbopack"
-  }
+  "sourceCommit": "03c76c373315f6a6d59c3f0d2d703fbf3adc00f1",
+  "commitMessage": "test: complete reversible release gate evidence",
+  "branch": "audit/independent-release-gate"
 }
