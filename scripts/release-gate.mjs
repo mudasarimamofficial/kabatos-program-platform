@@ -22,7 +22,7 @@ const adminRoutes = ['/admin', '/admin/brands', '/admin/brands/new', '/admin/cus
 const customerRoutes = ['/comprex/dashboard', '/demo-wellness/dashboard']
 const leak = t => /totalBrands[\\]*"\s*:|totalCustomers[\\]*"\s*:|firstName[\\]*"\s*:|sarah\.chen@email|sarah@example\.com|duration_snapshot|token_hash/.test(t)
 const users = [], brands = []
-let restoreDemo, browser
+let restoreDemo, browser, masterClient
 
 async function raw(path, cookie = '', rsc = false) {
   const headers = { ...bypassHeaders, ...(cookie ? { cookie } : {}), ...(rsc ? { RSC: '1' } : {}) }
@@ -63,6 +63,7 @@ async function cleanBrowser(path, cookieJar = [], expected) {
   })
   await page.goto(base + path)
   if (expected) await page.waitForURL(base + expected)
+  await page.waitForFunction(() => !document.body.innerText.includes('Loading your program'))
   const data = { finalUrl: page.url(), title: await page.title(), visibleBody: (await page.locator('body').innerText()).slice(0, 1100), network: (await Promise.all(responses)).filter(Boolean) }
   await context.close()
   return data
@@ -89,6 +90,7 @@ try {
   const bootstrapEnv = { ...process.env, ADMIN_EMAIL: masterEmail, ADMIN_PASSWORD: password }
   execFileSync(process.execPath, ['scripts/bootstrap-admin.ts'], { env: bootstrapEnv, stdio: 'pipe' })
   const master = await login(masterEmail, password)
+  masterClient = master.client
   const masterUser = check(await master.client.auth.getUser()).user
   users.push(masterUser.id)
   execFileSync(process.execPath, ['scripts/bootstrap-admin.ts'], { env: bootstrapEnv, stdio: 'pipe' })
@@ -152,6 +154,30 @@ try {
     const response = await raw('/' + slug)
     assert(response.text.includes(input.p_name))
     record('new runtime brand ' + suffix, { slug, status: response.status, nameRendered: true, redeployed: false })
+    if (suffix === 'a') {
+      const logoPath = slug + '/gate-logo.png'
+      // Upload fixture through the DEV service client; the editor persistence itself is exercised through the authenticated UI.
+      check(await service.storage.from('brand-assets').upload(logoPath, fs.readFileSync('public/placeholder-logo.png'), { contentType: 'image/png', upsert: true }))
+      brands.at(-1).logoPath = logoPath
+      await page.goto(base + '/admin/brands/' + slug)
+      await page.getByLabel('Brand logo', { exact: true }).fill(logoPath)
+      await page.getByLabel('Main brand color').fill('#335577')
+      await page.getByLabel('Product name', { exact: true }).fill('Verified gate product')
+      await page.getByLabel('Duration (days)').fill('8')
+      await page.getByRole('button', { name: '8', exact: true }).click()
+      await page.getByLabel('Reorder URL', { exact: true }).fill('https://example.com/gate-test')
+      await page.getByRole('button', { name: /save changes/i }).click()
+      await page.getByRole('button', { name: /changes saved/i }).waitFor()
+      const edited = await readBrand(slug), config = edited.program_configs.find(c => c.is_current)
+      assert.equal(edited.logo_path, logoPath)
+      assert.equal(edited.primary_color, '#335577')
+      assert.equal(edited.product_name, 'Verified gate product')
+      assert.equal(edited.reorder_url, 'https://example.com/gate-test')
+      assert.equal(config.duration_days, 8)
+      assert.deepEqual(config.schedule_days, [1,3,5,7,8])
+      assert.equal(config.subscription_required, false)
+      record('A-04 persistence', { logoPath: true, mainColor: true, productName: true, duration: true, schedule: true, reorderUrl: true, unrelatedConfigPreserved: true, uploadUi: false })
+    }
     const token = randomBytes(32).toString('base64url')
     const joined = check(await anon.rpc('customer_join', { p_brand_slug: slug, p_first_name: 'GateCustomer' + suffix, p_email: `gate-${stamp}-${suffix}@example.com`, p_phone: null, p_order_number: null, p_request_id: randomUUID(), p_capability: token }))
     check(await anon.rpc('customer_activate_tracking', { p_brand_slug: slug, p_capability: token }))
@@ -225,10 +251,14 @@ try {
   if (restoreDemo) { try { await restoreDemo() } catch (e) { report.cleanup.push('Demo restore failed: ' + e.message); process.exitCode = 1 } }
   for (const b of brands) {
     try {
-      for (const table of ['program_usage','customer_sessions','customer_programs','customers','program_configs','brands']) {
-        check(await service.from(table).delete().eq(table === 'brands' ? 'id' : 'brand_id', b.id))
+      for (const table of ['program_usage','customer_sessions','customer_programs','customers']) {
+        check(await service.from(table).delete().eq('brand_id', b.id))
       }
-      report.cleanup.push('Removed temporary brand ' + b.slug)
+      const row = await readBrand(b.slug)
+      check(await masterClient.rpc('admin_edit_brand', await editArgs(row, { p_active: false })))
+      if (b.logoPath) check(await service.storage.from('brand-assets').remove([b.logoPath]))
+      assert((await anon.rpc('resolve_brand', { p_slug: b.slug })).error)
+      report.cleanup.push('Removed test customers/sessions and deactivated temporary brand ' + b.slug + '; immutable configuration history retained')
     } catch (e) { report.cleanup.push('Fixture cleanup failed: ' + e.message); process.exitCode = 1 }
   }
   for (const id of users) {

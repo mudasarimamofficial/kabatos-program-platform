@@ -1,0 +1,21 @@
+2026-09-17, Windows, repository: D:\COMPREX DEVELOPMENT\comprex-main\comprex-main
+Command: docker info
+Client: Docker 29.5.2; context desktop-linux.
+Server: failed to connect to npipe:////./pipe/dockerDesktopLinuxEngine; pipe not found.
+Command: docker desktop start
+No successful engine startup; docker desktop status: Could not retrieve status.
+Command: supabase start
+Failed to inspect supabase_db_finbvtwjddrmbuuuyeni: Docker engine pipe not found.
+Command: supabase db reset --local
+Failed at service inspection for the same missing engine pipe.
+RESULT: BLOCKED. No disposable/local database was constructed, migrated, seeded, or tested.
+The linked DEV database is NOT clean-database reproduction evidence.
+
+Separate DEV evidence (not a clean DB):
+Verified supabase/.temp/project-ref = finbvtwjddrmbuuuyeni before each SQL/migration operation.
+supabase db query --linked --file supabase/migrations/20260917090000_release_gate_asset_and_customer_dto.sql -> rows [] (successful DDL)
+supabase migration repair 20260917090000 --status applied --linked -> applied
+supabase db push --linked -> applied 20260917091000_customer_session_revocation.sql
+supabase migration list --linked -> all ten repository versions match DEV.
+./scripts/seed-dev.ps1 -LinkedDev -> rows [], success; repeated -> rows [], success.
+Explicit negative test: SET app.kabatos_environment = ''; followed by the seed in the same SQL file -> P0001 DEV seed refused.

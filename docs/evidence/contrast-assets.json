@@ -1,0 +1,46 @@
+{
+  "base": "https://kabatos-program-platform-4nkuvbucf.vercel.app",
+  "results": [
+    {
+      "slug": "comprex",
+      "title": "COMPREX — Your program, made simple",
+      "visibleBody": "COMPREX\nYOUR WELLNESS PROGRAM\nYour program,\nmade simple.\n\nWelcome to your wellness journey. Simple routine. Clear progress. Easy reordering.\n\nCOMPREX · COMPREX\n14-day structured program\nDaily Routine\nEvening habit\nClear Progress\nDaily tracker\nNatural Comfort\nGentle rhythm\nStart My Program\n\nAlready started? View your program\n\nYour information is kept private and secure.",
+      "normal": {
+        "text": "rgb(18, 18, 18)",
+        "background": "rgb(240, 113, 6)",
+        "ratio": 6.30676258316344
+      },
+      "hover": {
+        "text": "rgb(18, 18, 18)",
+        "background": "rgb(216, 88, 0)",
+        "ratio": 4.74200360230907
+      },
+      "images": [
+        {
+          "loaded": true,
+          "source": "Next Image proxy"
+        },
+        {
+          "loaded": true,
+          "source": "Next Image proxy"
+        }
+      ]
+    },
+    {
+      "slug": "demo-wellness",
+      "title": "COMPREX — Your program, made simple",
+      "visibleBody": "Demo Wellness\nYOUR WELLNESS PROGRAM\nYour program,\nmade simple.\n\nWelcome to your wellness journey. Simple routine. Clear progress. Easy reordering.\n\nDemo Wellness\nWellness 10 · 10-day program\nDaily Routine\nEvening habit\nClear Progress\nDaily tracker\nNatural Comfort\nGentle rhythm\nStart My Program\n\nAlready started? View your program\n\nYour information is kept private and secure.",
+      "normal": {
+        "text": "rgb(255, 255, 255)",
+        "background": "rgb(36, 107, 90)",
+        "ratio": 6.314405673019003
+      },
+      "hover": {
+        "text": "rgb(255, 255, 255)",
+        "background": "rgb(30, 90, 76)",
+        "ratio": 8.009061204721299
+      },
+      "images": []
+    }
+  ]
+}

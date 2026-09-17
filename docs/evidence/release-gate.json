@@ -1,0 +1,491 @@
+{
+  "date": "2026-09-17T12:54:34.014Z",
+  "base": "https://kabatos-program-platform-4nkuvbucf.vercel.app",
+  "results": [
+    {
+      "label": "anonymous /admin",
+      "samples": [
+        {
+          "rsc": false,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "type": "text/html; charset=utf-8",
+          "bytes": 8043,
+          "privatePayload": false,
+          "serverRedirect": "NEXT_REDIRECT;replace;/admin/login;307;\">"
+        },
+        {
+          "rsc": true,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "type": "text/x-component",
+          "bytes": 4418,
+          "privatePayload": false,
+          "serverRedirect": "NEXT_REDIRECT;replace;/admin/login;307;\"}"
+        }
+      ],
+      "finalUrl": "https://kabatos-program-platform-4nkuvbucf.vercel.app/admin/login",
+      "title": "COMPREX — Your program, made simple",
+      "visibleBody": "COMPREX ADMIN\nSign in to continue.\n\nManage brands, programs, and customer access.\n\nEmail\nPassword\nSign in\nReturn to customer preview",
+      "network": [
+        {
+          "path": "/admin",
+          "status": 200,
+          "privatePayload": false
+        },
+        {
+          "path": "/admin/login",
+          "status": 200,
+          "privatePayload": false
+        }
+      ]
+    },
+    {
+      "label": "anonymous /admin/brands",
+      "samples": [
+        {
+          "rsc": false,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "type": "text/html; charset=utf-8",
+          "bytes": 8548,
+          "privatePayload": false,
+          "serverRedirect": "NEXT_REDIRECT;replace;/admin/login;307;\">"
+        },
+        {
+          "rsc": true,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "type": "text/x-component",
+          "bytes": 4844,
+          "privatePayload": false,
+          "serverRedirect": "NEXT_REDIRECT;replace;/admin/login;307;\"}"
+        }
+      ],
+      "finalUrl": "https://kabatos-program-platform-4nkuvbucf.vercel.app/admin/login",
+      "title": "COMPREX — Your program, made simple",
+      "visibleBody": "COMPREX ADMIN\nSign in to continue.\n\nManage brands, programs, and customer access.\n\nEmail\nPassword\nSign in\nReturn to customer preview",
+      "network": [
+        {
+          "path": "/admin/brands",
+          "status": 200,
+          "privatePayload": false
+        },
+        {
+          "path": "/admin/login",
+          "status": 200,
+          "privatePayload": false
+        }
+      ]
+    },
+    {
+      "label": "anonymous /admin/brands/new",
+      "samples": [
+        {
+          "rsc": false,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "type": "text/html; charset=utf-8",
+          "bytes": 9035,
+          "privatePayload": false,
+          "serverRedirect": "NEXT_REDIRECT;replace;/admin/login;307;\">"
+        },
+        {
+          "rsc": true,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "type": "text/x-component",
+          "bytes": 5257,
+          "privatePayload": false,
+          "serverRedirect": "NEXT_REDIRECT;replace;/admin/login;307;\"}"
+        }
+      ],
+      "finalUrl": "https://kabatos-program-platform-4nkuvbucf.vercel.app/admin/login",
+      "title": "COMPREX — Your program, made simple",
+      "visibleBody": "COMPREX ADMIN\nSign in to continue.\n\nManage brands, programs, and customer access.\n\nEmail\nPassword\nSign in\nReturn to customer preview",
+      "network": [
+        {
+          "path": "/admin/brands/new",
+          "status": 200,
+          "privatePayload": false
+        },
+        {
+          "path": "/admin/login",
+          "status": 200,
+          "privatePayload": false
+        }
+      ]
+    },
+    {
+      "label": "anonymous /admin/customers",
+      "samples": [
+        {
+          "rsc": false,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "type": "text/html; charset=utf-8",
+          "bytes": 8554,
+          "privatePayload": false,
+          "serverRedirect": "NEXT_REDIRECT;replace;/admin/login;307;\">"
+        },
+        {
+          "rsc": true,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "type": "text/x-component",
+          "bytes": 4847,
+          "privatePayload": false,
+          "serverRedirect": "NEXT_REDIRECT;replace;/admin/login;307;\"}"
+        }
+      ],
+      "finalUrl": "https://kabatos-program-platform-4nkuvbucf.vercel.app/admin/login",
+      "title": "COMPREX — Your program, made simple",
+      "visibleBody": "COMPREX ADMIN\nSign in to continue.\n\nManage brands, programs, and customer access.\n\nEmail\nPassword\nSign in\nReturn to customer preview",
+      "network": [
+        {
+          "path": "/admin/customers",
+          "status": 200,
+          "privatePayload": false
+        },
+        {
+          "path": "/admin/login",
+          "status": 200,
+          "privatePayload": false
+        }
+      ]
+    },
+    {
+      "label": "anonymous /admin/access",
+      "samples": [
+        {
+          "rsc": false,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "type": "text/html; charset=utf-8",
+          "bytes": 8548,
+          "privatePayload": false,
+          "serverRedirect": "NEXT_REDIRECT;replace;/admin/login;307;\">"
+        },
+        {
+          "rsc": true,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "type": "text/x-component",
+          "bytes": 4844,
+          "privatePayload": false,
+          "serverRedirect": "NEXT_REDIRECT;replace;/admin/login;307;\"}"
+        }
+      ],
+      "finalUrl": "https://kabatos-program-platform-4nkuvbucf.vercel.app/admin/login",
+      "title": "COMPREX — Your program, made simple",
+      "visibleBody": "COMPREX ADMIN\nSign in to continue.\n\nManage brands, programs, and customer access.\n\nEmail\nPassword\nSign in\nReturn to customer preview",
+      "network": [
+        {
+          "path": "/admin/access",
+          "status": 200,
+          "privatePayload": false
+        },
+        {
+          "path": "/admin/login",
+          "status": 200,
+          "privatePayload": false
+        },
+        {
+          "path": "/comprex",
+          "status": 200,
+          "privatePayload": false
+        }
+      ]
+    },
+    {
+      "label": "anonymous /comprex/dashboard",
+      "samples": [
+        {
+          "rsc": false,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "type": "text/html; charset=utf-8",
+          "bytes": 8817,
+          "privatePayload": false,
+          "serverRedirect": "NEXT_REDIRECT;replace;/comprex;307;\\\"}\\n\"])"
+        },
+        {
+          "rsc": true,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "type": "text/x-component",
+          "bytes": 4571,
+          "privatePayload": false,
+          "serverRedirect": "NEXT_REDIRECT;replace;/comprex;307;\"}"
+        }
+      ],
+      "finalUrl": "https://kabatos-program-platform-4nkuvbucf.vercel.app/comprex",
+      "title": "COMPREX — Your program, made simple",
+      "visibleBody": "COMPREX\nYOUR WELLNESS PROGRAM\nYour program,\nmade simple.\n\nWelcome to your wellness journey. Simple routine. Clear progress. Easy reordering.\n\nCOMPREX · COMPREX\n14-day structured program\nDaily Routine\nEvening habit\nClear Progress\nDaily tracker\nNatural Comfort\nGentle rhythm\nStart My Program\n\nAlready started? View your program\n\nYour information is kept private and secure.",
+      "network": [
+        {
+          "path": "/comprex/dashboard",
+          "status": 200,
+          "privatePayload": false
+        },
+        {
+          "path": "/comprex",
+          "status": 200,
+          "privatePayload": false
+        }
+      ]
+    },
+    {
+      "label": "anonymous /demo-wellness/dashboard",
+      "samples": [
+        {
+          "rsc": false,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "type": "text/html; charset=utf-8",
+          "bytes": 8847,
+          "privatePayload": false,
+          "serverRedirect": "NEXT_REDIRECT;replace;/demo-wellness;307;\\\"}\\n\"])"
+        },
+        {
+          "rsc": true,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "type": "text/x-component",
+          "bytes": 4583,
+          "privatePayload": false,
+          "serverRedirect": "NEXT_REDIRECT;replace;/demo-wellness;307;\"}"
+        }
+      ],
+      "finalUrl": "https://kabatos-program-platform-4nkuvbucf.vercel.app/demo-wellness",
+      "title": "COMPREX — Your program, made simple",
+      "visibleBody": "Demo Wellness\nYOUR WELLNESS PROGRAM\nYour program,\nmade simple.\n\nWelcome to your wellness journey. Simple routine. Clear progress. Easy reordering.\n\nDemo Wellness\nWellness 10 · 10-day program\nDaily Routine\nEvening habit\nClear Progress\nDaily tracker\nNatural Comfort\nGentle rhythm\nStart My Program\n\nAlready started? View your program\n\nYour information is kept private and secure.",
+      "network": [
+        {
+          "path": "/demo-wellness/dashboard",
+          "status": 200,
+          "privatePayload": false
+        },
+        {
+          "path": "/demo-wellness",
+          "status": 200,
+          "privatePayload": false
+        }
+      ]
+    },
+    {
+      "label": "bootstrap",
+      "createdAuthUser": true,
+      "activeProfile": true,
+      "rerunSameUser": true,
+      "passwordCommitted": false
+    },
+    {
+      "label": "nonadmin /admin",
+      "samples": [
+        {
+          "rsc": false,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "type": "text/html; charset=utf-8",
+          "bytes": 8387,
+          "privatePayload": false,
+          "serverRedirect": "NEXT_REDIRECT;replace;/admin/login;307;\\\"}\\n8:E{\\\"digest\\\":\\\"NEXT_REDIRECT;replace;/admin/login;307;\\\"}\\n\"])"
+        },
+        {
+          "rsc": true,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "type": "text/x-component",
+          "bytes": 4418,
+          "privatePayload": false,
+          "serverRedirect": "NEXT_REDIRECT;replace;/admin/login;307;\"}"
+        }
+      ],
+      "finalUrl": "https://kabatos-program-platform-4nkuvbucf.vercel.app/admin/login",
+      "visibleBody": "COMPREX ADMIN\nSign in to continue.\n\nManage brands, programs, and customer access.\n\nEmail\nPassword\nSign in\nReturn to customer preview"
+    },
+    {
+      "label": "nonadmin /admin/brands",
+      "samples": [
+        {
+          "rsc": false,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "type": "text/html; charset=utf-8",
+          "bytes": 8892,
+          "privatePayload": false,
+          "serverRedirect": "NEXT_REDIRECT;replace;/admin/login;307;\\\"}\\n8:E{\\\"digest\\\":\\\"NEXT_REDIRECT;replace;/admin/login;307;\\\"}\\n\"])"
+        },
+        {
+          "rsc": true,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "type": "text/x-component",
+          "bytes": 4844,
+          "privatePayload": false,
+          "serverRedirect": "NEXT_REDIRECT;replace;/admin/login;307;\"}"
+        }
+      ],
+      "finalUrl": "https://kabatos-program-platform-4nkuvbucf.vercel.app/admin/login",
+      "visibleBody": "COMPREX ADMIN\nSign in to continue.\n\nManage brands, programs, and customer access.\n\nEmail\nPassword\nSign in\nReturn to customer preview"
+    },
+    {
+      "label": "nonadmin /admin/brands/new",
+      "samples": [
+        {
+          "rsc": false,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "type": "text/html; charset=utf-8",
+          "bytes": 9379,
+          "privatePayload": false,
+          "serverRedirect": "NEXT_REDIRECT;replace;/admin/login;307;\\\"}\\n8:E{\\\"digest\\\":\\\"NEXT_REDIRECT;replace;/admin/login;307;\\\"}\\n\"])"
+        },
+        {
+          "rsc": true,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "type": "text/x-component",
+          "bytes": 5257,
+          "privatePayload": false,
+          "serverRedirect": "NEXT_REDIRECT;replace;/admin/login;307;\"}"
+        }
+      ],
+      "finalUrl": "https://kabatos-program-platform-4nkuvbucf.vercel.app/admin/login",
+      "visibleBody": "COMPREX ADMIN\nSign in to continue.\n\nManage brands, programs, and customer access.\n\nEmail\nPassword\nSign in\nReturn to customer preview"
+    },
+    {
+      "label": "nonadmin /admin/customers",
+      "samples": [
+        {
+          "rsc": false,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "type": "text/html; charset=utf-8",
+          "bytes": 8898,
+          "privatePayload": false,
+          "serverRedirect": "NEXT_REDIRECT;replace;/admin/login;307;\\\"}\\n8:E{\\\"digest\\\":\\\"NEXT_REDIRECT;replace;/admin/login;307;\\\"}\\n\"])"
+        },
+        {
+          "rsc": true,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "type": "text/x-component",
+          "bytes": 4847,
+          "privatePayload": false,
+          "serverRedirect": "NEXT_REDIRECT;replace;/admin/login;307;\"}"
+        }
+      ],
+      "finalUrl": "https://kabatos-program-platform-4nkuvbucf.vercel.app/admin/login",
+      "visibleBody": "COMPREX ADMIN\nSign in to continue.\n\nManage brands, programs, and customer access.\n\nEmail\nPassword\nSign in\nReturn to customer preview"
+    },
+    {
+      "label": "nonadmin /admin/access",
+      "samples": [
+        {
+          "rsc": false,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "type": "text/html; charset=utf-8",
+          "bytes": 8892,
+          "privatePayload": false,
+          "serverRedirect": "NEXT_REDIRECT;replace;/admin/login;307;\\\"}\\n8:E{\\\"digest\\\":\\\"NEXT_REDIRECT;replace;/admin/login;307;\\\"}\\n\"])"
+        },
+        {
+          "rsc": true,
+          "status": 200,
+          "location": null,
+          "followed": false,
+          "type": "text/x-component",
+          "bytes": 4844,
+          "privatePayload": false,
+          "serverRedirect": "NEXT_REDIRECT;replace;/admin/login;307;\"}"
+        }
+      ],
+      "finalUrl": "https://kabatos-program-platform-4nkuvbucf.vercel.app/admin/login",
+      "visibleBody": "COMPREX ADMIN\nSign in to continue.\n\nManage brands, programs, and customer access.\n\nEmail\nPassword\nSign in\nReturn to customer preview"
+    },
+    {
+      "label": "master /admin",
+      "status": 200,
+      "location": null
+    },
+    {
+      "label": "master /admin/brands",
+      "status": 200,
+      "location": null
+    },
+    {
+      "label": "master /admin/brands/new",
+      "status": 200,
+      "location": null
+    },
+    {
+      "label": "master /admin/customers",
+      "status": 200,
+      "location": null
+    },
+    {
+      "label": "master /admin/access",
+      "status": 200,
+      "location": null
+    },
+    {
+      "label": "cache propagation /demo-wellness",
+      "adminUiSaved": true,
+      "persisted": true,
+      "status": 200,
+      "sentinelRendered": true,
+      "redeployed": false
+    },
+    {
+      "label": "cache propagation /demo-wellness/start",
+      "adminUiSaved": true,
+      "persisted": true,
+      "status": 200,
+      "sentinelRendered": true,
+      "redeployed": false
+    },
+    {
+      "label": "demo restored",
+      "name": "Demo Wellness"
+    },
+    {
+      "label": "new runtime brand a",
+      "slug": "gate-1789649700012-a",
+      "status": 200,
+      "nameRendered": true,
+      "redeployed": false
+    }
+  ],
+  "cleanup": [
+    "Removed test customers/sessions and deactivated temporary brand gate-1789649700012-a; immutable configuration history retained",
+    "Removed temporary Auth user",
+    "Removed temporary Auth user"
+  ],
+  "failure": "new row violates row-level security policy"
+}
