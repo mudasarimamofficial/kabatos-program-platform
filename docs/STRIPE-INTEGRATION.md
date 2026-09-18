@@ -12,7 +12,7 @@ Run `node --env-file=.env.local scripts/configure-stripe-test.mjs` with securely
 
 Checkout accepts only `brandSlug`; strict validation rejects browser-controlled identity, terms, price and return URLs. The capability cookie authorizes a DB checkout reservation, which supplies a stable Stripe idempotency key. Card collection is required; `subscription_data.trial_period_days=7`. Return URLs use the trusted deployment-origin helper, never request Origin/Host headers.
 
-Webhooks verify the raw body signature before processing. LIVE keys/events are rejected. Supported events: `checkout.session.completed`, `customer.subscription.created/updated/deleted`, `invoice.paid`, `invoice.payment_failed`.
+Webhooks verify the raw body signature before processing. LIVE keys/events are rejected. Supported events: `checkout.session.completed`, `customer.subscription.created/updated/deleted`, `invoice.paid`, `invoice.payment_succeeded`, `invoice.payment_failed`.
 
 Events trigger fresh Stripe retrieval under the existing DB lease/fence. Initial activation requires a linked, completed TEST Checkout, matching subscription/customer, paid or no-payment-required status, approved price and seven-day trial. Transactional reconciliation persists subscription/trial/period/cancellation fields and the durable event ledger. A not-started program activates once; renewal never resets Day 1 or rewrites snapshots. Failures return 503 for retry. Concurrent deliveries may retry while a worker holds the lease.
 

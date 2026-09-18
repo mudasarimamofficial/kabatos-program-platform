@@ -5,7 +5,7 @@ import { billingDb, getStripe, rpc, assertApprovedPrice } from './server'
 import { COMPREX_PLAN } from './plan'
 
 const supported = new Set(['checkout.session.completed','customer.subscription.created','customer.subscription.updated',
-  'customer.subscription.deleted','invoice.paid','invoice.payment_failed'])
+  'customer.subscription.deleted','invoice.paid','invoice.payment_succeeded','invoice.payment_failed'])
 export const stripeId = (value: string | { id: string } | null | undefined) => typeof value === 'string' ? value : value?.id
 const iso = (value: number | null | undefined) => value == null ? null : new Date(value * 1000).toISOString()
 
@@ -31,7 +31,7 @@ export async function reconcileStripeEvent(event: Stripe.Event, stripe = getStri
   let subscriptionId: string | undefined
   if (object.object === 'checkout.session') subscriptionId = stripeId(object.subscription)
   if (object.object === 'subscription') subscriptionId = object.id
-  if (object.object === 'invoice') subscriptionId = stripeId(object.parent?.subscription_details?.subscription)
+  if (object.object === 'invoice') subscriptionId = stripeId(object.parent?.subscription_details?.subscription) || stripeId((object as any).subscription)
   if (!subscriptionId) return { status: 'unrelated_event' }
   const { data: known, error: knownError } = await db.from('subscriptions').select('program_id,brand_id,stripe_customer_id').eq('stripe_subscription_id', subscriptionId).maybeSingle()
   if (knownError) throw new Error('Subscription lookup unavailable')

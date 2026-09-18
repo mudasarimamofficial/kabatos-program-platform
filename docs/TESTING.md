@@ -43,6 +43,5 @@ The application enforces comprehensive automated test coverage spanning pure dom
 
 Clean DB commands are `docker info`, `supabase start`, `supabase db reset --local`, `./scripts/seed-dev.ps1 -Local`, and `supabase db query --local --file scripts/verify-schema.sql`. They were attempted but Docker's Linux engine was unavailable; see `docs/evidence/clean-db.txt`. Linked DEV is not clean-DB proof.
 
-# 2026-09-17 Stripe TEST acceptance execution
-
-`pnpm typecheck` passed (0 errors). Unit/integration tests passed 62/62 (14 test files). Production build passed. Playwright E2E passed 10/10. Real Stripe TEST acceptance executed via `node --env-file=.env.local scripts/stripe-test-evidence.mjs` verifying real checkout, signed webhook delivery, 7-day trial access, replay idempotency, cancellation with access retention, renewal via Stripe Test Clock, and security regressions. Complete artifacts saved in `docs/evidence/stripe-test-acceptance.md` and `docs/evidence/stripe-*.json`.
+# 2026-09-18 Final test-readiness gate execution
+`pnpm typecheck` passed (0 errors). Unit/integration tests passed 63/63 (14 test files). Production build passed (19/19 routes). Playwright E2E passed 10/10. Real Stripe TEST acceptance confirmed via `https://kabatos-stripe-test.vercel.app` Preview deployment with 7-day trial, automatic renewal, cancel_at_period_end retention, signed webhook delivery (`invoice.payment_succeeded` and `invoice.paid` compatible), and Supabase DEV integration. Complete artifacts cataloged in `docs/evidence/final-test-readiness.md`.

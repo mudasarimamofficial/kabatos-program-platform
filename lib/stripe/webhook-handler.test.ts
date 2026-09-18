@@ -22,7 +22,7 @@ function fixture(status='trialing') {
 }
 beforeEach(()=>vi.stubEnv('COMPREX_STRIPE_TEST_PRICE_ID','price_fixture'))
 describe('Durable webhook orchestration',()=>{
-  for(const type of ['checkout.session.completed','customer.subscription.created','customer.subscription.updated','invoice.paid']) {
+  for(const type of ['checkout.session.completed','customer.subscription.created','customer.subscription.updated','invoice.paid','invoice.payment_succeeded']) {
     it(`${type}: replay uses durable event record and never runs activation twice`,async()=>{
       const f=fixture(), object=type.startsWith('invoice')?{object:'invoice',id:'in_fixture',parent:{subscription_details:{subscription:'sub_fixture'}}}:type.startsWith('checkout')?{object:'checkout.session',id:'cs_test_fixture',subscription:'sub_fixture'}:sub()
       const event={id:'evt_fixture',type,created:100,livemode:false,data:{object}} as Stripe.Event
