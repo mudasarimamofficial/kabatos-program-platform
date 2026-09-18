@@ -43,11 +43,11 @@
 
 - **Repository:** `https://github.com/mudasarimamofficial/kabatos-program-platform.git`
 - **Active Branch:** `audit/independent-release-gate`
-- **Git Commit HEAD:** `a52f6317dd370cc44c9e9d2b3d3f2993ceb0304f`
+- **Git Commit HEAD:** `f1be49d46f9fe09b11bbe01e06a6de1748f83ff5`
 - **Vercel Project:** `prj_tM5CUywwMBvYqAh5CHmdqZ6lv4qD`
 - **Active Preview Alias:** `https://kabatos-stripe-test.vercel.app`
-- **Active Preview Deployment:** `https://kabatos-program-platform-fexndfl9r.vercel.app` (`dpl_3JABmn4dNizTiPSwdXdUjT5M2d37`)
-- **Deployed Source Commit:** `a52f6317dd370cc44c9e9d2b3d3f2993ceb0304f`
+- **Active Preview Deployment:** `https://kabatos-program-platform-leh18wkqy.vercel.app` (`dpl_EgbMXb71mbQG27KxHJtw5Spj1e78`)
+- **Deployed Source Commit:** `f1be49d46f9fe09b11bbe01e06a6de1748f83ff5` (Exact matching local, origin, and deployed HEAD)
 - **Supabase DEV Backend:** `https://finbvtwjddrmbuuuyeni.supabase.co` (`finbvtwjddrmbuuuyeni`, PostgreSQL 17.6)
 - **Supabase PROD Backend (LOCKED):** `https://svghcgvmnpjuzzxtnjch.supabase.co` (`svghcgvmnpjuzzxtnjch`, PostgreSQL 17.6)
 

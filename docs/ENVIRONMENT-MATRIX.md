@@ -21,14 +21,15 @@ To enforce complete isolation between testing and commercial production data, en
 ## Current Authoritative Preview Deployment
 
 - **Stable Acceptance Alias**: `https://kabatos-stripe-test.vercel.app`
-- **Active Deployment Target**: `https://kabatos-program-platform-fexndfl9r.vercel.app`
-- **Deployment ID**: `dpl_3JABmn4dNizTiPSwdXdUjT5M2d37`
-- **Deployment Source Commit**: `a52f6317dd370cc44c9e9d2b3d3f2993ceb0304f` (Exact final engineering branch HEAD)
+- **Active Deployment Target**: `https://kabatos-program-platform-leh18wkqy.vercel.app`
+- **Deployment ID**: `dpl_EgbMXb71mbQG27KxHJtw5Spj1e78`
+- **Deployment Source Commit**: `f1be49d46f9fe09b11bbe01e06a6de1748f83ff5` (Exact local & origin branch HEAD)
 - **Supabase Target**: DEV (`finbvtwjddrmbuuuyeni`)
 - **Stripe Mode**: TEST (`prod_VHGrvdkYDhsdx1`, `price_1UGiK6RCnOFy7ZssnkNPUMvs`, $4.99/mo, 7-day trial)
 - **Stripe Webhook Target**: `https://kabatos-stripe-test.vercel.app/api/stripe/webhook` (`we_1UGiPVRCnOFy7ZssdVtvIOvI`)
 
 ## Historical Deployments (Archived)
+- `dpl_3JABmn4dNizTiPSwdXdUjT5M2d37` / `fexndfl9r` (Previous acceptance deployment commit `a52f631`)
 - `dpl_DB55kE5b9Wurp2hJuKMjZemsdGGn` (Stripe acceptance execution build during automated run)
 - `dpl_Bc5R4cJ2F6Cu4GvFwGGKKjbbJAnA` / `dstgjx4db` (Historical preview audit commit `03c76c3`)
 - `dpl_5VGVdoZmpM7D1uocgyJWiAttKtP3` (Historical preview commit `0e1cbba`)

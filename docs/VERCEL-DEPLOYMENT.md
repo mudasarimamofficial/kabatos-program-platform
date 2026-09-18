@@ -11,11 +11,12 @@
 2. **Stripe Binding:** TEST Mode verified ($4.99 USD / month, 7-day trial; real acceptance passed).
 3. **Current Authoritative Preview Deployment:**
    - **Active Alias:** `https://kabatos-stripe-test.vercel.app`
-   - **Deployment URL:** `https://kabatos-program-platform-fexndfl9r.vercel.app`
-   - **Deployment ID:** `dpl_3JABmn4dNizTiPSwdXdUjT5M2d37`
-   - **Source Commit:** `a52f6317dd370cc44c9e9d2b3d3f2993ceb0304f`
+   - **Deployment URL:** `https://kabatos-program-platform-leh18wkqy.vercel.app`
+   - **Deployment ID:** `dpl_EgbMXb71mbQG27KxHJtw5Spj1e78`
+   - **Source Commit:** `f1be49d46f9fe09b11bbe01e06a6de1748f83ff5` (Aligned with local & origin branch HEAD)
    - **Deployment Status:** `READY`
 4. **Historical Deployments (Audit Trail):**
+   - Acceptance Baseline: `dpl_3JABmn4dNizTiPSwdXdUjT5M2d37` (`fexndfl9r`, commit `a52f631`)
    - Initial Staging: `dpl_HtD8aatK7CNQ9w51znWvqMHQSsMN` (`f5o35hva4`)
    - Release Gate: `dpl_HLNLWrVA5ECeuNuifgV6uFP8UXC5` (`dstgjx4db`)
    - Stripe Test Execution: `dpl_DB55kE5b9Wurp2hJuKMjZemsdGGn` (`ihn7e2a7d`)

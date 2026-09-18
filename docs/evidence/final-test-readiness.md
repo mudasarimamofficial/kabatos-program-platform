@@ -1,12 +1,12 @@
 # Kabatos / COMPREX — Final Test-Readiness Certification Evidence
 
-- **Timestamp**: `2026-09-18T10:30:00Z`
-- **Documentation & Worktree Git HEAD**: `230cbee4710c25d3caf88c18f2154b95d725fb7a` (with test-readiness updates)
-- **Runtime Acceptance Source Commit**: `a52f6317dd370cc44c9e9d2b3d3f2993ceb0304f`
+- **Timestamp**: `2026-09-18T10:45:00Z`
+- **Documentation & Worktree Git HEAD**: `f1be49d46f9fe09b11bbe01e06a6de1748f83ff5`
+- **Runtime Acceptance Source Commit**: `f1be49d46f9fe09b11bbe01e06a6de1748f83ff5` (Exact alignment: Deployed Commit == Local HEAD == Origin Branch HEAD)
 - **Vercel Project ID**: `prj_tM5CUywwMBvYqAh5CHmdqZ6lv4qD`
-- **Vercel Deployment ID**: `dpl_3JABmn4dNizTiPSwdXdUjT5M2d37`
+- **Vercel Deployment ID**: `dpl_EgbMXb71mbQG27KxHJtw5Spj1e78`
 - **Vercel Public Acceptance Alias**: `https://kabatos-stripe-test.vercel.app`
-- **Vercel Target Preview URL**: `https://kabatos-program-platform-fexndfl9r.vercel.app`
+- **Vercel Target Preview URL**: `https://kabatos-program-platform-leh18wkqy.vercel.app`
 - **Supabase DEV Project Reference**: `finbvtwjddrmbuuuyeni` (`https://finbvtwjddrmbuuuyeni.supabase.co`)
 - **Supabase PROD Project Reference**: `svghcgvmnpjuzzxtnjch` (UNTOUCHED / Protected)
 - **Database Canonical Migrations**: 11 Local / 11 Remote DEV (0 drift)
